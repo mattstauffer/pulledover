@@ -30,7 +30,7 @@ Route::post('after-call', function (Illuminate\Http\Request $request) {
         env('TWILIO_FROM_NUMBER'), // From a valid Twilio number
         env('ADMIN_PHONE_NUMBER'), // Text this number
         sprintf(
-            "Number: %s\nFrom: %s %sURL: %s\n",
+            "Number: %s\nFrom: %s %s\nURL: %s\n",
             $request->get("From"),
             $request->get("CallerCity"),
             $request->get("CallerState"),
