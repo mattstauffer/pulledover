@@ -15,15 +15,11 @@ Route::post('call', function () {
     print $response;
 });
 
-Route::get('table', function (Illuminate\Http\Request $request) {
-    Log::info(print_r($request, true));
-});
-
 Route::post('after-call', function (Illuminate\Http\Request $request) {
     // Grab recording and text it to someone
     // @todo https://www.twilio.com/blog/2015/07/record-a-phone-call-in-ruby.html
 
-    Log::info(print_r($request));
+    Log::info(print_r($request, true));
 
     $response = new Services_Twilio_Twiml();
     $response->say('If you are hearing this, our application has run out of space or something and is hanging up.');
