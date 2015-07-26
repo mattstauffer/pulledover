@@ -5,8 +5,6 @@ Route::get('/', function () {
 });
 
 Route::post('call', function (Illuminate\Http\Request $request) {
-    Log::info(print_r($request->all(), true));
-
     $response = new Services_Twilio_Twiml();
     $response->say('Thank you for calling Pulled Over. Your audio is now being recorded.');
     $response->record([
@@ -17,6 +15,34 @@ Route::post('call', function (Illuminate\Http\Request $request) {
     // @todo: Trigger call received event, with call information. Or is that not possible? Hurgh. Do we get anything posted here?
 
     print $response;
+
+/**
+ * [AccountSid] => Long hex
+ * [ToZip] =>
+ * [FromState] => FL
+ * [Called] => +18443116837
+ * [FromCountry] => US
+ * [CallerCountry] => US
+ * [CalledZip] =>
+ * [Direction] => inbound
+ * [FromCity] => CITY
+ * [CalledCountry] => US
+ * [CallerState] => FL
+ * [CallSid] => Long hex
+ * [CalledState] =>
+ * [From] => +10987654321
+ * [CallerZip] => 12345
+ * [FromZip] => 12345
+ * [CallStatus] => ringing
+ * [ToCity] =>
+ * [ToState] =>
+ * [To] => +18443116837
+ * [ToCountry] => US
+ * [CallerCity] => CITY
+ * [ApiVersion] => 2010-04-01
+ * [Caller] => +10987654321
+ * [CalledCity] =>
+ */
 });
 
 Route::post('after-call', function (Illuminate\Http\Request $request, Services_Twilio $twilio) {
