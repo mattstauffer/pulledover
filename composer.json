@@ -6,7 +6,8 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.1.*"
+        "laravel/framework": "5.1.*",
+		"aloha/twilio": "~2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -47,5 +48,6 @@
     },
     "config": {
         "preferred-install": "dist"
-    }
+    },
+	"minimum-stability": "dev"
 }
