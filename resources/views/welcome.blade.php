@@ -38,17 +38,28 @@
                 font-size: 1.5rem;
                 padding: 1rem;
             }
+
+            .call-now {
+                font-size: 2rem;
+            }
+
+            .footer {
+                color: #555;
+                font-size: 0.75rem;
+                margin-bottom: 2rem;
+                text-transform: uppercase;
+            }
         </style>
     </head>
     <body>
         <div class="container">
             <div class="content">
                 <div class="title">Pulled Over</div>
-                <p class="the-goal"><strong>The goal</strong>: Give you a free app that is simple to set up and allows you to turn it on when you get pulled over, and it'll notify your friends or family, and start recording, and hopefully also capture geographic coordinates.</p>
+                <p class="the-goal"><strong>The goal</strong>: To provide a free app that is simple to set up and allows you to turn it on when you get pulled over. It will notify your friends or family, start recording audio, and hopefully also capture geographic coordinates.</p>
                 <p><strong>The reason</strong>: I've talked to a lot of people very close to me, especially women of color, who are legitimately terrified of what might happen if they get pulled over by a cop in the U.S. (and no, not all cops are bad, etc. etc., but this is still a completely legitimate fear). While this tool can't alleviate that terror, I hope it can at least be a first step towards helping.</p>
-                <p><strong>How it works right now</strong>: It will likely be a phone app later. Right now, it's just a phone number. The goal is to let you set up your contacts but for the current version, it just texts you a link back with a recording of everything that happened. Not all that useful, I know.</p>
-                <p><strong>Current limits:</strong> Because of the relatively limited usefulness of the current prototype, I've limited the prototype to record only 15 seconds of audio, and it'll delete your recording after a day, until I add appropriate constraints (and hopefully get some financial backing).</p>
-                <p>Call now: <a href="tel:+18443116837">1-844-311-OVER</a> (<a href="tel:+18443116837">1-844-311-6837</a>)</p>
+                <p><strong>How it works right now</strong>: Right now, it's just a phone number. You can call it, it'll record 15 seconds of your audio and then hang up, and it'll text you a link of the audio afterward. Soon, you'll be able to use this same phone number, paired with a user account on this site, to actually functionally record any time you're pulled over.</p>
+                <p><strong>How it will eventually work</strong>: That's still up on the air, but my dream: A mobile app with a big red button. Press the button, it texts your friends with your location. Then it records everything until you stop it (with a passcode). After it's disabled, it'll text you and your friends a link to the recording.</p>
+                <p class="call-now">Call now to try it out:<br><a href="tel:+18443116837">1-844-311-OVER</a><br>(<a href="tel:+18443116837">1-844-311-6837</a>)</p>
                 <br><hr><br>
                 <p><strong>Questions:</strong></p>
                 <ul>
@@ -56,7 +67,7 @@
                     <li><strong>When will the real app be ready?</strong> As soon as I can make time for it. I'll be adding to it incrementally every day as quickly as I can find free time. I don't plan to make money from this, though, so it can't take too much time from my day job.</li>
                 </ul>
                 <br><hr><br>
-                Built by <a href="http://mattstauffer.co/">Matt Stauffer</a>, powered by <a href="http://twilio.com/">Twilio</a> and <a href="http://laravel.com/">Laravel</a>, source on <a href="http://github.com/mattstauffer/pulledover">GitHub</a>
+                <p class="footer">Built by <a href="http://mattstauffer.co/">Matt Stauffer</a>, powered by <a href="http://twilio.com/">Twilio</a> and <a href="http://laravel.com/">Laravel</a>.<br>source on <a href="http://github.com/mattstauffer/pulledover">GitHub.com/mattstauffer/pulledover</a></p>
             </div>
         </div>
         @if (app()->environment() === 'production')
