@@ -4,7 +4,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('call', function () {
+Route::post('call', function (Illuminate\Http\Request $request) {
+    Log::info(print_r($request->all(), true));
+
     $response = new Services_Twilio_Twiml();
     $response->say('Thank you for calling Pulled Over. Your audio is now being recorded.');
     $response->record([
