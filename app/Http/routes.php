@@ -8,7 +8,7 @@ Route::post('call', function () {
     $response = new Services_Twilio_Twiml();
     $response->say('Thank you for calling Pulled Over. Your audio is now being recorded.');
     $response->record([
-        'maxLength' => 120,
+        'maxLength' => 15,
         'action' => '/after-call',
     ]);
 
