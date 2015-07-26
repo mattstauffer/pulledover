@@ -19,13 +19,9 @@ Route::post('call', function (Illuminate\Http\Request $request) {
     print $response;
 });
 
-Route::post('after-call', function (Illuminate\Http\Request $request) {
+Route::post('after-call', function (Illuminate\Http\Request $request, Services_Twilio $twilio) {
     // Grab recording and text it to someone
-    $sid = env('TWILIO_ACCOUNT_SID');
-    $token = env('TWILIO_ACCESS_TOKEN');
-
-    $client = new Services_Twilio($sid, $token);
-    $message = $client->account->messages->sendMessage(
+    $message = $twilio->account->messages->sendMessage(
         env('TWILIO_FROM_NUMBER'), // From a valid Twilio number
         env('ADMIN_PHONE_NUMBER'), // Text this number
         sprintf(
