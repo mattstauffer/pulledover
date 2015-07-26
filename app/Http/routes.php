@@ -4,10 +4,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('call', function () {
+Route::post('call', function () {
     // When someone calls our number, say hello and play 5 cowbells
     $response = new Services_Twilio_Twiml();
-    $response->say('Hello');
+    $response->say('Thank you for calling Pulled Over. Your audio is now being recorded.');
     $response->play('https://api.twilio.com/cowbell.mp3', ["loop" => 5]);
     print $response;
 });
