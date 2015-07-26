@@ -8,7 +8,7 @@ Route::post('call', function () {
     // When someone calls our number, say hello and play 5 cowbells
     $response = new Services_Twilio_Twiml();
     $response->say('Thank you for calling Pulled Over. Your audio is now being recorded.');
-    $twiml->record([
+    $response->record([
         // 'maxLength' => 120,
         'action' => '/after-call',
     ]);
@@ -19,7 +19,7 @@ Route::get('table', function (Illuminate\Http\Request $request) {
     Log::info(print_r($request, true));
 });
 
-Route::post('after-call', function () {
+Route::post('after-call', function (Illuminate\Http\Request $request) {
     // Grab recording and text it to someone
     // @todo https://www.twilio.com/blog/2015/07/record-a-phone-call-in-ruby.html
 
@@ -29,7 +29,7 @@ Route::post('after-call', function () {
     $response->say('If you are hearing this, our application has run out of space or something and is hanging up.');
     $response->hangup();
 
-    print $twiml;
+    print $response;
 
     // https://github.com/thatpodcast/voicemail/blob/master/app.php
     // $email->addTo($to)
