@@ -5,6 +5,8 @@ Route::get('/', function () {
 });
 
 Route::post('call', function (Illuminate\Http\Request $request) {
+    // @todo: Check if this is one of our stored numbers. If not, punt to "you need to register first" flow
+
     $response = new Services_Twilio_Twiml();
     $response->say('Thank you for calling Pulled Over. Your audio is now being recorded.');
     $response->record([
@@ -12,37 +14,9 @@ Route::post('call', function (Illuminate\Http\Request $request) {
         'action' => '/after-call',
     ]);
 
-    // @todo: Trigger call received event, with call information. Or is that not possible? Hurgh. Do we get anything posted here?
+    event(new App\Events\CallWasReceived($request->all()));
 
     print $response;
-
-/**
- * [AccountSid] => Long hex
- * [ToZip] =>
- * [FromState] => FL
- * [Called] => +18443116837
- * [FromCountry] => US
- * [CallerCountry] => US
- * [CalledZip] =>
- * [Direction] => inbound
- * [FromCity] => CITY
- * [CalledCountry] => US
- * [CallerState] => FL
- * [CallSid] => Long hex
- * [CalledState] =>
- * [From] => +10987654321
- * [CallerZip] => 12345
- * [FromZip] => 12345
- * [CallStatus] => ringing
- * [ToCity] =>
- * [ToState] =>
- * [To] => +18443116837
- * [ToCountry] => US
- * [CallerCity] => CITY
- * [ApiVersion] => 2010-04-01
- * [Caller] => +10987654321
- * [CalledCity] =>
- */
 });
 
 Route::post('after-call', function (Illuminate\Http\Request $request, Services_Twilio $twilio) {
@@ -60,42 +34,10 @@ Route::post('after-call', function (Illuminate\Http\Request $request, Services_T
     );
 
     $response = new Services_Twilio_Twiml();
-    $response->say('If you are hearing this, our application has run out of space or something and is hanging up.');
+    $response->say('Your fifteen seconds of fame are over. Goodbye!');
     $response->hangup();
 
-    // @todo: Emit voicemail received command or whatever
+    event(new App\Events\CallRecordingWasCompleted($request->all()));
 
     print $response;
-
-/**
- * [AccountSid] => Long hex thing
- * [ToZip] =>
- * [FromState] => FL
- * [Called] => +18443116837
- * [FromCountry] => US
- * [CallerCountry] => US
- * [CalledZip] =>
- * [Direction] => inbound
- * [FromCity] => CITY
- * [CalledCountry] => US
- * [CallerState] => FL
- * [CallSid] => Long hex thing
- * [CalledState] =>
- * [From] => +10987654321
- * [CallerZip] => 12345
- * [FromZip] => 12345
- * [CallStatus] => completed
- * [ToCity] =>
- * [ToState] =>
- * [RecordingUrl] => http://api.twilio.com/2010-04-01/Accounts/Long hex/Recordings/Long hex
- * [To] => +18443116837
- * [Digits] => hangup
- * [ToCountry] => US
- * [RecordingDuration] => 6
- * [CallerCity] => CITY
- * [ApiVersion] => 2010-04-01
- * [Caller] => +10987654321
- * [CalledCity] =>
- * [RecordingSid] => Long hex
- */
 });
