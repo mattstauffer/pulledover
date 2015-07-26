@@ -50,6 +50,12 @@
                 <p><strong>Current limits:</strong> Because of the relatively limited usefulness of the current prototype, I've limited the prototype to record only 15 seconds of audio, and it'll delete your recording after a day, until I add appropriate constraints (and hopefully get some financial backing).</p>
                 <p>Call now: <a href="tel:+18443116837">1-844-311-OVER</a> (<a href="tel:+18443116837">1-844-311-6837</a>)</p>
                 <br><hr><br>
+                <p><strong>Questions:</strong></p>
+                <ul>
+                    <li><strong>How can I help?</strong> If you're a coder, make some <a href="http://github.com/mattstauffer/pulledover">pull requests</a> (or if you're a mobile developer, message me at <a href="http://twitter.com/stauffermatt">@stauffermatt</a>). If you have money and want to support this, message me at <a href="http://twitter.com/stauffermatt">@stauffermatt</a></li>
+                    <li><strong>When will the real app be ready?</strong> As soon as I can make time for it. I'll be adding to it incrementally every day as quickly as I can find free time. I don't plan to make money from this, though, so it can't take too much time from my day job.</li>
+                </ul>
+                <br><hr><br>
                 Built by <a href="http://mattstauffer.co/">Matt Stauffer</a>, powered by <a href="http://twilio.com/">Twilio</a> and <a href="http://laravel.com/">Laravel</a>, source on <a href="http://github.com/mattstauffer/pulledover">GitHub</a>
             </div>
         </div>
