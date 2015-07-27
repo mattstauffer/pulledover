@@ -77,6 +77,10 @@
     </head>
     <body>
         <div class="container">
+            <div class="nav">
+                <a href="/register">Sign Up</a>
+                <a href="/login">Sign In</a>
+            </div>
             <div class="content">
                 <div class="title">Pulled Over</div>
                 <p class="the-goal"><strong>The goal</strong>: To provide a free app that is simple to set up and allows you to turn it on when you get pulled over. It will notify your friends or family, start recording audio, and hopefully also capture geographic coordinates.</p>

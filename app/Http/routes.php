@@ -4,6 +4,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::group(['namespace' => 'Auth'], function() {
+    Route::get('register', ['as' => 'auth.register', 'uses' => 'AuthController@getRegister']);
+    Route::post('register', ['uses' => 'AuthController@postRegister']);
+    Route::get('login', ['as' => 'auth.login', 'uses' => 'AuthController@getLogin']);
+    Route::post('login', ['uses' => 'AuthController@postLogin']);
+    Route::get('logout', ['as' => 'auth.logout', 'uses' => 'AuthController@getLogout']);
+    Route::get('password/email', ['as' => 'password.email', 'uses' => 'PasswordController@getEmail']);
+    Route::post('password/email', ['uses' => 'PasswordController@postEmail']);
+    Route::get('password/reset', ['as' => 'password.reset', 'uses' => 'PasswordController@getReset']);
+    Route::post('password/reset', ['uses' => 'PasswordController@postReset']);
+});
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/home', 'AccountController@index');
+});
+
 Route::post('call', function (Illuminate\Http\Request $request) {
     // @todo: Check if this is one of our stored numbers. If not, punt to "you need to register first" flow
 

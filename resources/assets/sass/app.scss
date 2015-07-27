@@ -1,2 +1,12 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+.logo {
+    width: 11rem;
+}
+
+@media only screen and (min-width: 800px) {
+    .logo {
+        margin-top: -1rem;
+        width: 16rem;
+    }
+}
