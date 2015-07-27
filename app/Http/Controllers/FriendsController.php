@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FriendsController extends Controller
 {
@@ -16,7 +16,8 @@ class FriendsController extends Controller
      */
     public function index()
     {
-        return view('friends.index');
+        return view('friends.index')
+            ->with('friends', Auth::user()->friends);
     }
 
     /**
