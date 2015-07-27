@@ -19,13 +19,15 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/"><img src="/pulledover-logo.png" alt="Pulled Over" class="logo"></a>
+            <a class="navbar-brand" href="/home"><img src="/pulledover-logo.png" alt="Pulled Over" class="logo"></a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 @if (Auth::check())
-                <li><a href="#">Nav stuff here</a></li>
+                <li><a href="/numbers">My Numbers</a></li>
+                <li><a href="/friends">My Friends</a></li>
+                <li><a href="/recordings">My Recordings</a></li>
                 @endif
             </ul>
 

@@ -11,6 +11,6 @@ class AccountController extends Controller
 {
     public function index()
     {
-        return 'WELCOME';
+        return view('dashboard');
     }
 }
