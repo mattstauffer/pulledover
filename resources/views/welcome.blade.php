@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="Pulled Over records your audio and notifies your friends when you get pulled over.">
+        <meta name="author" content="Matt Stauffer">
+        <meta name="viewport" content="width=device-width">
+
         <title>Pulled Over</title>
 
         <style>
+            html {
+                font-size: 14px;
+            }
+
             html, body {
                 height: 100%;
             }
 
             body {
                 font-family: arial;
-                font-size: 20px;
                 margin: 0;
                 padding: 0;
                 width: 100%;
@@ -19,16 +28,18 @@
             .container {
                 margin: 0 auto;
                 max-width: 40rem;
-                text-align: center;
+                padding-left: 1rem;
+                padding-right: 1rem;
+                text-align: left;
             }
 
             .content {
                 margin-top: 5rem;
-                text-align: center;
+                text-align: left;
             }
 
             .title {
-                font-size: 4rem;
+                font-size: 3rem;
             }
 
             .the-goal {
@@ -41,6 +52,7 @@
 
             .call-now {
                 font-size: 2rem;
+                text-align: center;
             }
 
             .footer {
@@ -49,6 +61,18 @@
                 margin-bottom: 2rem;
                 text-transform: uppercase;
             }
+
+
+            @media only screen and (min-width: 640px) {
+                html {
+                    font-size: 20px;
+                }
+
+                .title {
+                    font-size: 4rem;
+                }
+            }
+
         </style>
     </head>
     <body>
