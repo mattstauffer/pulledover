@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use App\PhoneNumber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,7 +28,7 @@ class NumbersController extends Controller
      */
     public function create()
     {
-        //
+        return view('numbers.create');
     }
 
     /**
@@ -38,7 +39,15 @@ class NumbersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'number' => 'required|digits:10|integer'
+        ]);
+
+        Auth::user()->phoneNumbers()->create([
+            'number' => $request->get('number'),
+        ]);
+
+        return redirect()->route('numbers.index');
     }
 
     /**

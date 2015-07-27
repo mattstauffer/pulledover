@@ -18,7 +18,7 @@ Route::group(['namespace' => 'Auth'], function() {
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('home', 'AccountController@index');
-    Route::get('numbers', 'NumbersController@index');
+    Route::resource('numbers', 'NumbersController');
     Route::get('friends', 'FriendsController@index');
     Route::get('recordings', 'RecordingsController@index');
 });

@@ -4,6 +4,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
+                <a href="{{ route('numbers.create') }}" class="pull-right btn btn-primary">Add New Phone Number</a>
                 <h2>Numbers</h2>
                 <table class="table">
                     @forelse ($numbers as $i => $number)
