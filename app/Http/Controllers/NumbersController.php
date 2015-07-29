@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Commands\VerifyPhoneNumberOwnership;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\PhoneNumber;
@@ -43,9 +44,11 @@ class NumbersController extends Controller
             'number' => 'required|digits:10|integer'
         ]);
 
-        Auth::user()->phoneNumbers()->create([
+        $number = Auth::user()->phoneNumbers()->create([
             'number' => $request->get('number'),
         ]);
+
+        $this->dispatch(new VerifyPhoneNumberOwnership($number));
 
         return redirect()->route('numbers.index');
     }
