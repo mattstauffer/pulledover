@@ -19,7 +19,7 @@ Route::group(['namespace' => 'Auth'], function() {
 Route::group(['middleware' => 'auth'], function() {
     Route::get('home', 'AccountController@index');
     Route::resource('numbers', 'NumbersController');
-    Route::get('friends', 'FriendsController@index');
+    Route::resource('friends', 'FriendsController');
     Route::get('recordings', 'RecordingsController@index');
 });
 

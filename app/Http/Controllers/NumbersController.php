@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Commands\VerifyPhoneNumberOwnership;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use App\Jobs\VerifyPhoneNumberOwnership;
 use App\PhoneNumber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
