@@ -11,13 +11,13 @@
 
         <style>
             html { font-size: 12px; }
-            .logo { clear: both; width: auto; display: block; margin-top: 8rem;}
+            .logo { clear: both; width: auto; display: block; margin-top: 8rem; }
             @media only screen and (min-width: 600px) {
                 html { font-size: 16px; }
-                .logo { clear: none; font-size: 3rem; margin-top: 2rem;}
+                .logo { clear: none; font-size: 5rem; margin-top: 3rem; }
             }
             p, li { font-size: 1.375rem; }
-            .the-goal, .call-now { font-size: 1.75rem;}
+            .the-goal, .call-now { font-size: 1.75rem; }
         </style>
 
         <title>Pulled Over</title>
@@ -34,12 +34,16 @@
 
             <div class="row col-md-8 col-md-push-2">
                 <p class="well the-goal"><strong>The goal</strong>: To provide a free app that is simple to set up and allows you to turn it on when you get pulled over. It will notify your friends or family, start recording audio, and hopefully also capture geographic coordinates.</p>
+
+                <br>
+                <p class="text-center call-now">Call now to try it out:<br><a href="tel:+18443116837">1-844-311-OVER</a><br>(<a href="tel:+18443116837">1-844-311-6837</a>)</p>
+                <br><hr><br>
+
                 <p><strong>The reason</strong>: I've talked to a lot of people very close to me, especially women of color, who are legitimately terrified of what might happen if they get pulled over by a cop in the U.S. (and no, not all cops are bad, etc. etc., but this is still a completely legitimate fear). While this tool can't alleviate that terror, I hope it can at least be a first step towards helping.</p>
                 <p><strong>How it works right now</strong>: Right now, it's just a phone number. You can call it, it'll record 15 seconds of your audio and then hang up, and it'll text you a link of the audio afterward. Soon, you'll be able to use this same phone number, paired with a user account on this site, to actually functionally record any time you're pulled over.</p>
                 <p><strong>How it will eventually work</strong>: That's still up on the air, but my dream: A mobile app with a big red button. Press the button, it texts your friends with your location. Then it records everything until you stop it (with a passcode). After it's disabled, it'll text you and your friends a link to the recording.</p>
-                <br>
-                <p class="text-center call-now">Call now to try it out:<br><a href="tel:+18443116837">1-844-311-OVER</a><br>(<a href="tel:+18443116837">1-844-311-6837</a>)</p>
-                <hr><br>
+
+
                 <p><strong>Questions:</strong></p>
                 <ul>
                     <li><strong>How can I help?</strong> If you're a coder, make some <a href="http://github.com/mattstauffer/pulledover">pull requests</a> (or if you're a mobile developer, message me at <a href="http://twitter.com/stauffermatt">@stauffermatt</a>). If you have money and want to support this, message me at <a href="http://twitter.com/stauffermatt">@stauffermatt</a></li>

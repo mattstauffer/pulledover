@@ -5999,4 +5999,20 @@ button.close {
     margin-top: -1rem;
     width: 16rem; } }
 
+.intro {
+  font-size: 1.5rem;
+  margin-bottom: 1em;
+  max-width: 40em; }
+
+.number {
+  margin-bottom: 1em; }
+  .number--verified {
+    color: green; }
+  .number--unverified {
+    color: red; }
+  .number__label {
+    color: #777;
+    font-size: 0.5em;
+    text-transform: uppercase; }
+
 /*# sourceMappingURL=app.css.map */

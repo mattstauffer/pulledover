@@ -26,6 +26,8 @@ class VerifyPhoneNumberOwnership extends Command implements SelfHandling, Should
      */
     public function handle()
     {
-        //
+        // $slug = generate string()
+        // Insert generator entry for validation($slug)
+        // $verifier->verifyOwnNumber($number, $slug);
     }
 }

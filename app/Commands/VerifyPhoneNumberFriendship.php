@@ -26,6 +26,8 @@ class VerifyPhoneNumberFriendship extends Command implements SelfHandling, Shoul
      */
     public function handle()
     {
-        //
+        // $slug = generate string()
+        // Insert generator entry for validation($slug)
+        // $verifier->verifyFriendsNumber($number, $slug, $this users name);
     }
 }
