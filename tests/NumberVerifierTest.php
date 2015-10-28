@@ -1,17 +1,17 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
+use App\Phone\NumberVerifier;
+use App\Phone\TwilioClient;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Mockery as M;
 
 class NumberVerifierTest extends TestCase
 {
     public function test_it_verifies_users_own_number()
     {
-        $this->markTestIncomplete('TODO');
-
-        // @todo: Make a Twilio wrapper so we're not mocking something we don't own?
-        $twilio = M::mock('Services_Twilio');
+        $twilio = M::mock(TwilioClient::class);
         $verifier = new NumberVerifier($twilio);
 
         $phoneNumber = '7346875309';
@@ -19,6 +19,10 @@ class NumberVerifierTest extends TestCase
 
         $verifier->verifyOwnNumber($phoneNumber, $key);
 
-        $twilio->shouldReceive('textOrSomething', ['idunnoletsmake this actually work plz']);
+        $twilio->shouldReceive('text')->with(
+            env('TWILIO_FROM_NUMBER'),
+            $phoneNumber,
+            $message
+        );
     }
 }
