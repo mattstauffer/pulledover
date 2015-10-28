@@ -15,7 +15,7 @@ class NumberVerifier
     {
         return $this->text(
             $number,
-            'If you requested this validation from Pulled Over, please visit ' . site_url(route('phones.verify', ['key' => $key]));
+            'If you requested this validation from Pulled Over, please visit ' . site_url(route('phones.verify', ['key' => $key]))
         );
     }
 
@@ -23,12 +23,12 @@ class NumberVerifier
     {
         return $this->text(
             $number,
-            'Your friend ' + $name + ' wants to add you as a friend on Pulled Over. If you want that too, please visit ' . site_url(route('friends.verify', ['key' => $key]));
+            'Your friend ' + $name + ' wants to add you as a friend on Pulled Over. If you want that too, please visit ' . site_url(route('friends.verify', ['key' => $key]))
         );
     }
 
     private function text($number, $message)
     {
-        dd('twilio dump this message');
+        dd('twilio send this message');
     }
 }
