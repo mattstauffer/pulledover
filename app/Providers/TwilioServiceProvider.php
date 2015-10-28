@@ -9,11 +9,11 @@ class TwilioServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $sid = env('TWILIO_ACCOUNT_SID');
-        $token = env('TWILIO_ACCESS_TOKEN');
-
-        $this->app->bind('Services_Twilio', function () use($sid, $token) {
-            return new Services_Twilio($sid, $token);
+        $this->app->bind('Services_Twilio', function () {
+            return new Services_Twilio(
+                env('TWILIO_ACCOUNT_SID'),
+                env('TWILIO_ACCESS_TOKEN')
+            );
         });
     }
 }
