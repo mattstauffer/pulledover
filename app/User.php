@@ -2,11 +2,14 @@
 
 namespace App;
 
+use App\Friend;
+use App\PhoneNumber;
+use App\Recording;
 use Illuminate\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Model;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
@@ -20,16 +23,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function phoneNumbers()
     {
-        return $this->hasMany(\App\PhoneNumber::class);
+        return $this->hasMany(PhoneNumber::class);
     }
 
     public function friends()
     {
-        return $this->hasMany(\App\Friend::class);
+        return $this->hasMany(Friend::class);
     }
 
     public function recordings()
     {
-        return $this->hasMany(\App\Recording::class);
+        return $this->hasMany(Recording::class);
     }
 }
