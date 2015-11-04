@@ -16,12 +16,7 @@ class TwilioClientTest extends TestCase
     {
         parent::setUp();
 
-        $this->client = new TwilioClient(
-            new Services_Twilio(
-                env('TWILIO_ACCOUNT_SID'),
-                env('TWILIO_ACCESS_TOKEN')
-            )
-        );
+        $this->client = app(TwilioClient::class);
     }
 
     public function test_it_sends_text_messages()

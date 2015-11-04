@@ -12,10 +12,12 @@ use Services_Twilio_RestException;
 
 class TwilioClient
 {
+    private $fromNumber;
     private $twilio;
 
-    public function __construct(Services_Twilio $twilio)
+    public function __construct($fromNumber, Services_Twilio $twilio)
     {
+        $this->fromNumber = $fromNumber;
         $this->twilio = $twilio;
     }
 
@@ -23,7 +25,7 @@ class TwilioClient
     {
         try {
             return $this->twilio->account->messages->sendMessage(
-                env('TWILIO_FROM_NUMBER'),
+                $this->fromNumber,
                 $number,
                 $message
             );
