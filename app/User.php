@@ -35,4 +35,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $this->hasMany(Recording::class);
     }
+
+    public static function findByPhoneNumber($number)
+    {
+        return PhoneNumber::where('number', $number)->firstOrFail()->user;
+    }
 }

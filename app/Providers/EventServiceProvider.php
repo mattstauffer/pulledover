@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\CallRecordingWasCompleted;
+use App\Events\CallWasReceived;
+use App\Listeners\MessageOwnerWithRecording;
+use App\Listeners\NotifyFriendsCallWasReceived;
+use App\Listeners\NotifyFriendsRecordingWasReceived;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -13,11 +18,12 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\CallWasReceived' => [
-            'App\Listeners\NotifyFriendsCallWasReceived',
+        CallWasReceived::class => [
+            NotifyFriendsCallWasReceived::class,
         ],
-        'App\Events\CallRecordingWasCompleted' => [
-            'App\Listeners\NotifyFriendsRecordingWasReceived',
+        CallRecordingWasCompleted::class => [
+            NotifyFriendsRecordingWasReceived::class,
+            MessageOwnerWithRecording::class,
         ],
     ];
 

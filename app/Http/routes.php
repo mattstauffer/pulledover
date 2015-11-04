@@ -4,7 +4,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['namespace' => 'Auth'], function() {
+Route::group(['namespace' => 'Auth'], function () {
     Route::get('register', ['as' => 'auth.register', 'uses' => 'AuthController@getRegister']);
     Route::post('register', ['uses' => 'AuthController@postRegister']);
     Route::get('login', ['as' => 'auth.login', 'uses' => 'AuthController@getLogin']);
@@ -16,7 +16,7 @@ Route::group(['namespace' => 'Auth'], function() {
     Route::post('password/reset', ['uses' => 'PasswordController@postReset']);
 });
 
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => 'auth'], function () {
     Route::get('home', 'AccountController@index');
     Route::resource('numbers', 'NumbersController');
     Route::resource('friends', 'FriendsController');
@@ -25,3 +25,6 @@ Route::group(['middleware' => 'auth'], function() {
 
 Route::post('call', 'TwilioController@callHook');
 Route::post('after-call', 'TwilioController@afterCallHook');
+
+Route::get('verify/own/{hash}', ['as' => 'phones.verify', 'VerificationController@own']);
+Route::get('verify/friend/{hash}', ['as' => 'friends.verify', 'VerificationController@friend']);

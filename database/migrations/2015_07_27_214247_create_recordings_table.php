@@ -14,8 +14,14 @@ class CreateRecordingsTable extends Migration
     {
         Schema::create('recordings', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('URL');
-            $table->integer('user_id')->references('id')->on('users');
+            $table->string('from');
+            $table->string('city');
+            $table->string('state');
+            $table->string('url');
+            $table->string('recording_sid');
+            $table->integer('duration');
+            $table->text('json');
+            $table->integer('user_id')->unsigned()->references('id')->on('users');
             $table->timestamps();
         });
     }
