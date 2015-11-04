@@ -26,8 +26,6 @@
         <env name="QUEUE_DRIVER" value="sync"/>
         <env name="DB_DATABASE" value=":memory:"/>
         <env name="DB_CONNECTION" value="sqlite"/>
-        <env name="TWILIO_ACCOUNT_SID" value="fillme"/>
-        <env name="TWILIO_ACCESS_TOKEN" value="fillme"/>
         <env name="TWILIO_FROM_NUMBER" value="+15005550006"/>
     </php>
 </phpunit>
