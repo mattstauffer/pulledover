@@ -4,40 +4,76 @@ use App\Phone\TwilioClient;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Mockery as M;
 
+/**
+ * @group needsInternet
+ */
 class TwilioClientTest extends TestCase
 {
-    public function test_it_sends_text_messages()
+    private $client;
+
+    public function setUp()
     {
-        $this->markTestIncomplete('I do not know how to fix this.');
+        parent::setUp();
 
-        $twilioApi = M::mock('Services_Twilio');
-        $client = new TwilioClient($twilioApi);
-
-        $phoneNumber = '7346875309';
-        $message = 'This is a text message.';
-
-        /**
-         * $message = $client->account->messages->sendMessage(
-         *  '9991231234', // From a valid Twilio number
-         *  '8881231234', // Text this number
-         *  "Hello monkey!"
-         * );
-         */
-        $twilioApi
-            ->shouldReceive('account->messages->sendMessage')
-            ->with([
-                env('TWILIO_FROM_NUMBER'),
-                $phoneNumber,
-                $message
-            ]);
-
-        $client->text($phoneNumber, $message);
+        $this->client = new TwilioClient(
+            new Services_Twilio(
+                env('TWILIO_ACCOUNT_SID'),
+                env('TWILIO_ACCESS_TOKEN')
+            )
+        );
     }
 
-    public function tearDown()
+    public function test_it_sends_text_messages()
     {
-        Mockery::close();
+        $response = $this->client->text(
+            '+17346875309',
+            'This is a text message.'
+        );
+        $this->assertEquals('queued', $response->status);
+    }
+
+    /**
+     * @expectedException App\Phone\Exceptions\InternationalPhoneNumberException
+     */
+    public function test_it_handles_international_text_messages()
+    {
+        $response = $this->client->text(
+            '+15005550003',
+            'This is a text message.'
+        );
+    }
+
+    /**
+     * @expectedException App\Phone\Exceptions\NonMobilePhoneNumberException
+     */
+    public function test_it_handles_non_mobile_text_messages()
+    {
+        $response = $this->client->text(
+            '+15005550009',
+            'This is a text message.'
+        );
+    }
+
+    /**
+     * @expectedException App\Phone\Exceptions\InvalidPhoneNumberException
+     */
+    public function test_it_handles_invalid_text_messages()
+    {
+        $response = $this->client->text(
+            '+15005550001',
+            'This is a text message.'
+        );
+    }
+
+    /**
+     * @expectedException App\Phone\Exceptions\BlacklistedPhoneNumberException
+     */
+    public function test_it_handles_blacklisted_text_messages()
+    {
+        $response = $this->client->text(
+            '+15005550004',
+            'This is a text message.'
+        );
     }
 }

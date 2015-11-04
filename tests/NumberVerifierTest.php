@@ -11,18 +11,19 @@ class NumberVerifierTest extends TestCase
 {
     public function test_it_verifies_users_own_number()
     {
-        $twilio = M::mock(TwilioClient::class);
-        $verifier = new NumberVerifier($twilio);
-
         $phoneNumber = '7346875309';
         $key = '12531234hio123hipgqwerqwe';
 
-        $verifier->verifyOwnNumber($phoneNumber, $key);
+        $twilio = M::mock(TwilioClient::class);
 
-        $twilio->shouldReceive('text')->with(
-            env('TWILIO_FROM_NUMBER'),
+        // @todo: Is it possible to test the message too?
+        $twilio->shouldReceive('text')->once()/*->with(
             $phoneNumber,
-            $message
-        );
+            $message // @todo: How do we build this message without duplicating the code?
+        )*/;
+
+        $verifier = new NumberVerifier($twilio);
+
+        $verifier->verifyOwnNumber($phoneNumber, $key);
     }
 }
