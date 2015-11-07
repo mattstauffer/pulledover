@@ -19,7 +19,7 @@ class NumberVerifierTest extends TestCase
         // @todo: Is it possible to test the message too?
         $twilio->shouldReceive('text')->once()/*->with(
             $phoneNumber,
-            $message // @todo: How do we build this message without duplicating the code?
+            'How do I test this without manually copying the text message here?'
         )*/;
 
         $verifier = new NumberVerifier($twilio);
