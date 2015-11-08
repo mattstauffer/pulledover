@@ -26,5 +26,5 @@ Route::group(['middleware' => 'auth'], function () {
 Route::post('call', 'TwilioController@callHook');
 Route::post('after-call', 'TwilioController@afterCallHook');
 
-Route::get('verify/own/{hash}', ['as' => 'phones.verify', 'VerificationController@own']);
-Route::get('verify/friend/{hash}', ['as' => 'friends.verify', 'VerificationController@friend']);
+Route::get('verify/own/{hash}', ['as' => 'phones.verify', 'uses' => 'VerificationController@own']);
+Route::get('verify/friend/{hash}', ['as' => 'friends.verify', 'uses' => 'VerificationController@friend']);
