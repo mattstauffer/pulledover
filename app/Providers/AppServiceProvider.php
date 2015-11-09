@@ -17,16 +17,17 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Validator::extend('globally_unique_number', function($attribute, $value, $parameters, $validator) {
-            if (PhoneNumber::where(['number' => $value])->count() > 0) {
-                Log::info(sprintf(
-                    'User %s tried to add a phone number that already is in use by another user: %s',
-                    Auth::user()->id,
-                    $value
-                ));
-                return false;
+            if (PhoneNumber::where(['number' => $value])->count() === 0) {
+                return true;
             }
 
-            return true;
+            Log::info(sprintf(
+                'User %s tried to add a phone number that already is in use by another user: %s',
+                Auth::user()->id,
+                $value
+            ));
+
+            return false;
         });
 
         Validator::extend('unique_friend', function($attribute, $value, $parameters, $validator) {
