@@ -61,7 +61,7 @@ class NumberVerifierTest extends TestCase
         $phoneNumber = $phoneNumber->fresh();
         $this->assertFalse($phoneNumber->is_verified);
 
-        $this->visit(route('phones.verify', ['key' => $key]));
+        $this->visit($verifier->ownNumberVerificationUrl($key));
 
         $phoneNumber = $phoneNumber->fresh();
         $this->assertTrue($phoneNumber->is_verified);

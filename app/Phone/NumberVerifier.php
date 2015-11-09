@@ -15,6 +15,19 @@ class NumberVerifier
         $this->twilio = $twilio;
     }
 
+    public function ownNumberVerificationUrl($key)
+    {
+        return url(route('phones.verify', ['key' => $key]));
+    }
+
+    private function ownNumberVerificationMessage($key)
+    {
+        return sprintf(
+            'If you requested this validation from Pulled Over, please visit %s',
+            $this->ownNumberVerificationUrl($key)
+        );
+    }
+
     public function verifyOwnNumber(PhoneNumber $number, $key)
     {
         $number->verification_hash = $key;
@@ -22,11 +35,22 @@ class NumberVerifier
 
         return $this->twilio->text(
             $number->number,
-            'If you requested this validation from Pulled Over, please visit ' . url(route('phones.verify', ['key' => $key]))
+            $this->ownNumberVerificationMessage($key)
         );
     }
 
-    // @todo: Write methods to handle incoming verificaiton
+    public function friendsNumberVerificationUrl($key)
+    {
+        return url(route('friends.verify', ['key' => $key]));
+    }
+
+    private function friendsNumberVerificationMessage($key, $name)
+    {
+        return sprintf(
+            'Your friend %s wants to add you as a friend on Pulled Over. If you want that too, please visit %s',
+            $this->friendsNumberVerificationUrl($key)
+        );
+    }
 
     public function verifyFriendsNumber(Friend $number, $key, $name)
     {
@@ -35,7 +59,9 @@ class NumberVerifier
 
         return $this->twilio->text(
             $number->number,
-            'Your friend ' + $name + ' wants to add you as a friend on Pulled Over. If you want that too, please visit ' . url(route('friends.verify', ['key' => $key]))
+            $this->friendsNumberVerificationMessage($key, $name)
         );
     }
+
+    // @todo: Write methods to handle incoming verificaiton
 }
