@@ -10,4 +10,14 @@ class Friend extends Model
         'name',
         'number'
     ];
+
+    protected $casts = [
+        'is_verified' => 'boolean'
+    ];
+
+    public function markVerified()
+    {
+        $this->is_verified = true;
+        $this->save();
+    }
 }

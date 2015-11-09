@@ -18,6 +18,7 @@ class CreateFriendsTable extends Migration
             $table->string('number');
             $table->boolean('is_verified')->default(0);
             $table->integer('user_id')->references('id')->on('users');
+            $table->string('verification_hash')->nullable();
             $table->timestamps();
         });
     }

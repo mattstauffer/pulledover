@@ -1,5 +1,6 @@
 <?php
 
+use App\Friend;
 use App\PhoneNumber;
 use App\Phone\NumberVerifier;
 use App\Phone\TwilioClient;
@@ -36,7 +37,7 @@ class NumberVerifierTest extends TestCase
         $verifier->verifyOwnNumber($phoneNumber, $key);
     }
 
-    public function test_it_marks_number_verified_after_url_visited()
+    public function test_it_marks_users_own_number_verified_after_url_visited()
     {
         $user = factory(User::class)->create();
         $phoneNumber = factory(PhoneNumber::class)->make();
@@ -65,5 +66,59 @@ class NumberVerifierTest extends TestCase
 
         $phoneNumber = $phoneNumber->fresh();
         $this->assertTrue($phoneNumber->is_verified);
+    }
+
+    public function test_it_verifies_friends_number()
+    {
+        $user = factory(User::class)->create();
+        $friend = factory(Friend::class)->make();
+        $user->friends()->save($friend);
+
+        $friend = $friend->fresh();
+
+        $key = '12531234hio123hipgqwerqwe';
+
+        $twilio = M::mock(TwilioClient::class);
+
+        // @todo: Is it possible to test the message too?
+        $twilio->shouldReceive('text')->once()/*->with(
+            $friend,
+            'How do I test this without manually copying the text message here?'
+        )*/;
+
+        $verifier = new NumberVerifier($twilio);
+
+        $verifier->verifyFriendsNumber($friend, $key);
+    }
+
+    public function test_it_marks_friends_number_verified_after_url_visited()
+    {
+        $user = factory(User::class)->create();
+        $friend = factory(Friend::class)->make();
+        $user->friends()->save($friend);
+
+        $friend = $friend->fresh();
+
+        $key = '12531234hio123hipgqwerqwe';
+
+        $twilio = M::mock(TwilioClient::class);
+
+        // @todo: Is it possible to test the message too?
+        $twilio->shouldReceive('text')->once()/*->with(
+            $friend,
+            'How do I test this without manually copying the text message here?'
+        )*/;
+
+        $verifier = new NumberVerifier($twilio);
+
+        $verifier->verifyFriendsNumber($friend, $key);
+
+        $friend = $friend->fresh();
+        $this->assertFalse($friend->is_verified);
+
+        $this->visit($verifier->friendsNumberVerificationUrl($key));
+
+        $friend = $friend->fresh();
+        $this->assertTrue($friend->is_verified);
     }
 }

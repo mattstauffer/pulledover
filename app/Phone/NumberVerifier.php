@@ -48,18 +48,19 @@ class NumberVerifier
     {
         return sprintf(
             'Your friend %s wants to add you as a friend on Pulled Over. If you want that too, please visit %s',
+            $name,
             $this->friendsNumberVerificationUrl($key)
         );
     }
 
-    public function verifyFriendsNumber(Friend $number, $key, $name)
+    public function verifyFriendsNumber(Friend $friend, $key)
     {
-        $number->verification_hash = $key;
-        $number->save();
+        $friend->verification_hash = $key;
+        $friend->save();
 
         return $this->twilio->text(
-            $number->number,
-            $this->friendsNumberVerificationMessage($key, $name)
+            $friend->number,
+            $this->friendsNumberVerificationMessage($key, $friend->name)
         );
     }
 

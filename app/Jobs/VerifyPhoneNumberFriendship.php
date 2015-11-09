@@ -3,23 +3,27 @@
 namespace App\Jobs;
 
 use App\Jobs\Job;
+use App\Phone\NumberVerifier;
 use Illuminate\Contracts\Bus\SelfHandling;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class VerifyPhoneNumberFriendship extends Job implements SelfHandling
 {
     use InteractsWithQueue, SerializesModels;
 
-    private $phoneNumber;
+    private $friend;
 
-    public function __construct($phoneNumber)
+    public function __construct($friend)
     {
-        $this->phoneNumber = $phoneNumber;
+        $this->friend = $friend;
     }
 
-    public function handle()
+    public function handle(NumberVerifier $verifier)
     {
-        // $slug = generate string()
-        // Insert generator entry for validation($slug)
-        // $verifier->verifyFriendsNumber($number, $slug, $this users name);
+        $verifier->verifyFriendsNumber(
+            $this->friend,
+            str_random(16)
+        );
     }
 }

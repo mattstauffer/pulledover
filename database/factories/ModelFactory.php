@@ -26,3 +26,11 @@ $factory->define(App\PhoneNumber::class, function (Faker\Generator $faker) {
         'is_verified' => false
     ];
 });
+
+$factory->define(App\Friend::class, function (Faker\Generator $faker) {
+    return [
+        'number' => $faker->phoneNumber,
+        'is_verified' => false,
+        'name' => $faker->name
+    ];
+});

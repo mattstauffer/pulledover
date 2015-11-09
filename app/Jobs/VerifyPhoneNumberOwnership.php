@@ -23,7 +23,7 @@ class VerifyPhoneNumberOwnership extends Job implements SelfHandling
     {
         $verifier->verifyOwnNumber(
             $this->phoneNumber,
-            str_random(32)
+            str_random(16)
         );
     }
 }

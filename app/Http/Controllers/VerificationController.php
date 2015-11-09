@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Friend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\PhoneNumber;
@@ -16,5 +17,18 @@ class VerificationController extends Controller
         ])->firstOrFail();
 
         $phoneNumber->markVerified();
+
+        return "Verified!";
+    }
+
+    public function friend($hash)
+    {
+        $friend = Friend::where([
+            'verification_hash' => $hash
+        ])->firstOrFail();
+
+        $friend->markVerified();
+
+        return "Verified!";
     }
 }
