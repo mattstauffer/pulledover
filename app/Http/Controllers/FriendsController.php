@@ -24,7 +24,7 @@ class FriendsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'number' => 'required|digits:10|integer'
+            'number' => 'required|digits:10|integer|unique_friend'
         ]);
 
         $number = Auth::user()->friends()->create([
@@ -35,31 +35,5 @@ class FriendsController extends Controller
         $this->dispatch(new VerifyPhoneNumberFriendship($number));
 
         return redirect()->route('friends.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }

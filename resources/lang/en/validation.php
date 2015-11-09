@@ -74,6 +74,8 @@ return [
     'timezone'             => 'The :attribute must be a valid zone.',
     'unique'               => 'The :attribute has already been taken.',
     'url'                  => 'The :attribute format is invalid.',
+    'unique_number'        => 'You have already added that phone number.',
+    'unique_friend'        => 'You have already added a friend with that phone number.',
 
     /*
     |--------------------------------------------------------------------------

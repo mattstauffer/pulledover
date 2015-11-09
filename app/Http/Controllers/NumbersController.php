@@ -25,7 +25,7 @@ class NumbersController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'number' => 'required|digits:10|integer'
+            'number' => 'required|digits:10|integer|unique_number'
         ]);
 
         $number = Auth::user()->phoneNumbers()->create([
@@ -35,25 +35,5 @@ class NumbersController extends Controller
         $this->dispatch(new VerifyPhoneNumberOwnership($number));
 
         return redirect()->route('numbers.index');
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }
