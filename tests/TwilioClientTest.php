@@ -22,7 +22,7 @@ class TwilioClientTest extends TestCase
     public function test_it_sends_text_messages()
     {
         $response = $this->client->text(
-            '+17346875309',
+            '7346875309',
             'This is a text message.'
         );
         $this->assertEquals('queued', $response->status);
@@ -34,7 +34,7 @@ class TwilioClientTest extends TestCase
     public function test_it_handles_international_text_messages()
     {
         $response = $this->client->text(
-            '+15005550003',
+            '5005550003',
             'This is a text message.'
         );
     }
@@ -45,7 +45,7 @@ class TwilioClientTest extends TestCase
     public function test_it_handles_non_mobile_text_messages()
     {
         $response = $this->client->text(
-            '+15005550009',
+            '5005550009',
             'This is a text message.'
         );
     }
@@ -56,7 +56,7 @@ class TwilioClientTest extends TestCase
     public function test_it_handles_invalid_text_messages()
     {
         $response = $this->client->text(
-            '+15005550001',
+            '5005550001',
             'This is a text message.'
         );
     }
@@ -67,7 +67,7 @@ class TwilioClientTest extends TestCase
     public function test_it_handles_blacklisted_text_messages()
     {
         $response = $this->client->text(
-            '+15005550004',
+            '5005550004',
             'This is a text message.'
         );
     }
