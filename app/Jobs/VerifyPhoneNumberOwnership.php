@@ -3,7 +3,10 @@
 namespace App\Jobs;
 
 use App\Jobs\Job;
+use App\Phone\NumberVerifier;
 use Illuminate\Contracts\Bus\SelfHandling;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class VerifyPhoneNumberOwnership extends Job implements SelfHandling
 {
@@ -16,10 +19,11 @@ class VerifyPhoneNumberOwnership extends Job implements SelfHandling
         $this->phoneNumber = $phoneNumber;
     }
 
-    public function handle()
+    public function handle(NumberVerifier $verifier)
     {
-        // $slug = generate string()
-        // Insert generator entry for validation($slug)
-        // $verifier->verifyOwnNumber($number, $slug, $this users name);
+        $verifier->verifyOwnNumber(
+            $this->phoneNumber,
+            str_random(32)
+        );
     }
 }

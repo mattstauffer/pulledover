@@ -21,12 +21,17 @@ class TwilioClient
         $this->twilio = $twilio;
     }
 
+    public function formatNumberForTwilio($number)
+    {
+        return '+1' . $number;
+    }
+
     public function text($number, $message)
     {
         try {
             return $this->twilio->account->messages->sendMessage(
                 $this->fromNumber,
-                $number,
+                $this->formatNumberForTwilio($number),
                 $message
             );
         } catch (Services_Twilio_RestException $e) {
