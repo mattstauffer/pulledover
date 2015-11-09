@@ -6,7 +6,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <a href="{{ route('friends.create') }}" class="pull-right btn btn-primary">Add New Friend</a>
                 <h2>Friends</h2>
-                <p class="intro">@todo</p>
+                <p class="intro">Your friends are the ones who will get notified if you get pulled over.</p>
 
                 <h3>My friends</h3>
                 @if ($friends->count() == 0)

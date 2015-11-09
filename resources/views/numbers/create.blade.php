@@ -6,7 +6,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <h2>Add Your Phone Number</h2>
                 {!! BootForm::open()->action(route('numbers.store')) !!}
-                    {!! BootForm::text('Number (xxxxxxxxxx, no dashes, with area code)', 'number') !!}
+                    {!! BootForm::text('Number (xxxxxxxxxx, no dashes, with area code)', 'number')->autofocus() !!}
                     {!! BootForm::submit('Add New Number') !!}
                 {!! BootForm::close() !!}
             </div>
