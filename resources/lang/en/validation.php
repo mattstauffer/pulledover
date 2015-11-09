@@ -76,6 +76,7 @@ return [
     'url'                  => 'The :attribute format is invalid.',
     'unique_number'        => 'You have already added that phone number.',
     'unique_friend'        => 'You have already added a friend with that phone number.',
+    'globally_unique_friend' => 'Something went wrong.', // We can't really tell them WHY.. :/
 
     /*
     |--------------------------------------------------------------------------

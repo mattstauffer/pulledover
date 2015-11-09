@@ -25,7 +25,7 @@ class NumbersController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'number' => 'required|digits:10|integer|unique_number'
+            'number' => 'required|digits:10|integer|unique_number|globally_unique_number'
         ]);
 
         $number = Auth::user()->phoneNumbers()->create([
