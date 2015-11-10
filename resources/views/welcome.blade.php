@@ -14,7 +14,8 @@
             .logo { clear: both; width: auto; display: block; margin-top: 8rem; }
             @media only screen and (min-width: 600px) {
                 html { font-size: 16px; }
-                .logo { clear: none; font-size: 5rem; margin-top: 3rem; }
+                .logo { clear: none; margin-top: 3rem; }
+                .logo img { max-width: 100%; }
             }
             p, li { font-size: 1.375rem; }
             .the-goal, .call-now { font-size: 1.75rem; }
@@ -29,7 +30,7 @@
                     <a class="btn btn-primary btn-lg" href="/register">Sign Up</a>
                     <a class="btn btn-default btn-lg" href="/login">Sign In</a>
                 </nav>
-                <h1 class="logo">Pulled Over</h1>
+                <h1 class="logo"><img src="pulledover-logo.png"></h1>
             </div>
 
             <div class="row col-md-8 col-md-push-2">
