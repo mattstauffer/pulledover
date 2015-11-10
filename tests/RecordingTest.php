@@ -120,7 +120,11 @@ class RecordingTest extends TestCase
         $this->assertEquals(1, $user->recordings->count());
         $recording = $user->recordings->first();
 
-        // $this->assertEquals($this->afterCallPost['Caller'], );
-        // @todo: Check its values against POST
+        $this->assertEquals($this->afterCallPost['Caller'], $recording->from);
+        $this->assertEquals($this->afterCallPost['CallerCity'], $recording->city);
+        $this->assertEquals($this->afterCallPost['CallerState'], $recording->state);
+        $this->assertEquals($this->afterCallPost['RecordingUrl'], $recording->url);
+        $this->assertEquals($this->afterCallPost['RecordingSid'], $recording->recording_sid);
+        $this->assertEquals($this->afterCallPost['RecordingDuration'], $recording->duration);
     }
 }
