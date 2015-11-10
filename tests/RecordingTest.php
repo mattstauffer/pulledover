@@ -37,7 +37,7 @@ class RecordingTest extends TestCase
         'ToCountry' => 'US',
         'CallerCity' => 'CITY',
         'ApiVersion' => '2010-04-01',
-        'Caller' => '+10987654321',
+        'Caller' => '+17345780309',
         'CalledCity' => '',
     ];
 
@@ -93,7 +93,21 @@ class RecordingTest extends TestCase
     public function test_call_is_twiml()
     {
         $this->post(route('hook.call'), $this->callPost);
+    }
 
+    public function test_call_succeeds()
+    {
+        $user = factory(User::class)->create();
+        $number = new PhoneNumber([
+            'number' => TwilioClient::formatNumberFromTwilio($this->callPost['Caller']),
+        ]);
+        $number->is_verified = true;
+        $user->phoneNumbers()->save($number);
+
+        $this->post(route('hook.call'), $this->callPost);
+        $this->checkTwiml();
+
+        $this->assertNotFalse(strpos($this->response->getContent(), 'Your audio is now being recorded'));
     }
 
     public function test_after_call_is_twiml()
