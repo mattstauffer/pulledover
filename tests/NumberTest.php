@@ -18,8 +18,8 @@ class NumberTest extends TestCase
 
         $number = '7345678309';
 
-        $this->post('/numbers', ['name' => 'Sally', 'number' => $number]);
-        $this->post('/numbers', ['name' => 'Schmally', 'number' => $number]);
+        $this->post(route('numbers.index'), ['name' => 'Sally', 'number' => $number]);
+        $this->post(route('numbers.index'), ['name' => 'Schmally', 'number' => $number]);
 
         $numbers = $user->phoneNumbers()->where(['number' => $number])->get();
 
