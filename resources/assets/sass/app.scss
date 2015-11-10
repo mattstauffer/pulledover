@@ -1,2 +1,36 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+.logo {
+    width: 11rem;
+}
+
+@media only screen and (min-width: 800px) {
+    .logo {
+        margin-top: -1rem;
+        width: 16rem;
+    }
+}
+
+.intro {
+    font-size: 1.5rem;
+    margin-bottom: 1em;
+    max-width: 40em;
+}
+
+.number {
+    margin-bottom: 1em;
+
+    &--verified {
+        color: green;
+    }
+
+    &--unverified {
+        color: red;
+    }
+
+    &__label {
+        color: #777;
+        font-size: 0.5em;
+        text-transform: uppercase;
+    }
+}

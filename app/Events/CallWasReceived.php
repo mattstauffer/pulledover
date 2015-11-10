@@ -7,10 +7,12 @@ use Illuminate\Support\Facades\Log;
 
 class CallWasReceived extends Event
 {
+    public $phoneNumber;
     public $post;
 
-    public function __construct(array $post)
+    public function __construct($phoneNumber, array $post)
     {
+        $this->phoneNumber = $phoneNumber;
         $this->post = $post;
     }
 }

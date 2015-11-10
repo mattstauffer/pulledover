@@ -19,3 +19,24 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\PhoneNumber::class, function (Faker\Generator $faker) {
+    return [
+        'number' => '734' . $faker->randomNumber(7),
+        'is_verified' => false
+    ];
+});
+
+$factory->defineAs(App\PhoneNumber::class, 'verified', function (Faker\Generator $faker) use ($factory) {
+    $phoneNumber = $factory->raw(App\PhoneNumber::class);
+
+    return array_merge($phoneNumber, ['is_verified' => true]);
+});
+
+$factory->define(App\Friend::class, function (Faker\Generator $faker) {
+    return [
+        'number' => '313' . $faker->randomNumber(7),
+        'is_verified' => false,
+        'name' => $faker->name
+    ];
+});
