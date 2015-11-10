@@ -54,7 +54,7 @@
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <div class="input-group-addon">+1</div>
-                                        <input type="text" class="form-control" name="number" value="{{ old('number', Input::get('number')) }}" aria-describedby="numberHelpBlock" maxlength="10">
+                                        <input type="text" class="form-control" name="number" value="{{ old('number', Input::get('number')) }}" aria-describedby="numberHelpBlock" maxlength="10" placeholder="5552221234">
                                     </div>
                                     <span id="numberHelpBlock" class="help-block">
                                         Start with the phone number you're most likely to make a phone call from. You can add other numbers later. <strong>U.S. only.</strong> No dashes, just the numbers.
