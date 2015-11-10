@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\PhoneNumber;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class VerificationController extends Controller
 {
@@ -18,6 +19,7 @@ class VerificationController extends Controller
 
         $phoneNumber->markVerified();
 
+        Log::info('Phone number verified: ' . print_r($phoneNumber, true));
         return "Verified!";
     }
 
@@ -29,6 +31,7 @@ class VerificationController extends Controller
 
         $friend->markVerified();
 
+        Log::info('Friend number verified: ' . print_r($phoneNumber, true));
         return "Verified!";
     }
 }
