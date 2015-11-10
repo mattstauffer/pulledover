@@ -27,6 +27,12 @@ $factory->define(App\PhoneNumber::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->defineAs(App\PhoneNumber::class, 'verified', function (Faker\Generator $faker) use ($factory) {
+    $phoneNumber = $factory->raw(App\PhoneNumber::class);
+
+    return array_merge($phoneNumber, ['is_verified' => true]);
+});
+
 $factory->define(App\Friend::class, function (Faker\Generator $faker) {
     return [
         'number' => '313' . $faker->randomNumber(7),

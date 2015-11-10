@@ -31,7 +31,7 @@ class VerificationController extends Controller
 
         $friend->markVerified();
 
-        Log::info('Friend number verified: ' . print_r($phoneNumber, true));
+        Log::info('Friend number verified: ' . print_r($friend, true));
         return "Verified!";
     }
 }

@@ -66,6 +66,7 @@ class TwilioController extends Controller
         return $response;
     }
 
+    // Move into the event, or drop the event
     private function notifyOwnerOfRecording($request)
     {
         $this->twilio->text(
@@ -80,6 +81,7 @@ class TwilioController extends Controller
         );
     }
 
+    // Move into the event, or drop the event
     private function notifyFriendsofRecording($request)
     {
         $user = PhoneNumber::findByTwilioNumber($request->get('From'))->user;
@@ -98,6 +100,7 @@ class TwilioController extends Controller
         });
     }
 
+    // Job?
     private function saveRecording($request)
     {
         $number = PhoneNumber::findByTwilioNumber($request->input('Caller'));

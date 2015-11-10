@@ -1,6 +1,7 @@
 <?php
 
 use App\Friend;
+use App\PhoneNumber;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -14,6 +15,8 @@ class FriendTest extends TestCase
     public function test_user_cannot_add_the_same_friend_twice()
     {
         $user = factory(User::class)->create();
+        $phoneNumber = factory(PhoneNumber::class, 'verified')->make();
+        $user->phoneNumbers()->save($phoneNumber);
         $this->be($user);
 
         $number = '7345678309';
