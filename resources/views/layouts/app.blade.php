@@ -50,16 +50,18 @@
     </div>
 </nav>
 
-@if (isset($messages) && count($messages) > 0)
+@if (session('messages'))
+<div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-10 col-md-offset-1">
             <p class="btn-lg bg-success">
-              @foreach ($messages as $message)
+              @foreach (session('messages') as $message)
                   {{ $message }}<br>
               @endforeach
             </p>
         </div>
     </div>
+</div>
 @endif
 
 @yield('content')
