@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
 
             Log::info(sprintf(
                 'User %s tried to add a phone number that already is in use by another user: %s',
-                Auth::user()->id,
+                Auth::user() ? Auth::user()->id : 'New user signing up',
                 $value
             ));
 

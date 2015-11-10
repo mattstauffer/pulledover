@@ -11,6 +11,7 @@ class AccountController extends Controller
 {
     public function index()
     {
-        return view('dashboard');
+        return redirect()->route('numbers.index');
+        // return view('dashboard');
     }
 }

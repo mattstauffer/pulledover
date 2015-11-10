@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-10 col-md-offset-1">
                 <a href="{{ route('friends.create') }}" class="pull-right btn btn-primary">Add New Friend</a>
                 <h2>Friends</h2>
                 <p class="intro">Your friends are the ones who will get notified if you get pulled over.</p>
