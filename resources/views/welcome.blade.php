@@ -36,16 +36,15 @@
             <div class="row col-md-8 col-md-push-2">
                 <p class="well the-goal"><strong>What does it do?</strong><br>Pulled Over is a phone number (<a href="tel:+18443116837">1-844-311-OVER</a>) provided for free to any registered users. Save the number on your phone, and call it on speakerphone next time you're being pulled over by the police and worried for your safety. Once you hang up, it will send a recording of everything that happened to you and your friends.</p>
 
-                <p class="well the-goal"><strong>What's the goal?</strong><br>To provide a free app that is simple to set up and allows you to turn it on when you get pulled over. It will notify your friends or family, start recording audio, and hopefully also capture geographic coordinates.</p>
+                <p class="well the-goal"><strong>What's the eventual goal?</strong><br>To provide a free app that is simple to set up and allows you to turn it on when you get pulled over. It will notify your friends or family, start recording audio, and hopefully also capture geographic coordinates.</p>
 
                 <p><strong>The reason</strong>: I've talked to a lot of people very close to me, especially women of color, who are legitimately terrified of what might happen if they get pulled over by a cop in the U.S. (and no, not all cops are bad, etc. etc., but this is still a completely legitimate fear). While this tool can't alleviate that terror, I hope it can at least be a first step towards helping.</p>
-                <p><strong>How it will eventually work</strong>: That's still up on the air, but my dream: A mobile app with a big red button. Press the button, it texts your friends with your location. Then it records everything until you stop it (with a passcode). After it's disabled, it'll text you and your friends a link to the recording.</p>
+                <p><strong>How it will eventually work</strong>: That's still up in the air, but my dream: A mobile app with a big red button. Press the button, it texts your friends with your location. Then it records everything until you stop it (with a passcode). After it's disabled, it'll text you and your friends a link to the recording.</p>
 
                 <p><strong>Questions:</strong></p>
                 <ul>
                     <li><strong>How can I help?</strong> If you're a coder, make some <a href="http://github.com/mattstauffer/pulledover">pull requests</a> (or if you're a mobile developer, message me at <a href="http://twitter.com/stauffermatt">@stauffermatt</a>). If you have money and want to support this, message me at <a href="http://twitter.com/stauffermatt">@stauffermatt</a></li>
                     <li><strong>How you can you afford this?</strong> Right now I'm just going to cover it. If people abuse it I may have to shut it down. If it gets legitimately popular I may seek sponsorship from like-minded people (not advertisers, but people who care about civil liberties).</li>
-                    <li><strong>When will the real app be ready?</strong> As soon as I can make time for it. I'll be adding to it incrementally every day as quickly as I can find free time. I don't plan to make money from this, though, so it can't take too much time from my day job.</li>
                 </ul>
                 <br><hr><br>
                 <p class="footer">Built by <a href="http://mattstauffer.co/">Matt Stauffer</a>, powered by <a href="http://twilio.com/">Twilio</a> and <a href="http://laravel.com/">Laravel</a>.<br>source on <a href="http://github.com/mattstauffer/pulledover">GitHub.com/mattstauffer/pulledover</a></p>
