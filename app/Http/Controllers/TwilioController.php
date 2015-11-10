@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\PhoneNumber;
 use App\Phone\TwilioClient;
+use App\Recording;
 use Exception;
 use Illuminate\Http\Request;
 use Services_Twilio_Twiml as TwimlGenerator;
@@ -31,7 +32,7 @@ class TwilioController extends Controller
 
         event(new CallWasReceived($phoneNumber, $request->all()));
 
-        print $response;
+        return $response;
     }
 
     private function promptToRegister()
@@ -40,7 +41,7 @@ class TwilioController extends Controller
         $response->say('This is not a registered number. Please do blah blah blah to register.');
         $response->hangup();
 
-        print $response;
+        return $response;
     }
 
     public function afterCallHook(Request $request, TwilioClient $twilio)
@@ -48,7 +49,7 @@ class TwilioController extends Controller
         // Grab recording and text it to someone
         // @todo: Text it to them and all their friends along with their pre-stored message?
         $twilio->text(
-            $request->get("From"),
+            TwilioClient::formatNumberFromTwilio($request->get("From")),
             sprintf(
                 "Number: %s\nFrom: %s %s\nURL: %s\n",
                 $request->get("From"),
@@ -66,7 +67,7 @@ class TwilioController extends Controller
 
         event(new CallRecordingWasCompleted($request->all()));
 
-        print $response;
+        return $response;
     }
 
     private function saveRecording($request)

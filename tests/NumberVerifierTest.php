@@ -5,6 +5,7 @@ use App\PhoneNumber;
 use App\Phone\NumberVerifier;
 use App\Phone\TwilioClient;
 use App\User;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -24,17 +25,21 @@ class NumberVerifierTest extends TestCase
 
         $key = '12531234hio123hipgqwerqwe';
 
-        $twilio = M::mock(TwilioClient::class);
+        $twilio = M::spy(TwilioClient::class);
+        $urlGenerator = app(UrlGenerator::class);
 
-        // @todo: Is it possible to test the message too?
-        $twilio->shouldReceive('text')->once()/*->with(
-            $phoneNumber,
-            'How do I test this without manually copying the text message here?'
-        )*/;
-
-        $verifier = new NumberVerifier($twilio);
+        $verifier = new NumberVerifier($twilio, $urlGenerator);
 
         $verifier->verifyOwnNumber($phoneNumber, $key);
+
+        $url = route('phones.verify', ['key' => $key]);
+
+        $twilio->shouldHaveReceived('text')->once()->with(
+            $phoneNumber->number,
+            M::on(function ($message) use ($url) {
+                return strpos($message, $url) !== false;
+            })
+        );
     }
 
     public function test_it_marks_users_own_number_verified_after_url_visited()
@@ -47,25 +52,29 @@ class NumberVerifierTest extends TestCase
 
         $key = '12531234hio123hipgqwerqwe';
 
-        $twilio = M::mock(TwilioClient::class);
+        $twilio = M::spy(TwilioClient::class);
 
-        // @todo: Is it possible to test the message too?
-        $twilio->shouldReceive('text')->once()/*->with(
-            $phoneNumber,
-            'How do I test this without manually copying the text message here?'
-        )*/;
+        $urlGenerator = app(UrlGenerator::class);
 
-        $verifier = new NumberVerifier($twilio);
+        $verifier = new NumberVerifier($twilio, $urlGenerator);
 
         $verifier->verifyOwnNumber($phoneNumber, $key);
 
         $phoneNumber = $phoneNumber->fresh();
         $this->assertFalse($phoneNumber->is_verified);
 
-        $this->visit($verifier->ownNumberVerificationUrl($key));
+        $url = route('phones.verify', ['key' => $key]);
+        $this->visit($url);
 
         $phoneNumber = $phoneNumber->fresh();
         $this->assertTrue($phoneNumber->is_verified);
+
+        $twilio->shouldHaveReceived('text')->once()->with(
+            $phoneNumber->number,
+            M::on(function ($message) use ($url) {
+                return strpos($message, $url) !== false;
+            })
+        );
     }
 
     public function test_it_verifies_friends_number()
@@ -78,17 +87,21 @@ class NumberVerifierTest extends TestCase
 
         $key = '12531234hio123hipgqwerqwe';
 
-        $twilio = M::mock(TwilioClient::class);
+        $twilio = M::spy(TwilioClient::class);
+        $urlGenerator = app(UrlGenerator::class);
 
-        // @todo: Is it possible to test the message too?
-        $twilio->shouldReceive('text')->once()/*->with(
-            $friend,
-            'How do I test this without manually copying the text message here?'
-        )*/;
-
-        $verifier = new NumberVerifier($twilio);
+        $verifier = new NumberVerifier($twilio, $urlGenerator);
 
         $verifier->verifyFriendsNumber($friend, $key);
+
+        $url = route('friends.verify', ['key' => $key]);
+
+        $twilio->shouldHaveReceived('text')->once()->with(
+            $friend->number,
+            M::on(function ($message) use ($url) {
+                return strpos($message, $url) !== false;
+            })
+        );
     }
 
     public function test_it_marks_friends_number_verified_after_url_visited()
@@ -101,24 +114,27 @@ class NumberVerifierTest extends TestCase
 
         $key = '12531234hio123hipgqwerqwe';
 
-        $twilio = M::mock(TwilioClient::class);
+        $twilio = M::spy(TwilioClient::class);
+        $urlGenerator = app(UrlGenerator::class);
 
-        // @todo: Is it possible to test the message too?
-        $twilio->shouldReceive('text')->once()/*->with(
-            $friend,
-            'How do I test this without manually copying the text message here?'
-        )*/;
-
-        $verifier = new NumberVerifier($twilio);
+        $verifier = new NumberVerifier($twilio, $urlGenerator);
 
         $verifier->verifyFriendsNumber($friend, $key);
 
         $friend = $friend->fresh();
         $this->assertFalse($friend->is_verified);
 
-        $this->visit($verifier->friendsNumberVerificationUrl($key));
+        $url = route('friends.verify', ['key' => $key]);
+        $this->visit($url);
 
         $friend = $friend->fresh();
         $this->assertTrue($friend->is_verified);
+
+        $twilio->shouldHaveReceived('text')->once()->with(
+            $friend->number,
+            M::on(function ($message) use ($url) {
+                return strpos($message, $url) !== false;
+            })
+        );
     }
 }

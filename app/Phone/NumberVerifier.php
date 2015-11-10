@@ -5,19 +5,22 @@ namespace App\Phone;
 use App\Friend;
 use App\PhoneNumber;
 use App\Phone\TwilioClient;
+use Illuminate\Contracts\Routing\UrlGenerator;
 
 class NumberVerifier
 {
     private $twilio;
+    private $urlGenerator;
 
-    public function __construct(TwilioClient $twilio)
+    public function __construct(TwilioClient $twilio, UrlGenerator $urlGenerator)
     {
         $this->twilio = $twilio;
+        $this->urlGenerator = $urlGenerator;
     }
 
-    public function ownNumberVerificationUrl($key)
+    private function ownNumberVerificationUrl($key)
     {
-        return url(route('phones.verify', ['key' => $key]));
+        return $this->urlGenerator->route('phones.verify', ['key' => $key]);
     }
 
     private function ownNumberVerificationMessage($key)
@@ -39,9 +42,9 @@ class NumberVerifier
         );
     }
 
-    public function friendsNumberVerificationUrl($key)
+    private function friendsNumberVerificationUrl($key)
     {
-        return url(route('friends.verify', ['key' => $key]));
+        return $this->urlGenerator->route('friends.verify', ['key' => $key]);
     }
 
     private function friendsNumberVerificationMessage($key, $name)

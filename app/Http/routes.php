@@ -23,8 +23,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('recordings', 'RecordingsController@index');
 });
 
-Route::post('call', 'TwilioController@callHook');
-Route::post('after-call', 'TwilioController@afterCallHook');
+Route::post('call', ['as' => 'hook.call', 'uses' => 'TwilioController@callHook']);
+Route::post('after-call', ['as' => 'hook.after-call', 'uses' => 'TwilioController@afterCallHook']);
 
 Route::get('verify/own/{hash}', ['as' => 'phones.verify', 'uses' => 'VerificationController@own']);
 Route::get('verify/friend/{hash}', ['as' => 'friends.verify', 'uses' => 'VerificationController@friend']);

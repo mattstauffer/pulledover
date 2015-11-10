@@ -28,4 +28,11 @@ class PhoneNumber extends Model
     {
         return self::where('number', $number)->firstOrFail();
     }
+
+    public static function findByTwilioNumber($number)
+    {
+        $number = str_replace('+1', '', $number);
+
+        return self::where('number', $number)->firstOrFail();
+    }
 }
