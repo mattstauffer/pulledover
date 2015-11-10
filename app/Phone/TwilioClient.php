@@ -21,7 +21,7 @@ class TwilioClient
         $this->twilio = $twilio;
     }
 
-    public function formatNumberForTwilio($number)
+    public static function formatNumberForTwilio($number)
     {
         return '+1' . $number;
     }

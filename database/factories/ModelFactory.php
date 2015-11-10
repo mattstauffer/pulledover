@@ -22,14 +22,14 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 $factory->define(App\PhoneNumber::class, function (Faker\Generator $faker) {
     return [
-        'number' => $faker->phoneNumber,
+        'number' => '734' . $faker->randomNumber(7),
         'is_verified' => false
     ];
 });
 
 $factory->define(App\Friend::class, function (Faker\Generator $faker) {
     return [
-        'number' => $faker->phoneNumber,
+        'number' => '313' . $faker->randomNumber(7),
         'is_verified' => false,
         'name' => $faker->name
     ];

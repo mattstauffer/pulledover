@@ -15,6 +15,13 @@ use Services_Twilio_Twiml as TwimlGenerator;
 
 class TwilioController extends Controller
 {
+    private $twilio;
+
+    public function __construct(TwilioClient $twilio)
+    {
+        $this->twilio = $twilio;
+    }
+
     public function callHook(Request $request)
     {
         try {
@@ -26,7 +33,7 @@ class TwilioController extends Controller
         $response = new TwimlGenerator;
         $response->say('Thank you for calling Pulled Over. Your audio is now being recorded.');
         $response->record([
-            'maxLength' => 15,
+            'maxLength' => 3600,
             'action' => '/after-call',
         ]);
 
@@ -44,11 +51,24 @@ class TwilioController extends Controller
         return $response;
     }
 
-    public function afterCallHook(Request $request, TwilioClient $twilio)
+    public function afterCallHook(Request $request)
     {
-        // Grab recording and text it to someone
-        // @todo: Text it to them and all their friends along with their pre-stored message?
-        $twilio->text(
+        $this->saveRecording($request);
+        $this->notifyOwnerOfRecording($request);
+        $this->notifyFriendsOfRecording($request);
+
+        $response = new TwimlGenerator;
+        $response->say('Sorry, but we can\'t record more than an hour.');
+        $response->hangup();
+
+        event(new CallRecordingWasCompleted($request->all()));
+
+        return $response;
+    }
+
+    private function notifyOwnerOfRecording($request)
+    {
+        $this->twilio->text(
             TwilioClient::formatNumberFromTwilio($request->get("From")),
             sprintf(
                 "Number: %s\nFrom: %s %s\nURL: %s\n",
@@ -58,16 +78,24 @@ class TwilioController extends Controller
                 $request->get("RecordingUrl")
             )
         );
+    }
 
-        $this->saveRecording($request);
+    private function notifyFriendsofRecording($request)
+    {
+        $user = PhoneNumber::findByTwilioNumber($request->get('From'))->user;
 
-        $response = new TwimlGenerator;
-        $response->say('Your fifteen seconds of fame are over. Goodbye!');
-        $response->hangup();
-
-        event(new CallRecordingWasCompleted($request->all()));
-
-        return $response;
+        $user->friends->each(function ($friend) use ($request) {
+            $this->twilio->text(
+                $friend->number,
+                sprintf(
+                    "Your friend has completed a PulledOver recording. From %s, City %s, State %s, Recording %s",
+                    $request->get("From"),
+                    $request->get("CallerCity"),
+                    $request->get("CallerState"),
+                    $request->get("RecordingUrl")
+                )
+            );
+        });
     }
 
     private function saveRecording($request)
@@ -77,7 +105,6 @@ class TwilioController extends Controller
 
         $recording = new Recording([
             'from' => $request->input('Caller'),
-            // @todo: Is caller city different from from city?
             'city' => $request->input('CallerCity'),
             'state' => $request->input('CallerState'),
             'url' => $request->input('RecordingUrl'),
