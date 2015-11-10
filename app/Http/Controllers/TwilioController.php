@@ -18,7 +18,7 @@ class TwilioController extends Controller
     public function callHook(Request $request)
     {
         try {
-            $phoneNumber = PhoneNumber::findByNumber($request->input("From"));
+            $phoneNumber = PhoneNumber::verified()->findByTwilioNumber($request->input("From"));
         } catch (Exception $e) {
             return $this->promptToRegister();
         }
@@ -72,8 +72,11 @@ class TwilioController extends Controller
 
     private function saveRecording($request)
     {
-        $recording = Recording::create([
-            'from' => $request->input('caller'),
+        $number = PhoneNumber::findByTwilioNumber($request->input('Caller'));
+        $user = $number->user;
+
+        $recording = new Recording([
+            'from' => $request->input('Caller'),
             // @todo: Is caller city different from from city?
             'city' => $request->input('CallerCity'),
             'state' => $request->input('CallerState'),
@@ -82,5 +85,7 @@ class TwilioController extends Controller
             'duration' => $request->input('RecordingDuration'),
             'json' => json_encode($request->all()),
         ]);
+
+        $user->recordings()->save($recording);
     }
 }
