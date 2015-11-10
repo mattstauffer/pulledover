@@ -1,0 +1,6 @@
+{
+    "ignore": [
+        "resources/views/*",
+        "public/*"
+    ]
+}

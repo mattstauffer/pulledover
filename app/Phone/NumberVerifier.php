@@ -55,7 +55,6 @@ class NumberVerifier
         return sprintf(
             'Your friend %s wants to add you as a friend on Pulled Over. If you want that too, please visit %s',
             $this->auth->user()->name,
-            // \Illuminate\Support\Facades\Auth::user()->name,
             $this->friendsNumberVerificationUrl($key)
         );
     }
@@ -70,6 +69,4 @@ class NumberVerifier
             $this->friendsNumberVerificationMessage($key)
         );
     }
-
-    // @todo: Write methods to handle incoming verificaiton
 }
