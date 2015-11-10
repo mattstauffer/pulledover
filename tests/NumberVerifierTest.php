@@ -26,9 +26,8 @@ class NumberVerifierTest extends TestCase
         $key = '12531234hio123hipgqwerqwe';
 
         $twilio = M::spy(TwilioClient::class);
-        $urlGenerator = app(UrlGenerator::class);
-
-        $verifier = new NumberVerifier($twilio, $urlGenerator);
+        App::instance(TwilioClient::class, $twilio);
+        $verifier = app(NumberVerifier::class);
 
         $verifier->verifyOwnNumber($phoneNumber, $key);
 
@@ -53,10 +52,8 @@ class NumberVerifierTest extends TestCase
         $key = '12531234hio123hipgqwerqwe';
 
         $twilio = M::spy(TwilioClient::class);
-
-        $urlGenerator = app(UrlGenerator::class);
-
-        $verifier = new NumberVerifier($twilio, $urlGenerator);
+        App::instance(TwilioClient::class, $twilio);
+        $verifier = app(NumberVerifier::class);
 
         $verifier->verifyOwnNumber($phoneNumber, $key);
 
@@ -82,15 +79,15 @@ class NumberVerifierTest extends TestCase
         $user = factory(User::class)->create();
         $friend = factory(Friend::class)->make();
         $user->friends()->save($friend);
+        $this->be($user);
 
         $friend = $friend->fresh();
 
         $key = '12531234hio123hipgqwerqwe';
 
         $twilio = M::spy(TwilioClient::class);
-        $urlGenerator = app(UrlGenerator::class);
-
-        $verifier = new NumberVerifier($twilio, $urlGenerator);
+        App::instance(TwilioClient::class, $twilio);
+        $verifier = app(NumberVerifier::class);
 
         $verifier->verifyFriendsNumber($friend, $key);
 
@@ -98,8 +95,10 @@ class NumberVerifierTest extends TestCase
 
         $twilio->shouldHaveReceived('text')->once()->with(
             $friend->number,
-            M::on(function ($message) use ($url) {
-                return strpos($message, $url) !== false;
+            M::on(function ($message) use ($url, $user) {
+                $hasUrl = strpos($message, $url) !== false;
+                $hasUserName = strpos($message, $user->name) !== false;
+                return $hasUrl && $hasUserName;
             })
         );
     }
@@ -109,20 +108,22 @@ class NumberVerifierTest extends TestCase
         $user = factory(User::class)->create();
         $friend = factory(Friend::class)->make();
         $user->friends()->save($friend);
+        $this->be($user);
 
         $friend = $friend->fresh();
 
         $key = '12531234hio123hipgqwerqwe';
 
         $twilio = M::spy(TwilioClient::class);
-        $urlGenerator = app(UrlGenerator::class);
-
-        $verifier = new NumberVerifier($twilio, $urlGenerator);
+        App::instance(TwilioClient::class, $twilio);
+        $verifier = app(NumberVerifier::class);
 
         $verifier->verifyFriendsNumber($friend, $key);
 
         $friend = $friend->fresh();
         $this->assertFalse($friend->is_verified);
+
+        $this->beSomeOtherUser();
 
         $url = route('friends.verify', ['key' => $key]);
         $this->visit($url);
@@ -136,5 +137,10 @@ class NumberVerifierTest extends TestCase
                 return strpos($message, $url) !== false;
             })
         );
+    }
+
+    private function beSomeOtherUser()
+    {
+        $this->be(factory(User::class)->create());
     }
 }

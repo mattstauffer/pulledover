@@ -5,17 +5,20 @@ namespace App\Phone;
 use App\Friend;
 use App\PhoneNumber;
 use App\Phone\TwilioClient;
+use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Routing\UrlGenerator;
 
 class NumberVerifier
 {
     private $twilio;
     private $urlGenerator;
+    private $auth;
 
-    public function __construct(TwilioClient $twilio, UrlGenerator $urlGenerator)
+    public function __construct(TwilioClient $twilio, UrlGenerator $urlGenerator, AuthManager $auth)
     {
         $this->twilio = $twilio;
         $this->urlGenerator = $urlGenerator;
+        $this->auth = $auth;
     }
 
     private function ownNumberVerificationUrl($key)
@@ -47,11 +50,12 @@ class NumberVerifier
         return $this->urlGenerator->route('friends.verify', ['key' => $key]);
     }
 
-    private function friendsNumberVerificationMessage($key, $name)
+    private function friendsNumberVerificationMessage($key)
     {
         return sprintf(
             'Your friend %s wants to add you as a friend on Pulled Over. If you want that too, please visit %s',
-            $name,
+            $this->auth->user()->name,
+            // \Illuminate\Support\Facades\Auth::user()->name,
             $this->friendsNumberVerificationUrl($key)
         );
     }
@@ -63,7 +67,7 @@ class NumberVerifier
 
         return $this->twilio->text(
             $friend->number,
-            $this->friendsNumberVerificationMessage($key, $friend->name)
+            $this->friendsNumberVerificationMessage($key)
         );
     }
 
