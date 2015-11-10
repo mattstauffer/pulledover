@@ -45,7 +45,7 @@ class TwilioController extends Controller
     private function promptToRegister()
     {
         $response = new TwimlGenerator;
-        $response->say('This is not a registered number. Please do blah blah blah to register.');
+        $response->say('This is not a registered number. Please log into your account at pulledover.us, add a phone number, and verify it to register.');
         $response->hangup();
 
         return $response;
@@ -71,7 +71,7 @@ class TwilioController extends Controller
         $this->twilio->text(
             TwilioClient::formatNumberFromTwilio($request->get("From")),
             sprintf(
-                "Number: %s\nFrom: %s %s\nURL: %s\n",
+                "New Pulledover.us recording. Number: %s\nFrom: %s %s\nURL: %s\n",
                 $request->get("From"),
                 $request->get("CallerCity"),
                 $request->get("CallerState"),
@@ -84,11 +84,11 @@ class TwilioController extends Controller
     {
         $user = PhoneNumber::findByTwilioNumber($request->get('From'))->user;
 
-        $user->friends->each(function ($friend) use ($request) {
+        $user->friends->each(function ($friend) use ($user, $request) {
             $this->twilio->text(
                 $friend->number,
                 sprintf(
-                    "Your friend has completed a PulledOver recording. From %s, City %s, State %s, Recording %s",
+                    "Your friend {$user->name} has completed a PulledOver recording. From %s, City %s, State %s, Recording %s",
                     $request->get("From"),
                     $request->get("CallerCity"),
                     $request->get("CallerState"),
