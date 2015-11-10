@@ -27,7 +27,7 @@ class TwilioController extends Controller
         try {
             $phoneNumber = PhoneNumber::verified()->findByTwilioNumber($request->input("From"));
         } catch (Exception $e) {
-            return $this->promptToRegister();
+            return $this->promptToRegister($request);
         }
 
         $response = new TwimlGenerator;
@@ -42,10 +42,10 @@ class TwilioController extends Controller
         return $response;
     }
 
-    private function promptToRegister()
+    private function promptToRegister($request)
     {
         $response = new TwimlGenerator;
-        $response->say('Sorry, but this is not a registered number. Please log into your account at Pulled Over Dot US, add a phone number, and verify it to register.');
+        $response->say('Sorry, but ' . $request->input('From') . ' is not a registered number. Please log into your account at Pulled Over Dot US, add a phone number, and verify it to register. Thank you!');
         $response->hangup();
 
         return $response;
