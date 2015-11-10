@@ -45,7 +45,7 @@ class TwilioController extends Controller
     private function promptToRegister()
     {
         $response = new TwimlGenerator;
-        $response->say('This is not a registered number. Please log into your account at pulledover.us, add a phone number, and verify it to register.');
+        $response->say('Sorry, but this is not a registered number. Please log into your account at Pulled Over Dot US, add a phone number, and verify it to register.');
         $response->hangup();
 
         return $response;
