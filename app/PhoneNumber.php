@@ -29,6 +29,11 @@ class PhoneNumber extends Model
         return self::where('number', $number)->firstOrFail();
     }
 
+    public function scopeVerified()
+    {
+        return $this->where('is_verified', true);
+    }
+
     public static function findByTwilioNumber($number)
     {
         $number = str_replace('+1', '', $number);
