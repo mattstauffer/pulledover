@@ -7,24 +7,28 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Register</div>
                     <div class="panel-body">
-                        @if (count($errors) > 0)
-                            <div class="alert alert-danger">
-                                <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
-                        <div class="well">
-                            <p><strong>Please note:</strong> Any recordings made using this product are <em>not</em> private. If your situation becomes worthy of investigation&mdash;that is, if something <em>does</em> happen while you're recording&mdash;we will help the recordings be available to anyone who needs it.</p>
-                            <p>But because the recordings cost me money, I also reserve the right to review any recordings. I will only do so for accounts that look like they're abusing the service, but just know up front: nothing recorded with this app is private. That's not what it's for.</p>
-                            <p>Please, please, don't abuse the service and make me have to shut it down.</p>
-                        </div>
                         <form class="form-horizontal" role="form" method="POST" action="{{ route('auth.register') }}">
+                            <div class="well">
+                                <h3 style="margin-top: 0">Disclaimer</h3>
+                                <p><strong>Please note:</strong> Any recordings made using this product are <em>not</em> private. If your situation becomes worthy of investigation&mdash;that is, if something <em>does</em> happen while you're recording&mdash;we will help the recordings be available to anyone who needs it.</p>
+                                <p>But because the recordings cost me money, I also reserve the right to review any recordings. I will only do so for accounts that look like they're abusing the service, but just know up front: nothing recorded with this app is private. That's not what it's for.</p>
+                                <p>Please, please, don't abuse the service and make me have to shut it down.</p>
+                                <p>Finally, <strong>you are responsible for ensuring the legality of recording in each situation</strong>. I don't make any guarantees of the legality of recording in your paritcular situation. See <a href="https://reason.com/archives/2012/04/05/7-rules-for-recording-police/singlepage">this brief article about your rights when recording the police</a> for some guidelines.</p>
+
+                            </div>
+
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                            @if (count($errors) > 0)
+                                <div class="alert alert-danger">
+                                    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Name</label>
@@ -54,7 +58,7 @@
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <div class="input-group-addon">+1</div>
-                                        <input type="text" class="form-control" name="number" value="{{ old('number', Input::get('number')) }}" aria-describedby="numberHelpBlock" maxlength="10" placeholder="5552221234">
+                                        <input type="text" class="form-control" name="phone_number" value="{{ old('phone_number', Input::get('phone_number')) }}" aria-describedby="numberHelpBlock" maxlength="10" placeholder="5552221234">
                                     </div>
                                     <span id="numberHelpBlock" class="help-block">
                                         Start with the phone number you're most likely to make a phone call from. You can add other numbers later. <strong>U.S. only.</strong> No dashes, just the numbers.
@@ -67,6 +71,14 @@
 
                                 <div class="col-md-6">
                                     <input type="password" class="form-control" name="password">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="checkbox col-md-6 col-md-push-4">
+                                    <label style="font-weight: bold;">
+                                        <input type="checkbox" name="disclaimer" {{ old('disclaimer', false) ? 'checked' : '' }}> I have read and agree with the Disclaimer text in the box above.
+                                    </label>
                                 </div>
                             </div>
 

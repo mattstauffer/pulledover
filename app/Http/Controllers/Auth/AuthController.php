@@ -27,7 +27,8 @@ class AuthController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6',
-            'number' => 'required|digits:10|integer|globally_unique_number',
+            'phone_number' => 'required|digits:10|integer|globally_unique_number',
+            'disclaimer' => 'required'
         ]);
     }
 
@@ -41,7 +42,7 @@ class AuthController extends Controller
 
         try {
             $number = $user->phoneNumbers()->create([
-                'number' => $data['number'],
+                'number' => $data['phone_number'],
             ]);
 
             $this->dispatch(new VerifyPhoneNumberOwnership($number));

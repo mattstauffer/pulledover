@@ -90,8 +90,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'disclaimer' => [
+            'required' => 'You need to check that you have read and agreed with the disclaimer.',
         ],
     ],
 
