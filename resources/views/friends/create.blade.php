@@ -5,6 +5,7 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <h2>Add Your Friend's Phone Number</h2>
+
                 {!! BootForm::open()->action(route('friends.store')) !!}
                 <div class="row">
                     <div class="col-md-6">
@@ -23,6 +24,14 @@
 
                 {!! BootForm::submit('Add New Friend') !!}
                 {!! BootForm::close() !!}
+
+                <br><br>
+                <div class="well">
+                    <h3 style="margin-top: 0">What message will this send to my friend?</h3>
+                    <p>Your friend will receive a single text message right now verifying their address. It will say this:</p>
+                    <p style="font-style: italic">"Your friend {{ Auth::user()->name }} wants to add you as a friend on Pulled Over. If you want that too, please visit (verification URL here)."</p>
+                    <p>After that they won't receive any messages from us ever, unless you initiate a Pulled Over recording.</p>
+                </div>
             </div>
         </div>
     </div>
