@@ -7,7 +7,6 @@
     <title>Pulled Over</title>
 
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-default">

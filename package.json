@@ -5,6 +5,7 @@
   },
   "dependencies": {
     "laravel-elixir": "^2.0.0",
-    "bootstrap-sass": "^3.0.0"
+    "bootstrap-sass": "^3.0.0",
+    "font-awesome": "^4.4.0"
   }
 }
