@@ -43,6 +43,14 @@ body {
     }
 }
 
+.auth-menu {
+    float: right;
+
+    @media only screen and (max-width: 677px) {
+        width: 10em;
+    }
+}
+
 .intro {
     font-size: 1.5rem;
     margin-bottom: 1em;

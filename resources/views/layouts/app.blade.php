@@ -12,39 +12,25 @@
 <body>
 <nav class="navbar navbar-default">
     <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle Navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+        <div class="navbar-header" style="float: left;">
             <a class="navbar-brand" href="/home"><img src="/pulledover-logo.png" alt="Pulled Over" class="logo"></a>
         </div>
 
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                @if (Auth::check())
-                @endif
-            </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-                @if (Auth::guest())
-                    <li><a href="{{ route('auth.login') }}">Login</a></li>
-                    <li><a href="{{ route('auth.register') }}">Register</a></li>
-                @else
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <!-- <li><a href="#">Edit Profile</a></li> -->
-                            <li><a href="{{ route('auth.logout') }}">Logout</a></li>
-                        </ul>
-                    </li>
-                @endif
-            </ul>
-        </div>
+        <ul class="nav navbar-nav navbar-right auth-menu">
+            @if (Auth::guest())
+                <li><a href="{{ route('auth.login') }}">Login</a></li>
+                <li><a href="{{ route('auth.register') }}">Register</a></li>
+            @else
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                       aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <!-- <li><a href="#">Edit Profile</a></li> -->
+                        <li><a href="{{ route('auth.logout') }}">Logout</a></li>
+                    </ul>
+                </li>
+            @endif
+        </ul>
     </div>
 </nav>
 
