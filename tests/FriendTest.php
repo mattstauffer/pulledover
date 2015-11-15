@@ -14,6 +14,11 @@ class FriendTest extends TestCase
 
     public function test_user_cannot_add_the_same_friend_twice()
     {
+        Validator::extend('valid_phone', function ($attribute, $value, $parameters, $validator) {
+            // Skip validation because we can't validate a phone number on test creds
+            return true;
+        });
+
         $user = factory(User::class)->create();
         $phoneNumber = factory(PhoneNumber::class, 'verified')->make();
         $user->phoneNumbers()->save($phoneNumber);

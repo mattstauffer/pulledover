@@ -23,6 +23,11 @@ class PhoneNumberTest extends TestCase
 
     public function test_user_cannot_add_the_same_number_twice()
     {
+        Validator::extend('valid_phone', function ($attribute, $value, $parameters, $validator) {
+            // Skip validation because we can't validate a phone number on test creds
+            return true;
+        });
+
         $user = factory(User::class)->create();
         $this->be($user);
 
@@ -54,5 +59,18 @@ class PhoneNumberTest extends TestCase
         $this
             ->get(route('dashboard'))
             ->see($number->formattedNumber);
+    }
+
+    public function test_it_shows_user_error_for_twilio_rejected_phone_number()
+    {
+        $user = factory(User::class)->create();
+        $this->be($user);
+
+        $this
+            ->visit(route('numbers.create'))
+            ->type('1000000001', 'number')
+            ->press('Add New Number');
+
+        $this->see('Whoops!');
     }
 }

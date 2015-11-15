@@ -77,6 +77,7 @@ return [
     'unique_number'        => 'You have already added that phone number.',
     'unique_friend'        => 'You have already added a friend with that phone number.',
     'globally_unique_number' => 'Something went wrong with the :attribute field.', // We can't really tell them WHY.. :/
+    'valid_phone'          => 'That is not a valid phone number.',
 
     /*
     |--------------------------------------------------------------------------

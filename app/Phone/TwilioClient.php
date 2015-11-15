@@ -7,6 +7,7 @@ use App\Phone\Exceptions\InternationalPhoneNumberException;
 use App\Phone\Exceptions\InvalidPhoneNumberException;
 use App\Phone\Exceptions\NonMobilePhoneNumberException;
 use App\Phone\Exceptions\TwilioException;
+use Lookups_Services_Twilio;
 use Services_Twilio;
 use Services_Twilio_RestException;
 
@@ -19,6 +20,21 @@ class TwilioClient
     {
         $this->fromNumber = $fromNumber;
         $this->twilio = $twilio;
+    }
+
+    public function validatePhone($number)
+    {
+        $number = app(Lookups_Services_Twilio::class)->phone_numbers->get(
+            self::formatNumberForTwilio($number)
+        );
+
+        try {
+            $countryCode = $number->country_code;
+        } catch (Services_Twilio_RestException $e) {
+            return false;
+        }
+
+        return true;
     }
 
     public static function formatNumberForTwilio($number)

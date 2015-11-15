@@ -43,7 +43,7 @@ class FriendsController extends Controller
         }
 
         $this->validate($request, [
-            'number' => 'required|digits:10|integer|unique_friend'
+            'number' => 'required|digits:10|integer|unique_friend|valid_phone'
         ]);
 
         $number = Auth::user()->friends()->create([

@@ -71,4 +71,17 @@ class TwilioClientTest extends TestCase
             'This is a text message.'
         );
     }
+
+    // "Resource not accessible with Test Account Credentials" BOO.
+    /*
+    public function test_it_marks_invalid_numbers_invalid()
+    {
+        $this->assertFalse($this->client->validatePhone('1000000001'));
+    }
+
+    public function test_it_marks_valid_numbers_valid()
+    {
+        $this->assertTrue($this->client->validatePhone('3135155151'));
+    }
+    */
 }
