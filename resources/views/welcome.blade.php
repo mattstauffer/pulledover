@@ -12,10 +12,10 @@
         <style>
             html { font-size: 12px; }
             .logo { clear: both; width: auto; display: block; margin-top: 8rem; }
+            .logo img { max-width: 100%; }
             @media only screen and (min-width: 600px) {
                 html { font-size: 16px; }
                 .logo { clear: none; margin-top: 3rem; }
-                .logo img { max-width: 100%; }
             }
             p, li { font-size: 1.375rem; }
             .the-goal, .call-now { font-size: 1.75rem; }
