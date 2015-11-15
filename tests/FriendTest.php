@@ -21,8 +21,8 @@ class FriendTest extends TestCase
 
         $number = '7345678309';
 
-        $this->post(route('friends.index'), ['name' => 'Sally', 'number' => $number]);
-        $this->post(route('friends.index'), ['name' => 'Schmally', 'number' => $number]);
+        $this->post(route('friends.store'), ['name' => 'Sally', 'number' => $number]);
+        $this->post(route('friends.store'), ['name' => 'Schmally', 'number' => $number]);
 
         $friends = $user->friends()->where(['number' => $number])->get();
 
