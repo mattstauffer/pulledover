@@ -20,4 +20,11 @@ class PhoneNumberTest extends TestCase
 
         $this->assertEquals($number->id, $foundNumber->id);
     }
+
+    public function test_it_formats_numbers_correctly()
+    {
+        $phoneNumber = factory(PhoneNumber::class)->make();
+        $phoneNumber->number = '8582930491';
+        $this->assertEquals('(858) 293-0491', $phoneNumber->formattedNumber);
+    }
 }
