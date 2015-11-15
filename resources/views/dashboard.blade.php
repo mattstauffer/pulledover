@@ -65,34 +65,36 @@
             <div class="col-sm-10">
                 <h2>Recordings</h2>
 
-                <table class="table">
-                    @forelse ($recordings as $i => $recording)
-                        @if ($i === 0)
-                        <thead>
+                <div class="table-responsive">
+                    <table class="table">
+                        @forelse ($recordings as $i => $recording)
+                            @if ($i === 0)
+                            <thead>
+                                <tr>
+                                    <th>From</th>
+                                    <th>City</th>
+                                    <th>State</th>
+                                    <th>Recording</th>
+                                    <th>Duration</th>
+                                    <th>Date/Time</th>
+                                </tr>
+                            </thead>
+                            @endif
                             <tr>
-                                <th>From</th>
-                                <th>City</th>
-                                <th>State</th>
-                                <th>Recording</th>
-                                <th>Duration</th>
-                                <th>Date/Time</th>
+                                <th>{{ $recording->from }}</th>
+                                <th>{{ $recording->city }}</th>
+                                <th>{{ $recording->state }}</th>
+                                <th><a href="{{ $recording->url }}">{{ $recording->url }}</a></th>
+                                <th>{{ $recording->duration }}s</th>
+                                <th>{{ $recording->created_at }}</th>
                             </tr>
-                        </thead>
-                        @endif
-                        <tr>
-                            <th>{{ $recording->from }}</th>
-                            <th>{{ $recording->city }}</th>
-                            <th>{{ $recording->state }}</th>
-                            <th><a href="{{ $recording->url }}">{{ $recording->url }}</a></th>
-                            <th>{{ $recording->duration }}s</th>
-                            <th>{{ $recording->created_at }}</th>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td>No recordings! Remember to add 1-844-311-OVER to your phonebook!</td>
-                        </tr>
-                    @endforelse
-                </table>
+                        @empty
+                            <tr>
+                                <td>No recordings! Remember to add 1-844-311-OVER to your phonebook!</td>
+                            </tr>
+                        @endforelse
+                    </table>
+                </div>
             </div>
         </div>
     </div>
