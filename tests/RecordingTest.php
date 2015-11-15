@@ -3,6 +3,7 @@
 use App\Friend;
 use App\PhoneNumber;
 use App\Phone\TwilioClient;
+use App\Recording;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -195,5 +196,21 @@ class RecordingTest extends TestCase
                 return strpos($message, $this->afterCallPost['RecordingUrl']) !== false;
             })
         );
+    }
+
+    public function test_it_is_listed_on_the_dashboard_after_being_added()
+    {
+        $user = factory(User::class)->create();
+        $recording = factory(Recording::class)->make();
+        $user->recordings()->save($recording);
+
+        $this->be($user);
+
+        $this
+            ->get(route('dashboard'))
+            ->see($recording->url)
+            ->see($recording->city)
+            ->see($recording->state)
+            ->see($recording->duration);
     }
 }

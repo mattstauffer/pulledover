@@ -28,4 +28,18 @@ class FriendTest extends TestCase
 
         $this->assertEquals(1, $friends->count());
     }
+
+    public function test_it_is_listed_on_the_dashboard_after_being_added()
+    {
+        $user = factory(User::class)->create();
+        $friend = factory(Friend::class)->make();
+        $user->friends()->save($friend);
+
+        $this->be($user);
+
+        $this
+            ->get(route('dashboard'))
+            ->see($friend->formattedNumber)
+            ->see($friend->name);
+    }
 }

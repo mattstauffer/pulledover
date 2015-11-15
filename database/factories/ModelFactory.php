@@ -40,3 +40,15 @@ $factory->define(App\Friend::class, function (Faker\Generator $faker) {
         'name' => $faker->name
     ];
 });
+
+$factory->define(App\Recording::class, function (Faker\Generator $faker) {
+    return [
+        'from' => '+1313' . $faker->randomNumber(7),
+        'city' => $faker->city,
+        'state' => $faker->state,
+        'url' => $faker->url,
+        'recording_sid' => $faker->randomNumber(8) . $faker->randomNumber(8) . $faker->randomNumber(8) . $faker->randomNumber(8),
+        'duration' => $faker->randomNumber(2),
+        'json' => '{}',
+    ];
+});
