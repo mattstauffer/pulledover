@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Friend extends Model
 {
+    use formatsNumber;
+
     protected $fillable = [
         'name',
         'number'

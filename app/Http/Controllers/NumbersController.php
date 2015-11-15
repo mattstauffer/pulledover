@@ -11,12 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class NumbersController extends Controller
 {
-    public function index()
-    {
-        return view('numbers.index')
-            ->with('numbers', Auth::user()->phoneNumbers);
-    }
-
     public function create()
     {
         return view('numbers.create');
@@ -34,6 +28,6 @@ class NumbersController extends Controller
 
         $this->dispatch(new VerifyPhoneNumberOwnership($number));
 
-        return redirect()->route('numbers.index');
+        return redirect()->route('dashboard');
     }
 }

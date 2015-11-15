@@ -7,6 +7,7 @@
     <title>Pulled Over</title>
 
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -25,9 +26,6 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 @if (Auth::check())
-                <li><a href="/numbers">My Numbers</a></li>
-                <li><a href="/friends">My Friends</a></li>
-                <li><a href="/recordings">My Recordings</a></li>
                 @endif
             </ul>
 
@@ -40,7 +38,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Edit Profile</a></li>
+                            <!-- <li><a href="#">Edit Profile</a></li> -->
                             <li><a href="{{ route('auth.logout') }}">Logout</a></li>
                         </ul>
                     </li>
@@ -65,6 +63,12 @@
 @endif
 
 @yield('content')
+
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">1-844-311-OVER</p>
+    </div>
+</footer>
 
 <!-- Scripts -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

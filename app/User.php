@@ -40,4 +40,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return PhoneNumber::where('number', $number)->firstOrFail()->user;
     }
+
+    public function hasAVerifiedPhoneNumber()
+    {
+        return $this->phoneNumbers()->verified()->count() > 0;
+    }
 }

@@ -23,18 +23,8 @@ class FriendsController extends Controller
     {
         // This should be a middleware
         return redirect()
-            ->route('numbers.index')
+            ->route('dashboard')
             ->with('messages', ['You need to verify a phone number before you can add any friends.']);
-    }
-
-    public function index()
-    {
-        if ($this->quit) {
-            return $this->quit();
-        }
-
-        return view('friends.index')
-            ->with('friends', Auth::user()->friends);
     }
 
     public function create()
@@ -63,6 +53,6 @@ class FriendsController extends Controller
 
         $this->dispatch(new VerifyPhoneNumberFriendship($number));
 
-        return redirect()->route('friends.index');
+        return redirect()->route('dashboard');
     }
 }

@@ -1,13 +1,45 @@
+$navbar-default-bg: #fff;
+$navbar-default-color: red;
+$navbar-height: 80px;
+
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
-.logo {
-    width: 11rem;
+// Override
+.navbar-default {
+    border: none;
+    border-radius: 0;
 }
 
-@media only screen and (min-width: 800px) {
-    .logo {
-        margin-top: -1rem;
-        width: 16rem;
+// Sticky footer
+html {
+    min-height: 100%;
+    position: relative;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+.footer {
+    background-color: #fff;
+    bottom: 0;
+    height: 60px;
+    padding-top: 20px;
+    position: absolute;
+    width: 100%;
+}
+// End sticky footer
+
+body {
+    background: #f8f8f8;
+}
+
+.logo {
+    margin-top: -1rem;
+    width: 16rem;
+
+    @media only screen and (min-width: 800px) {
+        margin-top: -1.5rem;
+        width: 19rem;
     }
 }
 
@@ -32,5 +64,29 @@
         color: #777;
         font-size: 0.5em;
         text-transform: uppercase;
+    }
+}
+
+.dashboard-divider {
+    background: #eee;
+    border-color: #eee;
+    color: #eee;
+    margin-bottom: 3rem;
+    margin-top: 4rem;
+}
+
+.dashboard-section-icon {
+    text-align: center;
+
+    @media only screen and (max-width: 767px) {
+        background: #888;
+        border: 1px solid #ccc;
+        color: #fff;
+        padding: 1rem;
+    }
+
+    @media only screen and (min-width: 768px) {
+        padding-top: 2rem;
+        text-align: right;
     }
 }

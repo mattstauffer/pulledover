@@ -17,9 +17,9 @@ Route::group(['namespace' => 'Auth'], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('home', 'AccountController@index');
-    Route::resource('numbers', 'NumbersController');
-    Route::resource('friends', 'FriendsController');
+    Route::get('home', ['as' => 'dashboard', 'uses' => 'AccountController@index']);
+    Route::resource('numbers', 'NumbersController', ['only' => ['create', 'store']]);
+    Route::resource('friends', 'FriendsController', ['only' => ['create', 'store']]);
     Route::get('recordings', 'RecordingsController@index');
 });
 

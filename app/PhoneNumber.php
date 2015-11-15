@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class PhoneNumber extends Model
 {
+    use formatsNumber;
+
     protected $fillable = ['number'];
 
     protected $casts = [
