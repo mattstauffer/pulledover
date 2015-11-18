@@ -2,6 +2,17 @@
 
 @section('content')
     <div class="container">
+        @if (! Auth::user()->dismissed_welcome)
+            <div class="alert alert-info">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true" id="dismissWelcome">&times;</button>
+
+                <p><h2 style="margin-top: 0">Welcome to Pulled Over!</h2></p>
+                <div style="font-size: 1.25em;">
+                    <p>Make sure you remember to add <b><tel>1-844-311-OVER</tel></b> to your phonebook right now, for when you need to call!
+                    <p>Next, you'll need to verify your phone number, and then add some friends to be notified if you ever call in.</p>
+                </div>
+            </div>
+        @endif
         <div class="row">
             <div class="col-sm-1 dashboard-section-icon">
                 <i class="fa fa-3x fa-phone"></i>
@@ -98,4 +109,16 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+<script>
+$(function () {
+    $('#dismissWelcome').on('click', function () {
+        $.ajax({
+             url: "{{ route('dismiss-welcome') }}",
+        });
+    });
+});
+</script>
 @endsection

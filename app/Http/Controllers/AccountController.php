@@ -16,4 +16,15 @@ class AccountController extends Controller
             ->with('friends', Auth::user()->friends)
             ->with('recordings', Auth::user()->recordings);
     }
+
+    public function dismissWelcome()
+    {
+        Auth::user()->dismissed_welcome = true;
+        Auth::user()->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Welcome successfully marked as dismissed.'
+        ]);
+    }
 }
