@@ -23,6 +23,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('recordings', 'RecordingsController@index');
 
     Route::get('dismiss-welcome', ['as' => 'dismiss-welcome', 'uses' => 'AccountController@dismissWelcome']);
+
+    Route::get('admin', ['as' => 'admin.index', 'uses' => 'AdminController@index']);
 });
 
 Route::post('call', ['as' => 'hook.call', 'uses' => 'TwilioController@callHook']);

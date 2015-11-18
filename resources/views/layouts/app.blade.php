@@ -24,7 +24,9 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                        aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <!-- <li><a href="#">Edit Profile</a></li> -->
+                        @if (Auth::user()->isAdmin())
+                        <li><a href="{{ route('admin.index') }}">Admin</a></li>
+                        @endif
                         <li><a href="{{ route('auth.logout') }}">Logout</a></li>
                     </ul>
                 </li>

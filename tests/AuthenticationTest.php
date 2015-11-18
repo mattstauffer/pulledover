@@ -47,4 +47,15 @@ class AuthenticationTest extends TestCase
 
         $this->see('The email has already been taken');
     }
+
+    public function test_non_admin_users_cannot_view_admin_pages()
+    {
+        $user = factory(User::class)->create();
+        $user->role = 0;
+        $user->save();
+        $this->be($user);
+
+        $this->get(route('admin.index'));
+        $this->assertResponseStatus(302);
+    }
 }

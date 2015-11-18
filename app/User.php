@@ -49,4 +49,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $this->phoneNumbers()->verified()->count() > 0;
     }
+
+    public function isAdmin()
+    {
+        return $this->role === 42;
+    }
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddDismissedWelcomeToUser extends Migration
+class AddRoleToUser extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddDismissedWelcomeToUser extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('dismissed_welcome')->default(false);
+            $table->integer('role')->default(0);
         });
     }
 
@@ -25,7 +25,7 @@ class AddDismissedWelcomeToUser extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('dismissed_welcome');
+            $table->dropColumn('role');
         });
     }
 }
