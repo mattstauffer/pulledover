@@ -23,7 +23,7 @@
                 <h4>Recordings</h4>
                 <ul>
                     @foreach ($user->recordings as $recording)
-                    {{ json_encode($recording) }}
+                    <li>Duration: <span style="font-size: {{ $recording->duration > 300 ? 2 : 1 }}em;">{{ $recording->duration / 60 }}m</span>, <a title="{{ json_encode($recording) }}">JSON</a>
                     @endforeach
                 </ul>
                 <hr>
