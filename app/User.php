@@ -22,7 +22,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $hidden = ['password', 'remember_token'];
 
     protected $casts = [
-        'dismissed_welcome' => 'boolean'
+        'dismissed_welcome' => 'boolean',
+        'role' => 'integer',
     ];
 
     public function phoneNumbers()
