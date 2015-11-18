@@ -21,7 +21,7 @@ class DeleteOldRecordings extends Command
     public function handle(Services_Twilio $twilio)
     {
         $recordings = $twilio->account->recordings->getIterator(0, 1000, [
-            'DateCreated<' => Carbon::now()->subDays(2)->format('Y-m-d')
+            'DateCreated<' => Carbon::now()->subDays(10)->format('Y-m-d')
         ]);
 
         foreach ($recordings as $recording) {

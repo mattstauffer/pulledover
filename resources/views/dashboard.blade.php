@@ -76,6 +76,8 @@
             <div class="col-sm-10">
                 <h2>Recordings</h2>
 
+                <p class="intro text-muted">Important note! Recordings are deleted from the server after 10 days to save space. Please have your recordings saved before they're deleted!</p>
+
                 <div class="table-responsive">
                     <table class="table">
                         @forelse ($recordings as $i => $recording)
