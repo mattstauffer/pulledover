@@ -1,81 +1,9 @@
 @extends('layouts.app')
 
+@section('headerScripts')
+    <link href="{{ asset('/css/homepage.css') }}" rel="stylesheet">
+@endsection
 @section('content')
-<style>
-.home-page-columns {
-    font-family: georgia, serif;
-}
-.home-page-columns .well {
-    padding: 2em;
-    }
-.home-page-columns p {
-    font-size: 1.5em;
-    line-height: 1.7;
-    margin-bottom: 1.25em;
-}
-.home-page-hero {
-    background-color: #1a1a1a;
-    background-image: url('/images/hero-header.jpg');
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-    background-size: auto 100%; 
-    height: 912px;
-    margin-bottom: 4em;
-    margin-top: -20px;
-}
-.pitch-column {
-    color: #fff;
-    font-family: georgia, serif;
-    margin-left: 5rem;
-    text-align: center;
-    width: 550px;
-}
-.pitch-column a {
-    color: #fff;
-}
-.pitch {
-    background: rgba(0, 0, 0, .3);
-    margin-top: 13rem;
-    padding: 2em;
-    text-align: left;
-}
-.pitch .big-number {
-    color: #fff;
-    font-family: 'Roboto Condensed', arial, sans-serif;
-    font-size: 6rem;
-    font-weight: 400;
-}
-.pitch-sign-up-button {
-    background: #43c25b;
-    color: #fff;
-    display: inline-block;
-    font-size: 1.1em;
-    margin: 2em auto;
-    padding: 1em 2em;
-    font-family: arial;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-    .pitch-sign-up-button:hover {
-        background: #149a2d;
-        text-decoration: none;
-    }
-.pitch-donate-button {
-    font-size: 1.2em;
-}
-.home-page-well h2 {
-    margin-bottom: 1em;
-}
-body {
-    margin-bottom: 100px;
-}
-.footer {
-    background: transparent;
-    font-size: 1.25em;
-    margin-bottom: 2em;
-    margin-top: 2em;
-}
-</style>
 <div class="jumbotron home-page-hero">
     <div class="container">
         <div class="pitch-column">

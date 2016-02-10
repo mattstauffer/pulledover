@@ -9,32 +9,41 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700' rel='stylesheet' type='text/css'>
 
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+
+    @yield('headerScripts')
 </head>
 <body>
 <nav class="navbar navbar-inverse">
     <div class="container">
-        <div class="navbar-header" style="float: left;">
+        <div class="navbar-header">
             <a class="navbar-brand" href="{{ Auth::guest() ? '/' : '/home' }}"><img src="/images/pulledover-logo.png" alt="Pulled Over" class="logo"></a>
+
+            <button type="button" class="splash-nav-toggle navbar-toggle pull-right" data-toggle="collapse" data-target="#primary-nav" aria-expanded="true" aria-controls="primary-nav">
+                <span class="sr-only">Toggle navigation</span>
+                MENU
+            </button>
         </div>
 
-        <ul class="nav navbar-nav navbar-right auth-menu">
-            <li><a href="{{ route('donate') }}">Donate</a></li>
-            @if (Auth::guest())
-                <li><a href="{{ route('auth.register') }}">Sign Up</a></li>
-                <li><a href="{{ route('auth.login') }}">Login</a></li>
-            @else
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        @if (Auth::user()->isAdmin())
-                        <li><a href="{{ route('admin.index') }}">Admin</a></li>
-                        @endif
-                        <li><a href="{{ route('auth.logout') }}">Logout</a></li>
-                    </ul>
-                </li>
-            @endif
-        </ul>
+        <div id="primary-nav" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right auth-menu">
+                <li><a href="{{ route('donate') }}">Donate</a></li>
+                @if (Auth::guest())
+                    <li><a href="{{ route('auth.register') }}">Sign Up</a></li>
+                    <li><a href="{{ route('auth.login') }}">Login</a></li>
+                @else
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            @if (Auth::user()->isAdmin())
+                            <li><a href="{{ route('admin.index') }}">Admin</a></li>
+                            @endif
+                            <li><a href="{{ route('auth.logout') }}">Logout</a></li>
+                        </ul>
+                    </li>
+                @endif
+            </ul>
+        </div>
     </div>
 </nav>
 

@@ -7828,6 +7828,11 @@ button.close {
   border: none;
   border-radius: 0; }
 
+.navbar-inverse .navbar-toggle {
+  border-color: #fff;
+  border-radius: 0;
+  color: #fff; }
+
 html {
   min-height: 100%;
   position: relative; }
@@ -7870,13 +7875,20 @@ h2 {
   text-transform: uppercase; }
 
 .logo {
-  width: 273px; }
+  margin-left: -15px;
+  width: 250px; }
+  @media only screen and (min-width: 500px) {
+    .logo {
+      margin-left: 0;
+      width: 273px; } }
 
-.auth-menu {
-  float: right; }
-  @media only screen and (max-width: 677px) {
-    .auth-menu {
-      width: 10em; } }
+@media only screen and (max-width: 677px) {
+  .auth-menu {
+    width: 10em; } }
+
+@media only screen and (min-width: 768px) {
+  .auth-menu {
+    float: right; } }
 
 .intro {
   font-size: 1.5rem;

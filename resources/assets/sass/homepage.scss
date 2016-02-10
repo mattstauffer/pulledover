@@ -1,0 +1,111 @@
+body {
+    margin-bottom: 140px;
+}
+
+.footer {
+    font-size: 1.25em;
+    margin-bottom: 2em;
+    margin-top: 2em;
+}
+
+
+.home-page-columns {
+    font-family: georgia, serif;
+
+    .well {
+        padding: 2em;
+    }
+    
+    p {
+        font-size: 1.25em;
+        line-height: 1.7;
+        margin-bottom: 1.25em;
+
+        @media only screen and (min-width: 500px) {
+            font-size: 1.5em;
+        }
+    }
+}
+
+.home-page-hero {
+    background-color: #1a1a1a;
+    background-image: url('../images/hero-header.jpg');
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: auto 100%; 
+    height: 600px;
+    margin-bottom: 4em;
+    margin-top: -20px;
+
+    @media only screen and (min-width: 700px) {
+        height: 912px;
+    }
+}
+
+.pitch-column {
+    color: #fff;
+    font-family: georgia, serif;
+    margin-top: 1rem;
+    text-align: center;
+    width: 100%;
+
+    @media only screen and (min-width: 700px) {
+        margin-left: 5rem;
+        margin-top: 13rem;
+        width: 550px;
+    }
+
+    a {
+        color: #fff;
+    }
+}
+
+.pitch {
+    background: rgba(0, 0, 0, .75);
+    padding: 2em;
+    text-align: left;
+
+    .big-number {
+        color: #fff;
+        font-family: 'Roboto Condensed', arial, sans-serif;
+        font-size: 3rem;
+        font-weight: 400;
+
+        @media only screen and (min-width: 400px) {
+            font-size: 4.5rem;
+        }
+
+        @media only screen and (min-width: 700px) {
+            font-size: 6rem;
+        }
+    }
+
+    @media only screen and (min-width: 992px) {
+        background: rgba(0, 0, 0, 0.3);
+    }
+}
+
+.pitch-sign-up-button {
+    background: #43c25b;
+    color: #fff;
+    display: inline-block;
+    font-size: 1.1em;
+    margin: 2em auto;
+    padding: 1em 2em;
+    font-family: arial;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    &:hover {
+        background: #149a2d;
+        text-decoration: none;
+    }
+}
+
+.pitch-donate-button {
+    font-size: 1.2em;
+}
+
+.home-page-well h2 {
+    margin-bottom: 1em;
+}
