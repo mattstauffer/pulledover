@@ -1,6 +1,9 @@
-$navbar-default-bg: #fff;
+$navbar-inverse-bg: #1a1a1a;
+$navbar-inverse-link-color: #fff;
+$navbar-inverse-link-hover-bg: #333;
 $navbar-default-color: red;
 $navbar-height: 80px;
+$link-color: #ef0e5e;
 
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "node_modules/font-awesome/scss/font-awesome";
@@ -11,44 +14,82 @@ $navbar-height: 80px;
     border-radius: 0;
 }
 
+.navbar-inverse .navbar-toggle {
+    border-color: #fff; // @todo can we do this with a variable?
+    border-radius: 0;
+    color: #fff;
+}
+
 // Sticky footer
 html {
     min-height: 100%;
     position: relative;
 }
 body {
+    background: #eee;
     /* Margin bottom by footer height */
-    margin-bottom: 60px;
+    margin-bottom: 80px;
 }
 .footer {
-    background-color: #fff;
     bottom: 0;
-    height: 60px;
+    font-family: Georgia, serif;
+    height: 80px;
     padding-top: 20px;
     position: absolute;
+    text-align: center;
     width: 100%;
 }
 // End sticky footer
 
-body {
-    background: #f8f8f8;
+h1, h2, h3, h4 {
+    font-family: 'Roboto Condensed', arial, sans-serif;
+}
+
+h2 {
+    text-transform: uppercase;
+}
+
+.well {
+    background: #fff;
+
+    > h2:first-child {
+        margin-top: 0;
+    }
+}
+
+
+.navbar {
+    border-radius: 0;
+}
+.navbar-brand {
+    padding: 0;
+}
+
+.navbar-nav {
+    color: #fff;
+    font-family: 'Roboto Condensed', arial;
+    font-size: 1.25em;
+    text-transform: uppercase;
 }
 
 .logo {
-    margin-top: -1rem;
-    width: 16rem;
+    margin-left: -15px;
+    width: 250px;
 
-    @media only screen and (min-width: 800px) {
-        margin-top: -1.5rem;
-        width: 19rem;
+    @media only screen and (min-width: 500px) {
+        margin-left: 0;
+        width: 273px;
     }
 }
 
 .auth-menu {
-    float: right;
 
     @media only screen and (max-width: 677px) {
         width: 10em;
+    }
+
+    @media only screen and (min-width: 768px) {
+        float: right;
     }
 }
 

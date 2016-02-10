@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Friend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
@@ -25,9 +26,13 @@ class VerificationController extends Controller
 
     public function friend($hash)
     {
-        $friend = Friend::where([
-            'verification_hash' => $hash
-        ])->firstOrFail();
+        try {
+            $friend = Friend::where([
+                'verification_hash' => $hash
+            ])->firstOrFail();
+        } catch (Exception $e) {
+            return "Sorry, but we can't find that verification code.";
+        }
 
         $friend->markVerified();
 
