@@ -29,7 +29,7 @@
                 <h2>Why does this exist?</h2>
                 <p>A lot of people very close to me, especially women of color, are legitimately afraid of what might happen if they were pulled over by the police in the United States.</p>
                 <p>While I have no intention of suggesting that every law enforcement officer has malicious intent, it is very true that history shows this fear is legitimate. It is my hope that this tool can be a first step towards ensuring that interactions between police and traditionally disadvantaged people groups will end well.</p>
-                <p><strong>Is this legal?</strong> Probably. While I can't make any guarantees of legality (each user is responsible for ensuring the legality of recording in their particular situation), you should be OK using PulledOver. However, if you are in Illinois or Massachusetts, you are required to ask for the police officer's consent before you record (<a href="https://reason.com/archives/2012/04/05/7-rules-for-recording-police/singlepage">source</a>).</p>
+                <p><strong>Is this legal?</strong> Probably. While I can't make any guarantees of legality (each user is responsible for ensuring the legality of recording in their particular situation), you should be OK using PulledOver. However, if you are in Illinois or Massachusetts, you are required to ask for the police officer's consent before you record (<a href="https://reason.com/archives/2012/04/05/7-rules-for-recording-police/singlepage">source</a>). If you are in California, <a href="http://www.ehlinelaw.com/civil-rights/filming-police-legal/">the law</a> is a bit vaugue so your safest option is to ask for consent.</p>
             </div>
         </div>
         <div class="col-md-6">
