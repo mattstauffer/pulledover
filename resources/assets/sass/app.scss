@@ -1,4 +1,6 @@
-$navbar-default-bg: #fff;
+$navbar-inverse-bg: #1a1a1a;
+$navbar-inverse-link-color: #fff;
+$navbar-inverse-link-hover-bg: #333;
 $navbar-default-color: red;
 $navbar-height: 80px;
 
@@ -23,9 +25,11 @@ body {
 .footer {
     background-color: #fff;
     bottom: 0;
+    font-family: Georgia, serif;
     height: 60px;
     padding-top: 20px;
     position: absolute;
+    text-align: center;
     width: 100%;
 }
 // End sticky footer
@@ -34,14 +38,18 @@ body {
     background: #f8f8f8;
 }
 
-.logo {
-    margin-top: -1rem;
-    width: 16rem;
+.navbar-brand {
+    padding: 0;
+}
 
-    @media only screen and (min-width: 800px) {
-        margin-top: -1.5rem;
-        width: 19rem;
-    }
+.navbar-nav {
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.logo {
+    width: 273px;
 }
 
 .auth-menu {

@@ -4,6 +4,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('donate', ['as' => 'donate', function () {
+    return view('donate');
+}]);
+
 Route::group(['namespace' => 'Auth'], function () {
     Route::get('register', ['as' => 'auth.register', 'uses' => 'AuthController@getRegister']);
     Route::post('register', ['uses' => 'AuthController@postRegister']);

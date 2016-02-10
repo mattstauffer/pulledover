@@ -9,13 +9,14 @@
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header" style="float: left;">
-            <a class="navbar-brand" href="/home"><img src="/pulledover-logo.png" alt="Pulled Over" class="logo"></a>
+            <a class="navbar-brand" href="{{ Auth::guest() ? '/' : '/home' }}"><img src="/images/pulledover-logo.png" alt="Pulled Over" class="logo"></a>
         </div>
 
         <ul class="nav navbar-nav navbar-right auth-menu">
+            <li><a href="{{ route('donate') }}">Donate</a></li>
             @if (Auth::guest())
                 <li><a href="{{ route('auth.login') }}">Login</a></li>
                 <li><a href="{{ route('auth.register') }}">Register</a></li>
@@ -53,13 +54,25 @@
 
 <footer class="footer">
     <div class="container">
-        <p class="text-muted">1-844-311-OVER</p>
+        <p class="text-muted"><a href="tel:18443116837">1-844-311-OVER</a> | Built by <a href="http://mattstauffer.co/">Matt Stauffer</a> | Powered by <a href="http://twilio.com/">Twilio</a> and <a href="http://laravel.com/">Laravel</a> | Source on <a href="http://github.com/mattstauffer/pulledover">GitHub</a></p>
     </div>
 </footer>
 
 <!-- Scripts -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+@if (app()->environment() === 'production')
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-65620560-1', 'auto');
+  ga('send', 'pageview');
+</script>
+@endif
 
 @yield('scripts')
 
