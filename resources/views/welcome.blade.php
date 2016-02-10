@@ -16,7 +16,7 @@
             </div>
             <a href="{{ route('auth.register') }}" class="pitch-sign-up-button">Sign up now. It's free</a>
             <br>
-            <span class="pitch-donate-button">
+            <span class="pitch-donate-button big-green-button">
                 or <a href="/donate">help support development</a>
             </span>
         </div>

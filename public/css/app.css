@@ -7862,6 +7862,10 @@ h2 {
   .well > h2:first-child {
     margin-top: 0; }
 
+.sales-well {
+  font-family: georgia, serif;
+  font-size: 1.25em; }
+
 .navbar {
   border-radius: 0; }
 
@@ -7925,5 +7929,27 @@ h2 {
     .dashboard-section-icon {
       padding-top: 2rem;
       text-align: right; } }
+
+.big-green-button {
+  background: #43c25b;
+  color: #fff;
+  display: inline-block;
+  font-size: 1.1em;
+  margin: 2em auto;
+  padding: 1em 2em;
+  font-family: arial;
+  font-weight: bold;
+  text-transform: uppercase; }
+  .big-green-button:hover {
+    background: #149a2d;
+    color: #fff;
+    text-decoration: none; }
+
+.big-donate-button {
+  display: block;
+  text-align: center; }
+  @media only screen and (min-width: 500px) {
+    .big-donate-button {
+      width: 50%; } }
 
 /*# sourceMappingURL=app.css.map */
