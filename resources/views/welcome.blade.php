@@ -35,7 +35,7 @@
         <div class="col-md-6">
             <div class="well home-page-well">
                 <h2>The future of <strong>Pulled Over</strong></h2>
-                <p><strong>How is this free?</strong> Right now I'm covering all costs out of pocket Ibecause I believe it's the right thing to do. If the service is abused I may have to shut it down. If it gets legitimately popular I may seek sponsorship from like-minded people (not advertisers, but people who care about civil liberties).</li>
+                <p><strong>How is this free?</strong> Right now I'm covering all costs out of pocket because I believe it's the right thing to do. If the service is abused I may have to shut it down. If it gets legitimately popular I may seek sponsorship from like-minded people (not advertisers, but people who care about civil liberties).</li>
             <p><strong>How can I help?</strong> If PulledOver has helped you or you believe in this idea, you can <a href="{{ route('donate') }}">donate</a>. I would love to add a full, simple mobile application that works without the phone call&mdash;capturing audio, geographic coordinates, notifying family, friends, and perhaps even social media.</p>
             <p>If you're a coder, you can contribute on <a href="http://github.com/mattstauffer/pulledover">GitHub</a> (or if you're a mobile developer, message me at <a href="http://twitter.com/stauffermatt">@stauffermatt</a>).</p>
             </div>
