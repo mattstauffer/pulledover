@@ -6,6 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pulled Over</title>
 
+    <meta name="twitter:card" content="summary_large_image">
+
+    <meta property="og:title" content="Pulled Over" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://pulledover.us" />
+    <meta property="og:image" content="http://pulledover.us/images/og-pulledover-logo.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Call this free number to record any worrisome interactions and have the recording texted to your friends and family." />
+
+    <meta name="description" content="Call this free number to record any worrisome interactions and have the recording texted to your friends and family.">
+
     <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700' rel='stylesheet' type='text/css'>
 
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
