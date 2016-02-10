@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pulled Over</title>
 
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700' rel='stylesheet' type='text/css'>
+
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -18,8 +20,8 @@
         <ul class="nav navbar-nav navbar-right auth-menu">
             <li><a href="{{ route('donate') }}">Donate</a></li>
             @if (Auth::guest())
+                <li><a href="{{ route('auth.register') }}">Sign Up</a></li>
                 <li><a href="{{ route('auth.login') }}">Login</a></li>
-                <li><a href="{{ route('auth.register') }}">Register</a></li>
             @else
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -54,7 +56,9 @@
 
 <footer class="footer">
     <div class="container">
-        <p class="text-muted"><a href="tel:18443116837">1-844-311-OVER</a> | Built by <a href="http://mattstauffer.co/">Matt Stauffer</a> | Powered by <a href="http://twilio.com/">Twilio</a> and <a href="http://laravel.com/">Laravel</a> | Source on <a href="http://github.com/mattstauffer/pulledover">GitHub</a></p>
+        <p class="text-muted">
+            <a href="tel:18443116837" style="font-size: 1.25em;">1-844-311-OVER</a><br>
+            Built by <a href="http://mattstauffer.co/">Matt Stauffer</a> | Powered by <a href="http://twilio.com/">Twilio</a> and <a href="http://laravel.com/">Laravel</a> | Source on <a href="http://github.com/mattstauffer/pulledover">GitHub</a></p>
     </div>
 </footer>
 

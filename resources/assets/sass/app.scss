@@ -3,6 +3,7 @@ $navbar-inverse-link-color: #fff;
 $navbar-inverse-link-hover-bg: #333;
 $navbar-default-color: red;
 $navbar-height: 80px;
+$link-color: #ef0e5e;
 
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "node_modules/font-awesome/scss/font-awesome";
@@ -19,14 +20,14 @@ html {
     position: relative;
 }
 body {
+    background: #eee;
     /* Margin bottom by footer height */
-    margin-bottom: 60px;
+    margin-bottom: 80px;
 }
 .footer {
-    background-color: #fff;
     bottom: 0;
     font-family: Georgia, serif;
-    height: 60px;
+    height: 80px;
     padding-top: 20px;
     position: absolute;
     text-align: center;
@@ -34,17 +35,34 @@ body {
 }
 // End sticky footer
 
-body {
-    background: #f8f8f8;
+h1, h2, h3, h4 {
+    font-family: 'Roboto Condensed', arial, sans-serif;
 }
 
+h2 {
+    text-transform: uppercase;
+}
+
+.well {
+    background: #fff;
+
+    > h2:first-child {
+        margin-top: 0;
+    }
+}
+
+
+.navbar {
+    border-radius: 0;
+}
 .navbar-brand {
     padding: 0;
 }
 
 .navbar-nav {
     color: #fff;
-    font-weight: bold;
+    font-family: 'Roboto Condensed', arial;
+    font-size: 1.25em;
     text-transform: uppercase;
 }
 
