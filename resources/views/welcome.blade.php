@@ -14,9 +14,9 @@
                 </p>
                 <p>When you hang up, a recording of everything that happened will be sent to you and your friends.</p>
             </div>
-            <a href="{{ route('auth.register') }}" class="pitch-sign-up-button">Sign up now. It's free</a>
+            <a href="{{ route('auth.register') }}" class="big-green-button">Sign up now. It's free</a>
             <br>
-            <span class="pitch-donate-button big-green-button">
+            <span class="pitch-donate-button">
                 or <a href="/donate">help support development</a>
             </span>
         </div>
