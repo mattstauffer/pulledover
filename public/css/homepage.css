@@ -21,7 +21,7 @@ body {
 .home-page-hero {
   background-color: #1a1a1a;
   background-image: url("../images/hero-header-small.jpg");
-  background-position: right;
+  background-position: top right;
   background-repeat: no-repeat;
   background-size: cover;
   height: 600px;
@@ -30,7 +30,8 @@ body {
   @media only screen and (min-width: 700px) {
     .home-page-hero {
       background-image: url("../images/hero-header.jpg");
-      height: calc(100vh - 80px); } }
+      height: calc(100vh - 80px);
+      min-height: 650px; } }
 
 .pitch-column {
   color: #fff;
