@@ -7888,7 +7888,9 @@ h2 {
 
 @media only screen and (max-width: 677px) {
   .auth-menu {
-    width: 10em; } }
+    margin: 1em 0;
+    text-align: center;
+    width: 100%; } }
 
 @media only screen and (min-width: 768px) {
   .auth-menu {
