@@ -32,13 +32,13 @@ body {
     background-image: url('../images/hero-header.jpg');
     background-position: 50% 50%;
     background-repeat: no-repeat;
-    background-size: auto 100%; 
+    background-size: cover; 
     height: 600px;
     margin-bottom: 4em;
     margin-top: -20px;
 
     @media only screen and (min-width: 700px) {
-        height: 912px;
+        height: calc(100vh - 80px);
     }
 }
 
