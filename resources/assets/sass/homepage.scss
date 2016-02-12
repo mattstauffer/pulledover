@@ -29,8 +29,8 @@ body {
 
 .home-page-hero {
     background-color: #1a1a1a;
-    background-image: url('../images/hero-header.jpg');
-    background-position: 50% 50%;
+    background-image: url('../images/hero-header-small.jpg');
+    background-position: right;
     background-repeat: no-repeat;
     background-size: cover; 
     height: 600px;
@@ -38,6 +38,7 @@ body {
     margin-top: -20px;
 
     @media only screen and (min-width: 700px) {
+        background-image: url('../images/hero-header.jpg');
         height: calc(100vh - 80px);
     }
 }
