@@ -75,13 +75,7 @@
 
 @yield('content')
 
-<footer class="footer">
-    <div class="container">
-        <p class="text-muted">
-            <a href="tel:18443116837" style="font-size: 1.25em;">1-844-311-OVER</a><br>
-            Built by <a href="http://mattstauffer.co/">Matt Stauffer</a> | Powered by <a href="http://twilio.com/">Twilio</a> and <a href="http://laravel.com/">Laravel</a> | Source on <a href="http://github.com/mattstauffer/pulledover">GitHub</a></p>
-    </div>
-</footer>
+@include('partials.footer')
 
 <!-- Scripts -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
