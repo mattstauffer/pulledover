@@ -97,7 +97,13 @@
                                 <th>{{ $recording->from }}</th>
                                 <th>{{ $recording->city }}</th>
                                 <th>{{ $recording->state }}</th>
-                                <th><a href="{{ $recording->url }}">{{ $recording->url }}</a></th>
+                                <th>
+                                    @if ($recording->created_at->lt(Carbon::parse('-10 days')))
+                                    Recording has expired.
+                                    @else
+                                    <a href="{{ $recording->url }}">(link)</a>
+                                    @endif
+                                </th>
                                 <th>{{ $recording->duration }}s</th>
                                 <th>{{ $recording->created_at }}</th>
                             </tr>
