@@ -35,6 +35,7 @@ class TwilioController extends Controller
         $response->record([
             'maxLength' => 3600,
             'action' => '/after-call',
+            'timeout' => 600,
         ]);
 
         event(new CallWasReceived($phoneNumber, $request->all()));
@@ -58,7 +59,7 @@ class TwilioController extends Controller
         $this->notifyFriendsOfRecording($request);
 
         $response = new TwimlGenerator;
-        $response->say('Sorry, but we can\'t record more than an hour.');
+        $response->say('Sorry, but the recording will stop after an hour of recording or ten minutes of silence.');
         $response->hangup();
 
         event(new CallRecordingWasCompleted($request->all()));
