@@ -94,7 +94,7 @@
                             </thead>
                             @endif
                             <tr>
-                                <th>{{ $recording->from }}</th>
+                                <th>{{ $recording->formattedFrom }}</th>
                                 <th>{{ $recording->city }}</th>
                                 <th>{{ $recording->state }}</th>
                                 <th>

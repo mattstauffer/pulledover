@@ -21,4 +21,14 @@ class Recording extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getFormattedFromAttribute()
+    {
+        return sprintf(
+            '(%s) %s-%s',
+            substr($this->from, 2, 3),
+            substr($this->from, 5, 3),
+            substr($this->from, 8)
+        );
+    }
 }
