@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Jobs\Job;
 use App\Phone\TwilioClient;
 use Illuminate\Contracts\Bus\SelfHandling;
+use Illuminate\Log\Writer as Logger;
 
 class NotifyOwnerOfRecording extends Job implements SelfHandling
 {
@@ -15,17 +16,21 @@ class NotifyOwnerOfRecording extends Job implements SelfHandling
         $this->request = $request;
     }
 
-    public function handle(TwilioClient $twilio)
+    public function handle(TwilioClient $twilio, Logger $logger)
     {
+        $text = sprintf(
+            "New Pulledover.us recording. Number: %s\nFrom: %s %s\nURL: %s",
+            $this->request->get("From"),
+            $this->request->get("CallerCity"),
+            $this->request->get("CallerState"),
+            $this->request->get("RecordingUrl")
+        );
+
         $twilio->text(
             TwilioClient::formatNumberFromTwilio($this->request->get("From")),
-            sprintf(
-                "New Pulledover.us recording. Number: %s\nFrom: %s %s\nURL: %s",
-                $this->request->get("From"),
-                $this->request->get("CallerCity"),
-                $this->request->get("CallerState"),
-                $this->request->get("RecordingUrl")
-            )
+            $text
         );
+
+        $logger->info('Owner SMS sent: ' . $text);
     }
 }
