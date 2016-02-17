@@ -21,7 +21,8 @@ class VerificationController extends Controller
         $phoneNumber->markVerified();
 
         Log::info('Phone number verified: ' . print_r($phoneNumber, true));
-        return "Verified!";
+
+        return view('verified');
     }
 
     public function friend($hash)
@@ -37,6 +38,5 @@ class VerificationController extends Controller
         $friend->markVerified();
 
         Log::info('Friend number verified: ' . print_r($friend, true));
-        return "Verified!";
     }
 }
