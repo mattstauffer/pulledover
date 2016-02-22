@@ -7,7 +7,7 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
-        "twilio/sdk": "dev-master",
+        "twilio/sdk": "^4.10",
         "adamwathan/bootforms": "dev-master",
         "doctrine/dbal": "^2.6@dev"
     },
