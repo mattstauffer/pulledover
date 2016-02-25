@@ -28,11 +28,6 @@ class TwilioController extends Controller
     private function startRecording()
     {
         $response = new TwimlGenerator;
-        $response->say('We are so sorry but our servers are offline right now. We are working as fast as we can to get them back!');
-        $response->hangup();
-
-
-        $response = new TwimlGenerator;
         $response->say('Thank you for calling Pulled Over. Your audio is now being recorded.');
         $response->record([
             'maxLength' => 3600,
