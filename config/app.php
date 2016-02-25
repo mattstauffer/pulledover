@@ -144,7 +144,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\TwilioServiceProvider::class,
-        AdamWathan\BootForms\BootFormsServiceProvider::class
+        AdamWathan\BootForms\BootFormsServiceProvider::class,
         Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider::class,
     ],
 
