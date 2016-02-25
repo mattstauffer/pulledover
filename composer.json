@@ -9,7 +9,8 @@
         "laravel/framework": "5.1.*",
         "twilio/sdk": "^4.10",
         "adamwathan/bootforms": "dev-master",
-        "doctrine/dbal": "^2.6@dev"
+        "doctrine/dbal": "^2.6@dev",
+        "bugsnag/bugsnag-laravel": "1.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
