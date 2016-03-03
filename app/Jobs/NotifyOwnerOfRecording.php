@@ -6,7 +6,7 @@ use App\Jobs\Job;
 use App\Phone\TwilioClient;
 use Illuminate\Log\Writer as Logger;
 
-class NotifyOwnerOfRecording extends Job implements 
+class NotifyOwnerOfRecording extends Job implements
 {
     private $request;
 

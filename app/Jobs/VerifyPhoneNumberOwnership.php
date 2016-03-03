@@ -7,7 +7,7 @@ use App\Phone\NumberVerifier;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class VerifyPhoneNumberOwnership extends Job implements 
+class VerifyPhoneNumberOwnership extends Job implements
 {
     use InteractsWithQueue, SerializesModels;
 
