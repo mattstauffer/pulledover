@@ -22,4 +22,9 @@ class Friend extends Model
         $this->is_verified = true;
         $this->save();
     }
+
+    public function scopeVerified($query)
+    {
+        return $query->where('is_verified', true);
+    }
 }

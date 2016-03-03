@@ -29,10 +29,10 @@ class NotifyFriendsOfRecording extends Job implements SelfHandling
             $this->request->get("RecordingUrl")
         );
 
-        $user->friends->each(function ($friend) use ($user, $twilio, $text) {
+        $user->friends->verified()->each(function ($friend) use ($user, $twilio, $text) {
             $twilio->text($friend->number, $text);
         });
 
-        $logger->info('Friends CMS sent: ' . $text);
+        $logger->info('Friends SMS sent: ' . $text);
     }
 }
