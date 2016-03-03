@@ -7,7 +7,7 @@ use App\Phone\NumberVerifier;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class VerifyPhoneNumberFriendship extends Job implements
+class VerifyPhoneNumberFriendship extends Job
 {
     use InteractsWithQueue, SerializesModels;
 
