@@ -1,10 +1,12 @@
 <?php
 
+use App\Friend;
+use App\Jobs\NotifyFriendsOfRecording;
+use App\Phone\TwilioClient;
 use App\PhoneNumber;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Mockery as M;
 
 class NotificationTest extends TestCase
 {
@@ -13,21 +15,19 @@ class NotificationTest extends TestCase
     public function test_only_verified_friends_are_notified()
     {
         $user = factory(User::class)->create();
-        $number = factory(PhoneNumber::class)->make();
+        $number = factory(PhoneNumber::class, 'verified')->make();
         $user->phoneNumbers()->save($number);
 
         $friend = factory(Friend::class)->make();
-        $user->friends()->save($friend);
+        $friendVerified = factory(Friend::class, 'verified')->make();
+        $user->friends()->saveMany([$friend, $friendVerified]);
 
         $request = new \Illuminate\Http\Request([
-            'From' => 'abc',
-            'CallerCity' => 'def',
-            'CallerState' => 'ghi',
-            'RecordingUrl' => 'jkl',
+            'From'         => $number->number
         ]);
 
-        $twilioMock = m::mock(); // @todo
-
+        $twilioMock = M::spy(TwilioClient::class);
+        $this->app->instance(TwilioClient::class, $twilioMock);
         $command = new NotifyFriendsOfRecording($request);
 
         $command->handle(
@@ -35,6 +35,9 @@ class NotificationTest extends TestCase
             app('Illuminate\Log\Writer')
         );
 
-        // Assert stuff
+        $twilioMock->shouldHaveReceived('text')->once()->with(
+            $friendVerified->number,
+            M::any()
+        );
     }
 }

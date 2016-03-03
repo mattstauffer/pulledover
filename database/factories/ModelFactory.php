@@ -41,6 +41,12 @@ $factory->define(App\Friend::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->defineAs(App\Friend::class, 'verified', function (Faker\Generator $faker) use ($factory) {
+    $friend = $factory->raw(App\Friend::class);
+
+    return array_merge($friend, ['is_verified' => true]);
+});
+
 $factory->define(App\Recording::class, function (Faker\Generator $faker) {
     return [
         'from' => '+1313' . $faker->randomNumber(7),
