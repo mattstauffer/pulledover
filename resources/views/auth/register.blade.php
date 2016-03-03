@@ -36,7 +36,7 @@
                                 <label class="col-md-4 control-label">Email Address</label>
 
                                 <div class="col-md-6">
-                                    <input type="email" class="form-control" name="email" value="{{ old('email', Input::get('email')) }}" aria-describedby="emailHelpBlock">
+                                    <input type="email" class="form-control" name="email" value="{{ old('email') }}" aria-describedby="emailHelpBlock">
                                     <span id="emailHelpBlock" class="help-block">
                                         We need your email address for login and password resets.
                                     </span>
