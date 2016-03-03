@@ -14,8 +14,8 @@ class NotificationTest extends TestCase
 
     public function test_only_verified_friends_are_notified()
     {
-        $user   = factory(User::class)->create();
-        $number = factory(PhoneNumber::class,'verified')->make();
+        $user = factory(User::class)->create();
+        $number = factory(PhoneNumber::class, 'verified')->make();
         $user->phoneNumbers()->save($number);
 
         $friend = factory(Friend::class)->make();
