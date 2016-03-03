@@ -4,10 +4,9 @@ namespace App\Jobs;
 
 use App\Jobs\Job;
 use App\Phone\TwilioClient;
-use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Log\Writer as Logger;
 
-class NotifyOwnerOfRecording extends Job implements SelfHandling
+class NotifyOwnerOfRecording extends Job implements 
 {
     private $request;
 
