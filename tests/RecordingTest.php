@@ -177,9 +177,9 @@ class RecordingTest extends TestCase
         ]);
         $user->phoneNumbers()->save($number);
 
-        $friend1 = factory(Friend::class)->make();
-        $friend2 = factory(Friend::class)->make();
-        $friend3 = factory(Friend::class)->make();
+        $friend1 = factory(Friend::class, 'verified')->make();
+        $friend2 = factory(Friend::class, 'verified')->make();
+        $friend3 = factory(Friend::class, 'verified')->make();
 
         $user->friends()->saveMany([$friend1, $friend2, $friend3]);
 
