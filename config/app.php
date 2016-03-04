@@ -147,6 +147,8 @@ return [
         App\Providers\TwilioServiceProvider::class,
         AdamWathan\BootForms\BootFormsServiceProvider::class,
         Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider::class,
+        LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class,
+        LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
     ],
 
     /*
@@ -195,6 +197,7 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         'BootForm'  => AdamWathan\BootForms\Facades\BootForm::class,
         'Bugsnag'   => Bugsnag\BugsnagLaravel\BugsnagFacade::class,
+        'Authorizer' => LucaDegasperi\OAuth2Server\Facades\Authorizer::class,
     ],
 
 ];
