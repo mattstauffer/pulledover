@@ -4,11 +4,10 @@ namespace App\Jobs;
 
 use App\Jobs\Job;
 use App\Phone\NumberVerifier;
-use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class VerifyPhoneNumberFriendship extends Job implements SelfHandling
+class VerifyPhoneNumberFriendship extends Job
 {
     use InteractsWithQueue, SerializesModels;
 
