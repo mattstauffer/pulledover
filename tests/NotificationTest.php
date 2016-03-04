@@ -6,6 +6,7 @@ use App\Phone\TwilioClient;
 use App\PhoneNumber;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Http\Request;
 use Mockery as M;
 
 class NotificationTest extends TestCase
@@ -22,8 +23,8 @@ class NotificationTest extends TestCase
         $friendVerified = factory(Friend::class, 'verified')->make();
         $user->friends()->saveMany([$friend, $friendVerified]);
 
-        $request = new \Illuminate\Http\Request([
-            'From'         => $number->number
+        $request = new Request([
+            'From' => $number->number
         ]);
 
         $twilioMock = M::spy(TwilioClient::class);
