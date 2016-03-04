@@ -1,12 +1,12 @@
 <?php
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Foundation\Validation\ValidationException;
 
 namespace App\Exceptions;
 
-use Exception;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Bugsnag\BugsnagLaravel\BugsnagExceptionHandler as ExceptionHandler;
+use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Foundation\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
 {
