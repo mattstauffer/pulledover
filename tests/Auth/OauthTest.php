@@ -28,7 +28,7 @@ class OauthTest extends TestCase
 
         //should create code
         $this->postApprove($client);
-        $this->assertNotNull($this->responseQueryCode());
+        $this->assertNotNull($this->responseQueryCode(), 'Failed asserting that redirect query "code" was not null');
         $this->seeInDatabase('oauth_sessions', ['client_id' => $client->id]);
     }
 

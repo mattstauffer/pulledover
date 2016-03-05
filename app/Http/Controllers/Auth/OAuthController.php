@@ -23,6 +23,8 @@ class OAuthController extends Controller
     public function __construct(Authorizer $authorizer)
     {
         $this->authorizer = $authorizer;
+        $this->middleware('auth');
+        $this->middleware('check-authorization-params')->only(['getAuthorize', 'postAuthorize']);
     }
 
     /**

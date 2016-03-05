@@ -19,6 +19,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('password/email', ['uses' => 'PasswordController@postEmail']);
         Route::get('password/reset', ['as' => 'password.reset', 'uses' => 'PasswordController@getReset']);
         Route::post('password/reset', ['uses' => 'PasswordController@postReset']);
+        Route::get('oauth/authorize',['as' => 'oauth.authorize.get', 'uses' => 'OAuthController@getAuthorize']);
+        Route::post('oauth/authorize',['as' => 'oauth.authorize.post','uses' => 'OAuthController@postAuthorize']);
     });
 
     Route::group(['middleware' => 'auth'], function () {
@@ -30,19 +32,6 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('dismiss-welcome', ['as' => 'dismiss-welcome', 'uses' => 'AccountController@dismissWelcome']);
 
         Route::get('admin', ['as' => 'admin.index', 'uses' => 'AdminController@index']);
-
-        // Oauth sign in routes
-        Route::get('oauth/authorize',[
-            'as' => 'oauth.authorize.get',
-            'uses' => 'Auth\OAuthController@getAuthorize',
-            'middleware' => ['check-authorization-params']
-        ]);
-
-        Route::post('oauth/authorize',[
-            'as' => 'oauth.authorize.post',
-            'uses' => 'Auth\OAuthController@postAuthorize',
-            'middleware' => ['check-authorization-params']
-        ]);
     });
 
     Route::post('call', ['as' => 'hook.call', 'uses' => 'TwilioController@callHook']);
@@ -58,17 +47,10 @@ Route::post('oauth/access_token', [
     'uses' => 'Auth\OAuthController@postAccessToken'
 ]);
 
-// todo remove all below this line - welcome to testville where routes burn bright and die young
-Route::get('oauth/access_token', 'Auth\OAuthController@getAccessToken');
-
 Route::group(['prefix' => 'api', 'middleware' => ['api','oauth']], function(){
 
-    Route::get('test', function(\LucaDegasperi\OAuth2Server\Authorizer $authorizer){
-        dd(
-            'test 2',
-            \App\User::find($authorizer->getResourceOwnerId()),
-            'Hooray, you just authenticated with oauth!!'
-        );
-    });
-
 });
+
+if(app()->isLocal()){
+    Route::get('oauth/access_token', 'Auth\OAuthController@getAccessToken');
+}
