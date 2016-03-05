@@ -213,4 +213,41 @@ class RecordingTest extends TestCase
             ->see($recording->state)
             ->see($recording->duration);
     }
+
+    public function test_it_increments_count_on_incoming_call()
+    {
+        $limiter = M::spy(\Illuminate\Cache\RateLimiter::class);
+        app()->instance(\Illuminate\Cache\RateLimiter::class, $limiter);
+
+        $user = factory(User::class)->create();
+        $number = new PhoneNumber([
+            'number' => TwilioClient::formatNumberFromTwilio($this->afterCallPost['Caller']),
+        ]);
+        $user->phoneNumbers()->save($number);
+
+        $this->post(route('hook.call'), $this->callPost);
+        $this->checkTwiml();
+
+        $limiter->shouldHaveReceived('hit')->once()->withArgs([
+            'twilio.'.$this->callPost['From'].'.calls',
+            M::any()
+        ]);
+    }
+
+    public function test_it_rejects_call_if_over_rate_limit()
+    {
+        $limiter = M::spy(\Illuminate\Cache\RateLimiter::class);
+        app()->instance(\Illuminate\Cache\RateLimiter::class, $limiter);
+
+        $user = factory(User::class)->create();
+        $number = new PhoneNumber([
+            'number' => TwilioClient::formatNumberFromTwilio($this->afterCallPost['Caller']),
+        ]);
+        $user->phoneNumbers()->save($number);
+
+        $limiter->shouldReceive('tooManyAttempts')->andReturn('true');
+
+        $this->post(route('hook.call'), $this->callPost);
+        $this->assertResponseStatus(429);
+    }
 }
