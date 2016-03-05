@@ -11,7 +11,7 @@ class OauthTest extends TestCase
      *
      * @return void
      */
-    public function test_code_created_if_user_approves()
+    public function test_code_created_only_if_user_approves()
     {
         //create client
         $client = MockClient::create();
@@ -20,6 +20,13 @@ class OauthTest extends TestCase
         $user = factory(\App\User::class)->create();
 
         $this->actingAs($user);
+
+        //should not create code
+        $this->postApprove($client, false);
+        $this->assertNull($this->responseQueryCode());
+        $this->dontSeeInDatabase('oauth_sessions', ['client_id' => $client->id]);
+
+        //should create code
         $this->postApprove($client);
         $this->assertNotNull($this->responseQueryCode());
         $this->seeInDatabase('oauth_sessions', ['client_id' => $client->id]);
@@ -43,12 +50,13 @@ class OauthTest extends TestCase
      * Create code for user.
      *
      * @param MockClient $client
+     * @param bool $approve
      */
-    protected function postApprove(MockClient $client)
+    protected function postApprove(MockClient $client, $approve = true)
     {
         $this->post(
             route('oauth.authorize.post', $client->clientApproveParams()),
-            ['approve' => true]
+            $approve ? ['approve' => true] : ['deny' => true]
         );
     }
 
