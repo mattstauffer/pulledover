@@ -54,7 +54,13 @@ $factory->define(App\Recording::class, function (Faker\Generator $faker) {
         'state' => $faker->state,
         'url' => $faker->url,
         'recording_sid' => $faker->randomNumber(8) . $faker->randomNumber(8) . $faker->randomNumber(8) . $faker->randomNumber(8),
-        'duration' => $faker->randomNumber(2),
+        'duration' => $faker->numberBetween(1, 20),
         'json' => '{}',
+        'created_at' => $faker->dateTimeBetween('-1 week')
     ];
+});
+
+
+$factory->defineAs(App\Recording::class, 'long', function (Faker\Generator $faker) use ($factory){
+    return array_merge($factory->raw(\App\Recording::class), ['duration' => $faker->numberBetween(100, 400)]);
 });
