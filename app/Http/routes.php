@@ -42,15 +42,12 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 //mobile should post code back to this route for an access token
-Route::post('oauth/access_token', [
-    'as' => 'oauth.access_token',
-    'uses' => 'Auth\OAuthController@postAccessToken'
-]);
+Route::post('oauth/access_token', [ 'as' => 'oauth.access_token', 'uses' => 'Auth\OAuthController@postAccessToken']);
 
 Route::group(['prefix' => 'api', 'middleware' => ['api','oauth']], function () {
 
 });
 
-if( app()->isLocal() ) {
+if ( app()->isLocal() ) {
     Route::get('oauth/access_token', 'Auth\OAuthController@getAccessToken');
 }
