@@ -13,7 +13,8 @@
         "twilio/sdk": "^4.10",
         "adamwathan/bootforms": "dev-master",
         "doctrine/dbal": "^2.6@dev",
-        "bugsnag/bugsnag-laravel": "1.*"
+        "bugsnag/bugsnag-laravel": "1.*",
+        "lucadegasperi/oauth2-server-laravel": "5.1.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

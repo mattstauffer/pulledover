@@ -19,6 +19,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('password/email', ['uses' => 'PasswordController@postEmail']);
         Route::get('password/reset', ['as' => 'password.reset', 'uses' => 'PasswordController@getReset']);
         Route::post('password/reset', ['uses' => 'PasswordController@postReset']);
+        Route::get('oauth/authorize', ['as' => 'oauth.authorize.get', 'uses' => 'OAuthController@getAuthorize']);
+        Route::post('oauth/authorize', ['as' => 'oauth.authorize.post', 'uses' => 'OAuthController@postAuthorize']);
     });
 
     Route::group(['middleware' => 'auth'], function () {
@@ -38,3 +40,14 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('verify/own/{hash}', ['as' => 'phones.verify', 'uses' => 'VerificationController@own']);
     Route::get('verify/friend/{hash}', ['as' => 'friends.verify', 'uses' => 'VerificationController@friend']);
 });
+
+//mobile should post code back to this route for an access token
+Route::post('oauth/access_token', [ 'as' => 'oauth.access_token', 'uses' => 'Auth\OAuthController@postAccessToken']);
+
+Route::group(['prefix' => 'api', 'middleware' => ['api','oauth']], function () {
+
+});
+
+if ( app()->isLocal() ) {
+    Route::get('oauth/access_token', 'Auth\OAuthController@getAccessToken');
+}

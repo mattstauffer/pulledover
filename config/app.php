@@ -147,6 +147,7 @@ return [
         App\Providers\TwilioServiceProvider::class,
         AdamWathan\BootForms\BootFormsServiceProvider::class,
         Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider::class,
+        App\Providers\OAuthServiceProvider::class,
     ],
 
     /*
