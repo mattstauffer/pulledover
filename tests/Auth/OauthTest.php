@@ -20,9 +20,7 @@ class OauthTest extends TestCase
         $user = factory(\App\User::class)->create();
 
         $this->actingAs($user);
-        $this->post($client->toCodeUrl(),['approve' => true]);
-
-        //expect redirect with code
+        $this->postApprove($client);
         $this->assertNotNull($this->responseQueryCode());
         $this->seeInDatabase('oauth_sessions', ['client_id' => $client->id]);
     }
@@ -36,20 +34,45 @@ class OauthTest extends TestCase
         $user = factory(\App\User::class)->create();
 
         $this->actingAs($user);
-        $this->post($client->toCodeUrl(),['approve' => true]);
+        $this->postApprove($client);
+        $this->postAccessToken($client, $this->responseQueryCode());
+        $this->seeJsonStructure(['access_token','expires_in','token_type']);
+    }
 
+    /**
+     * Create code for user.
+     *
+     * @param MockClient $client
+     */
+    protected function postApprove(MockClient $client)
+    {
+        $this->post(
+            route('oauth.authorize.post', $client->clientApproveParams()),
+            ['approve' => true]
+        );
+    }
+
+    /**
+     * Exchange code for access token.
+     *
+     * @param MockClient $client
+     * @param $code
+     */
+    protected function postAccessToken(MockClient $client, $code)
+    {
         $params = array_merge(
             $client->clientAuthParams(),
             [
-                'code' => $this->responseQueryCode(),
+                'code' => $code,
                 'grant_type' => 'authorization_code',
                 'response_type' => 'code',
             ]
         );
 
-        $this->post(route('oauth.access_token', array_except($params,'client_secret')), $params);
-
-        $this->seeJsonStructure(['access_token','expires_in','token_type']);
+        $this->post(
+            route('oauth.access_token', array_except($params,'client_secret')),
+            $params
+        );
     }
 
     protected function responseQueryCode()
@@ -66,9 +89,6 @@ class OauthTest extends TestCase
 
 class MockClient extends \Illuminate\Support\Fluent
 {
-    public $codeRoute = 'oauth.authorize.post';
-    public $tokenRoute = 'oauth.access_token';
-
     protected $attributes = [
         'id' => 1,
         'name' => 'ios',
@@ -101,19 +121,24 @@ class MockClient extends \Illuminate\Support\Fluent
     }
 
     /**
-     * Get url string to post to for client approval.
+     * Get params for client approval request.
      *
      * @return string
      */
-    public function toCodeUrl()
+    public function clientApproveParams()
     {
-        return route($this->codeRoute,[
+        return [
             'client_id' => $this->id,
             'redirect_uri' => $this->redirect_uri,
             'response_type' => 'code',
-        ]);
+        ];
     }
 
+    /**
+     * Get params for code exchange request.
+     *
+     * @return array
+     */
     public function clientAuthParams()
     {
         return [
