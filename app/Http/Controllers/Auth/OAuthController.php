@@ -35,7 +35,7 @@ class OAuthController extends Controller
     public function getAuthorize()
     {
         $authParams = $this->authorizer->getAuthCodeRequestParams();
-        $formParams = array_except($authParams,'client');
+        $formParams = array_except($authParams, 'client');
         $formParams['client_id'] = $authParams['client']->getId();
 
         //get scope ids
@@ -91,7 +91,7 @@ class OAuthController extends Controller
     {
         $code = $request->get('code');
 
-        return view('oauth.authorize.token',compact('code'));
+        return view('oauth.authorize.token', compact('code'));
     }
 
     /**

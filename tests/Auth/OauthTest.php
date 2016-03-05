@@ -6,12 +6,7 @@ class OauthTest extends TestCase
 {
     use DatabaseMigrations;
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function test_code_created_only_if_user_approves()
+    public function test_code_created_only_if_user_approves ()
     {
         //create client
         $client = MockClient::create();
@@ -32,7 +27,7 @@ class OauthTest extends TestCase
         $this->seeInDatabase('oauth_sessions', ['client_id' => $client->id]);
     }
 
-    public function test_code_can_be_exchanged_for_auth_token()
+    public function test_code_can_be_exchanged_for_auth_token ()
     {
         //create client
         $client = MockClient::create();
@@ -43,7 +38,7 @@ class OauthTest extends TestCase
         $this->actingAs($user);
         $this->postApprove($client);
         $this->postAccessToken($client, $this->responseQueryCode());
-        $this->seeJsonStructure(['access_token','expires_in','token_type']);
+        $this->seeJsonStructure(['access_token', 'expires_in', 'token_type']);
     }
 
     /**
@@ -52,7 +47,7 @@ class OauthTest extends TestCase
      * @param MockClient $client
      * @param bool $approve
      */
-    protected function postApprove(MockClient $client, $approve = true)
+    protected function postApprove (MockClient $client, $approve = true)
     {
         $this->post(
             route('oauth.authorize.post', $client->clientApproveParams()),
@@ -66,7 +61,7 @@ class OauthTest extends TestCase
      * @param MockClient $client
      * @param $code
      */
-    protected function postAccessToken(MockClient $client, $code)
+    protected function postAccessToken (MockClient $client, $code)
     {
         $params = array_merge(
             $client->clientAuthParams(),
@@ -78,16 +73,16 @@ class OauthTest extends TestCase
         );
 
         $this->post(
-            route('oauth.access_token', array_except($params,'client_secret')),
+            route('oauth.access_token', array_except($params, 'client_secret')),
             $params
         );
     }
 
-    protected function responseQueryCode()
+    protected function responseQueryCode ()
     {
         $location = $this->response->headers->get('Location');
 
-        if(!strpos($location, 'code=')){
+        if (!strpos($location, 'code=')) {
             return null;
         }
 
@@ -109,7 +104,7 @@ class MockClient extends \Illuminate\Support\Fluent
      *
      * @return $this
      */
-    public static function create($attributes = [])
+    public static function create ($attributes = [])
     {
         return (new self($attributes))->save();
     }
@@ -117,9 +112,9 @@ class MockClient extends \Illuminate\Support\Fluent
     /**
      * @return $this
      */
-    public function save()
+    public function save ()
     {
-        DB::table('oauth_clients')->insert(array_only($this->attributes,['id','secret','name']));
+        DB::table('oauth_clients')->insert(array_only($this->attributes, ['id', 'secret', 'name']));
         DB::table('oauth_client_endpoints')->insert([
             'client_id' => $this->id,
             'redirect_uri' => $this->redirect_uri
@@ -133,7 +128,7 @@ class MockClient extends \Illuminate\Support\Fluent
      *
      * @return string
      */
-    public function clientApproveParams()
+    public function clientApproveParams ()
     {
         return [
             'client_id' => $this->id,
@@ -147,7 +142,7 @@ class MockClient extends \Illuminate\Support\Fluent
      *
      * @return array
      */
-    public function clientAuthParams()
+    public function clientAuthParams ()
     {
         return [
             'client_id' => $this->id,

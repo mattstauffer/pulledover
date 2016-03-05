@@ -37,5 +37,4 @@ class OAuthServiceProvider extends ServiceProvider
     {
         return [Authorizer::class];
     }
-
 }

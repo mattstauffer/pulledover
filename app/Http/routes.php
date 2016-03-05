@@ -19,8 +19,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('password/email', ['uses' => 'PasswordController@postEmail']);
         Route::get('password/reset', ['as' => 'password.reset', 'uses' => 'PasswordController@getReset']);
         Route::post('password/reset', ['uses' => 'PasswordController@postReset']);
-        Route::get('oauth/authorize',['as' => 'oauth.authorize.get', 'uses' => 'OAuthController@getAuthorize']);
-        Route::post('oauth/authorize',['as' => 'oauth.authorize.post','uses' => 'OAuthController@postAuthorize']);
+        Route::get('oauth/authorize', ['as' => 'oauth.authorize.get', 'uses' => 'OAuthController@getAuthorize']);
+        Route::post('oauth/authorize', ['as' => 'oauth.authorize.post', 'uses' => 'OAuthController@postAuthorize']);
     });
 
     Route::group(['middleware' => 'auth'], function () {
@@ -47,10 +47,10 @@ Route::post('oauth/access_token', [
     'uses' => 'Auth\OAuthController@postAccessToken'
 ]);
 
-Route::group(['prefix' => 'api', 'middleware' => ['api','oauth']], function(){
+Route::group(['prefix' => 'api', 'middleware' => ['api','oauth']], function () {
 
 });
 
-if(app()->isLocal()){
+if( app()->isLocal() ) {
     Route::get('oauth/access_token', 'Auth\OAuthController@getAccessToken');
 }
