@@ -53,7 +53,10 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 //mobile should post code back to this route for an access token
-Route::post('oauth/access_token', 'Auth\OAuthController@postAccessToken');
+Route::post('oauth/access_token', [
+    'as' => 'oauth.access_token',
+    'uses' => 'Auth\OAuthController@postAccessToken'
+]);
 
 // todo remove all below this line - welcome to testville where routes burn bright and die young
 Route::get('oauth/access_token', 'Auth\OAuthController@getAccessToken');
