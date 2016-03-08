@@ -56,7 +56,7 @@ $factory->define(App\Recording::class, function (Faker\Generator $faker) {
         'recording_sid' => $faker->randomNumber(8) . $faker->randomNumber(8) . $faker->randomNumber(8) . $faker->randomNumber(8),
         'duration' => $faker->numberBetween(1, 20),
         'json' => '{}',
-        'created_at' => $faker->dateTimeBetween('-1 week')
+        'created_at' => $faker->dateTimeBetween('-2 month')
     ];
 });
 

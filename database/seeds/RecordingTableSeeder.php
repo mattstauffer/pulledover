@@ -17,12 +17,12 @@ class RecordingTableSeeder extends Seeder
         foreach($users as $user){
             $user->phoneNumbers()->save(factory(\App\PhoneNumber::class, 'verified')->make());
 
-            $user->friends()->saveMany(factory(\App\Friend::class, $faker->numberBetween(0,3))->make([
-                'verified' => $faker->boolean(80)
+            $user->friends()->saveMany(factory(\App\Friend::class,3)->make([
+                'is_verified' => $faker->boolean(80)
             ]));
 
             factory(\App\Recording::class, 5)->create([
-                'user_id' => $user->id,
+                'user_id' => $user->id
             ]);
 
             if($faker->boolean(75)){
