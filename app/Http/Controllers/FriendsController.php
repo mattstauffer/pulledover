@@ -10,38 +10,18 @@ use Illuminate\Support\Facades\Auth;
 
 class FriendsController extends Controller
 {
-    private $quit = false;
-
     public function __construct()
     {
-        if (Auth::user()->phoneNumbers()->verified()->count() == 0) {
-            $this->quit = true;
-        }
-    }
-
-    private function quit()
-    {
-        // This should be a middleware
-        return redirect()
-            ->route('dashboard')
-            ->with('messages', ['You need to verify a phone number before you can add any friends.']);
+        $this->middleware('number.verified');
     }
 
     public function create()
     {
-        if ($this->quit) {
-            return $this->quit();
-        }
-
         return view('friends.create');
     }
 
     public function store(Request $request)
     {
-        if ($this->quit) {
-            return $this->quit();
-        }
-
         $number = preg_replace('/[^\d]/', '', $request->input('number'));
 
         $validator = $this->getValidationFactory()->make(compact('number'), [

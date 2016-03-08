@@ -63,4 +63,12 @@ class FriendTest extends TestCase
         $this->post(route('friends.store'), ['name' => 'Sally', 'number' => "(500) 555-5555"]);
         $this->seeInDatabase('friends', ['number' => '5005555555']);
     }
+
+    public function test_it_redirects_if_user_number_is_not_verified()
+    {
+        $this->be(factory(User::class)->create());
+        $this->post(route('friends.store'), ['name' => 'Sally', 'number' => "(500) 555-5555"]);
+        $this->assertRedirectedTo(route('dashboard'));
+        $this->assertSessionHas('messages', ['You need to verify a phone number before you can add any friends.']);
+    }
 }
