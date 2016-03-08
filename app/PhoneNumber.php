@@ -4,6 +4,7 @@ namespace App;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class PhoneNumber extends Model
 {
@@ -31,9 +32,9 @@ class PhoneNumber extends Model
         return self::where('number', $number)->firstOrFail();
     }
 
-    public function scopeVerified()
+    public function scopeVerified(Builder $builder)
     {
-        return $this->where('is_verified', true);
+        return $builder->where('is_verified', true);
     }
 
     public static function findByTwilioNumber($number)

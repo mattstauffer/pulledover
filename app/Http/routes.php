@@ -25,7 +25,6 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('home', ['as' => 'dashboard', 'uses' => 'AccountController@index']);
         Route::resource('numbers', 'NumbersController', ['only' => ['create', 'store']]);
         Route::resource('friends', 'FriendsController', ['only' => ['create', 'store']]);
-        Route::get('recordings', 'RecordingsController@index');
 
         Route::get('dismiss-welcome', ['as' => 'dismiss-welcome', 'uses' => 'AccountController@dismissWelcome']);
 

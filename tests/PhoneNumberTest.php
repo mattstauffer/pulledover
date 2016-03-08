@@ -5,6 +5,7 @@ use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Mockery as M;
 
 class PhoneNumberTest extends TestCase
 {
@@ -72,5 +73,20 @@ class PhoneNumberTest extends TestCase
             ->press('Add New Number');
 
         $this->see('Whoops!');
+    }
+
+    public function test_it_strips_non_numeric_characters_on_store()
+    {
+        $user = factory(User::class)->create();
+        $this->be($user);
+
+        //don't nobody wanna test twilio validators right now
+        Validator::extend('valid_phone', function ($attribute, $value, $parameters, $validator) {
+            // Skip validation because we can't validate a phone number on test creds
+            return true;
+        });
+
+        $this->post(route('numbers.store'), ['number' => '(500) 555-0000']);
+        $this->seeInDatabase('phone_numbers', ['number' => '5005550000']);
     }
 }

@@ -18,12 +18,18 @@ class NumbersController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $number = preg_replace('/[^\d]/', '', $request->input('number'));
+
+        $validator = $this->getValidationFactory()->make(compact('number'), [
             'number' => 'required|digits:10|integer|unique_number|globally_unique_number|valid_phone'
         ]);
 
+        if ($validator->fails()) {
+            $this->throwValidationException($request, $validator);
+        }
+
         $number = Auth::user()->phoneNumbers()->create([
-            'number' => $request->get('number'),
+            'number' => $number,
         ]);
 
         $this->dispatch(new VerifyPhoneNumberOwnership($number));

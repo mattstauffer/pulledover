@@ -47,4 +47,32 @@ class FriendTest extends TestCase
             ->see($friend->formattedNumber)
             ->see($friend->name);
     }
+
+    public function test_it_strips_non_numeric_characters_on_store()
+    {
+        $user = factory(User::class)->create();
+        $user->phoneNumbers()->save(factory(PhoneNumber::class, 'verified')->make());
+        $this->be($user);
+
+        //don't nobody wanna test twilio validators right now
+        Validator::extend('valid_phone', function ($attribute, $value, $parameters, $validator) {
+            // Skip validation because we can't validate a phone number on test creds
+            return true;
+        });
+
+        $this->post(route('friends.store'), ['name' => 'Sally', 'number' => "(500) 555-5555"]);
+        $this->seeInDatabase('friends', ['number' => '5005555555']);
+    }
+
+    public function test_it_redirects_if_user_number_is_not_verified()
+    {
+        //this just makes sure the verified numbers for other people aren't included in the count
+        $notMe = factory(User::class)->create();
+        $notMe->phoneNumbers()->save(factory(PhoneNumber::class, 'verified')->make());
+
+        $this->be(factory(User::class)->create());
+        $this->post(route('friends.store'), ['name' => 'Sally', 'number' => "(500) 555-5555"]);
+        $this->assertRedirectedTo(route('dashboard'));
+        $this->assertSessionHas('messages', ['You need to verify a phone number before you can add any friends.']);
+    }
 }
