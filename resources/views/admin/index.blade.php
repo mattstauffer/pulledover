@@ -135,7 +135,6 @@
 
 
 @section('scripts')
-    <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.17/vue.min.js"></script>
     <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
     <script src="/js/axis-title.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.min.js"></script>
