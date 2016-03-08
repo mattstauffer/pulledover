@@ -42,12 +42,18 @@ class FriendsController extends Controller
             return $this->quit();
         }
 
-        $this->validate($request, [
+        $number = preg_replace('/[^\d]/', '', $request->input('number'));
+
+        $validator = $this->getValidationFactory()->make(compact('number'), [
             'number' => 'required|digits:10|integer|unique_friend|valid_phone'
         ]);
 
+        if ($validator->fails()) {
+            $this->throwValidationException($request, $validator);
+        }
+
         $number = Auth::user()->friends()->create([
-            'number' => $request->get('number'),
+            'number' => $number,
             'name' => $request->get('name'),
         ]);
 

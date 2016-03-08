@@ -47,4 +47,20 @@ class FriendTest extends TestCase
             ->see($friend->formattedNumber)
             ->see($friend->name);
     }
+
+    public function test_it_strips_non_numeric_characters_on_store()
+    {
+        $user = factory(User::class)->create();
+        $user->phoneNumbers()->save(factory(PhoneNumber::class, 'verified')->make());
+        $this->be($user);
+
+        //don't nobody wanna test twilio validators right now
+        Validator::extend('valid_phone', function ($attribute, $value, $parameters, $validator) {
+            // Skip validation because we can't validate a phone number on test creds
+            return true;
+        });
+
+        $this->post(route('friends.store'), ['name' => 'Sally', 'number' => "(500) 555-5555"]);
+        $this->seeInDatabase('friends', ['number' => '5005555555']);
+    }
 }

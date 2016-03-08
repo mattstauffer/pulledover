@@ -81,10 +81,10 @@ class PhoneNumberTest extends TestCase
         $this->be($user);
 
         //don't nobody wanna test twilio validators right now
-        $validator = Mockery::mock(\App\Phone\TwilioClient::class);
-        $validator->shouldReceive('make')->once()->andReturn($validator);
-        $validator->shouldReceive('fails')->once()->andReturn(false);
-        Validator::swap($validator);
+        Validator::extend('valid_phone', function ($attribute, $value, $parameters, $validator) {
+            // Skip validation because we can't validate a phone number on test creds
+            return true;
+        });
 
         $this->post(route('numbers.store'), ['number' => '(500) 555-0000']);
         $this->seeInDatabase('phone_numbers', ['number' => '5005550000']);
