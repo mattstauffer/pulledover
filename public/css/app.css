@@ -7824,6 +7824,21 @@ button.close {
 .fa-percent:before {
   content: ""; }
 
+i.phone-number {
+  display: inline-block;
+  font: normal normal normal 14px / 1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: red; }
+  i.phone-number:before {
+    content: ""; }
+  i.phone-number.verified {
+    color: green; }
+    i.phone-number.verified:before {
+      content: ""; }
+
 .navbar-default {
   border: none;
   border-radius: 0; }

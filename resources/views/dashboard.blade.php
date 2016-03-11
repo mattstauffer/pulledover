@@ -26,7 +26,7 @@
                 @else
                     @foreach ($numbers as $i => $number)
                         <h4 class="number">{{ $number->formattedNumber }}
-                            <i class="fa fa-{{ $number->is_verified ? 'check-square-o number--verified' : 'square-o number--unverified' }}"></i>
+                            <i class="phone-number {{$number->is_verified ? 'verified':''}}"></i>
                             <span class="number__label">{{ $number->is_verified ? 'Verified' : 'Un-verified' }}</span>
                         </h4>
                     @endforeach
@@ -56,7 +56,7 @@
                 @else
                     @foreach ($friends as $i => $friend)
                         <h4 class="number">{{ $friend->name }} - {{ $friend->formattedNumber }}
-                            <i class="fa fa-{{ $friend->is_verified ? 'check-square-o number--verified' : 'square-o number--unverified' }}"></i>
+                            <i class="phone-number {{$friend->is_verified ? 'verified':''}}"></i>
                             <span class="number__label">{{ $friend->is_verified ? 'Verified' : 'Un-verified' }}</span>
                         </h4>
                     @endforeach
