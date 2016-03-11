@@ -17,7 +17,7 @@
             <div class="col-sm-1 dashboard-section-icon">
                 <i class="fa fa-3x fa-phone"></i>
             </div>
-            <div class="col-sm-10">
+            <div class="col-sm-10" tabindex="0">
                 <h2>My Phone Numbers</h2>
                 <p class="intro text-muted">In order to identify incoming phone calls with your account, you need to verify each of your phone numbers you want to be able to call from.</p>
 

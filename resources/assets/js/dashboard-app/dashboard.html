@@ -1,19 +1,22 @@
-<main class="container">
+<main class="container" id="admin-dashboard">
 
-    <section class="users">
+    <div class="users">
         <header>
-            <h2>Users</h2>
+            <h1>Users</h1>
         </header>
 
-        <div class="col-lg-6 col-md-8">
-            <div class="panel panel-default" tabindex="1">
+        <article class="col-lg-6 col-md-8" tabindex="0">
+            <div class="panel panel-default">
+                <header class="panel-heading">
+                    Recording Usage Summary
+                </header>
 
-                <div class="panel-body">
+                <div class="panel-body" tabindex="0">
                     The table below contains data gathered from each users recordings. <br>
                 </div>
 
-                <div class="usages">
-                    <table class="table" v-el:usage_table tabindex="2">
+                <main class="usages">
+                    <table class="table" v-el:usage_table tabindex="0">
                         <caption class="text-right">
                             This Month Begins: <strong>{{startOfMonth.format('MMM Do YYYY HH:mm a')}}</strong>
                         </caption>
@@ -35,44 +38,45 @@
                         <tbody>
                             <tr
                                     v-for="user in users | orderBy orderKey order"
+                                    tabindex="0"
                                     @click="$parent.user = user"
                                     :class="{'selected':$parent.user == user}">
                                 <td>{{user.name}}</td>
-                                <td class="right calls">{{user.calls}}</td>
-                                <td class="left calls">{{user.callsThisMonth}}</td>
-                                <td class="right minutes">{{user.minutes}}</td>
-                                <td class="left minutes">{{user.minutesThisMonth}}</td>
+                                <td class="right calls">{{user.calls}} <span class="sr-only">Calls total.</span></td>
+                                <td class="left calls">{{user.callsThisMonth}} <span class="sr-only">Calls this month.</span></td>
+                                <td class="right minutes">{{user.minutes}} <span class="sr-only">Seconds total.</span></td>
+                                <td class="left minutes">{{user.minutesThisMonth}} <span class="sr-only">Seconds this month</span></td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                </main>
 
                 <div class="panel-body">
                      <!--padding :)-->
                 </div>
             </div>
-        </div>
+        </article>
 
         <!--Selected user-->
-        <div class="col-lg-6 col-md-4">
-            <article class="panel panel-default" v-if="user" v-el:user tabindex="3">
+        <article class="col-lg-6 col-md-4">
+            <div class="panel panel-default" v-if="user" v-el:user >
 
                 <div class="panel-body">
-                    <h3>
+                    <h3  tabindex="0">
                         {{ user.name }}
                         <small>{{ user.email }}</small>
                     </h3>
 
                     <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 1em">
                         <li role="presentation" class="active">
-                            <a href="#recordings" aria-controls="recordings" role="tab" data-toggle="tab">Home</a>
+                            <a href="#recordings" aria-controls="recordings" role="tab" data-toggle="tab" tabindex="0">Home</a>
                         </li>
                         <li role="presentation">
                             <a href="#phones" aria-controls="phones" role="tab" data-toggle="tab">Profile</a>
                         </li>
                     </ul>
 
-                    <div class="tab-content">
+                    <div class="tab-content" tabindex="0">
                         <div role="tabpanel" class="tab-pane active" id="recordings">
                             <table class="table">
                                 <thead>
@@ -85,12 +89,12 @@
                                 </thead>
 
                                 <tbody>
-                                    <tr v-for="r in user.recordings | orderBy 'created_at' -1">
+                                    <tr v-for="r in user.recordings | orderBy 'created_at' -1"  tabindex="0">
                                         <td>{{r.from}}</td>
                                         <td>{{r.duration}}s</td>
                                         <td>{{r.created_at.format('YYYY-MM-DD')}}</td>
                                         <td>
-                                            <a href=""><i class="fa fa-eye"></i></a>
+                                            <a href="" title="View recording {{r.id}}"><i class="fa fa-eye"></i></a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -125,8 +129,8 @@
                     </div>
                 </div>
 
-            </article>
-        </div>
+            </div>
+        </article>
     </section>
 
 </main>

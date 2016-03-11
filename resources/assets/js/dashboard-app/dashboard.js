@@ -71,7 +71,7 @@ new Vue({
                 $('body').css({overflow: 'hidden'})
             }, function () {
                 $('body').css({overflow: 'auto'})
-            }).focus();
+            });
 
         let table = $(this.$els.usage_table).keydown(e => {
             let row = $('tr.selected');
