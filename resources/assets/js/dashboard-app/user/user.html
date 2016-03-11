@@ -1,0 +1,59 @@
+<div class="">
+    <div class="panel">
+        <div class="panel-heading">
+            <h3>
+                {{ user.name }} ({{ user.email}})
+            </h3>
+        </div>
+        <div class="panel-body">
+            <!--High usage alert-->
+            <div class="alert alert-danger" role="alert" v-if="user.minutes > 300 || user.calls > 5">
+                High usage!
+            </div>
+
+            <!--Phone number and Friends-->
+            <div class="col-sm-12">
+                <div class="row">
+
+                    <div class="col-sm-6">
+                        <ul class="fa-ul">
+                            <li>Phones</li>
+                            <li v-for="p in user.phone_numbers">
+                                <i class="fa-li phone-number" :class="{'verified':p.is_verified}"></i>
+                                {{ p.number }}
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <div class="col-sm-6">
+                        <ul class="fa-ul">
+                            <li>Friends</li>
+                            <li v-for="p in user.friends">
+                                <i class="fa-li phone-number" :class="{'verified':p.is_verified}"></i>
+                                {{ p.number }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <hr>
+            </div>
+
+            <!--Recordings chart and sums-->
+            <div class="col-sm-12">
+                <ul class="fa-ul">
+                    <li>
+                        <i class="fa fa-li fa-phone"></i>
+                        {{ user.calls }} Calls ({{ user.callsThisMonth }} This  month)
+                    </li>
+                    <li>
+                        <i class="fa fa-li fa-clock-o"></i>
+                        {{ user.minutes }} Minutes ({{ user.minutesThisMonth }} This  month)
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>

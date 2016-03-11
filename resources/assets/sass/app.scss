@@ -175,3 +175,73 @@ h2 {
         width: 50%;
     }
 }
+
+article.user {
+    padding: $panel-body-padding;
+    background-color: white;
+}
+
+$border-right: 1px 0 1px 1px;
+$border-left: 1px 1px 1px 0;
+$border-style: solid;
+$border-color: $table-border-color;
+
+section.users {
+    .usages {
+
+        max-height: 25em;
+        overflow: scroll;
+        padding-bottom: 1em;
+
+        table{
+
+            caption {
+                padding-right: 1em;
+            }
+            @media screen and (max-width:$screen-xs-max){
+                tr:nth-child(odd){
+                    td {
+                        background-color: $gray-lighter;
+                    }
+                }
+            }
+
+            tbody tr:hover {
+                cursor: pointer;
+            }
+
+            tr.selected {
+                border-left: 1em solid blue;
+            }
+            th, td {
+
+                //&.left, &.right {
+                //    border: 1px solid $table-border-color;
+                //}
+
+                &.left {
+                    border-left: 1px solid $table-border-color;
+                    text-align: left;
+                }
+
+                &.right {
+                    border-right: 1px solid $table-border-color;;
+                    text-align: right;
+                }
+
+                &.calls {
+                    background-color: $table-bg-accent;
+                    width: 100px;
+                }
+
+                &.minutes {
+                    width: 100px;
+                }
+            }
+
+            tbody {
+                max-height: 400px;
+            }
+        }
+    }
+}

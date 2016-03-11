@@ -1,0 +1,132 @@
+<main class="container">
+
+    <section class="users">
+        <header>
+            <h2>Users</h2>
+        </header>
+
+        <div class="col-lg-6 col-md-8">
+            <div class="panel panel-default" tabindex="1">
+
+                <div class="panel-body">
+                    The table below contains data gathered from each users recordings. <br>
+                </div>
+
+                <div class="usages">
+                    <table class="table" v-el:usage_table tabindex="2">
+                        <caption class="text-right">
+                            This Month Begins: <strong>{{startOfMonth.format('MMM Do YYYY HH:mm a')}}</strong>
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th colspan="2" class="text-center">Calls</th>
+                                <th colspan="2" class="text-center">Minutes</th>
+                            </tr>
+                            <tr>
+                                <th> </th>
+                                <th class="right calls" @click="orderBy('calls')">Total</th>
+                                <th class="left calls" @click="orderBy('callsThisMonth')">This Month</th>
+                                <th class="right minutes" @click="orderBy('minutes')">Total</th>
+                                <th class="left minutes" @click="orderBy('minutesThisMonth')">This Month</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr
+                                    v-for="user in users | orderBy orderKey order"
+                                    @click="$parent.user = user"
+                                    :class="{'selected':$parent.user == user}">
+                                <td>{{user.name}}</td>
+                                <td class="right calls">{{user.calls}}</td>
+                                <td class="left calls">{{user.callsThisMonth}}</td>
+                                <td class="right minutes">{{user.minutes}}</td>
+                                <td class="left minutes">{{user.minutesThisMonth}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="panel-body">
+                     <!--padding :)-->
+                </div>
+            </div>
+        </div>
+
+        <!--Selected user-->
+        <div class="col-lg-6 col-md-4">
+            <article class="panel panel-default" v-if="user" v-el:user tabindex="3">
+
+                <div class="panel-body">
+                    <h3>
+                        {{ user.name }}
+                        <small>{{ user.email }}</small>
+                    </h3>
+
+                    <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 1em">
+                        <li role="presentation" class="active">
+                            <a href="#recordings" aria-controls="recordings" role="tab" data-toggle="tab">Home</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#phones" aria-controls="phones" role="tab" data-toggle="tab">Profile</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="recordings">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>From</th>
+                                        <th>Duration</th>
+                                        <th>Date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr v-for="r in user.recordings | orderBy 'created_at' -1">
+                                        <td>{{r.from}}</td>
+                                        <td>{{r.duration}}s</td>
+                                        <td>{{r.created_at.format('YYYY-MM-DD')}}</td>
+                                        <td>
+                                            <a href=""><i class="fa fa-eye"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        <div role="tabpanel" class="tab-pane" id="phones">
+
+                            <section class="phone-numbers col-sm-6">
+                                <ul class="fa-ul">
+                                    <li>Phones</li>
+                                    <li v-for="n in user.phone_numbers">
+                                        <i class="fa-li phone-number" :class="{'verified':n.is_verified}"></i>
+                                        {{ n.number }}
+                                    </li>
+                                </ul>
+                            </section>
+
+                            <hr class="visible-xs">
+
+                            <section class="friends col-sm-6">
+                                <ul class="fa-ul">
+                                    <li>Friends</li>
+                                    <li v-for="n in user.friends">
+                                        <i class="fa-li phone-number" :class="{'verified':n.is_verified}"></i>
+                                        {{ n.number }}
+                                    </li>
+                                </ul>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+            </article>
+        </div>
+    </section>
+
+</main>

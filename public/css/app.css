@@ -7969,4 +7969,35 @@ h2 {
     .big-donate-button {
       width: 50%; } }
 
+article.user {
+  padding: 15px;
+  background-color: white; }
+
+section.users .usages {
+  max-height: 25em;
+  overflow: scroll;
+  padding-bottom: 1em; }
+  section.users .usages table caption {
+    padding-right: 1em; }
+  @media screen and (max-width: 767px) {
+    section.users .usages table tr:nth-child(odd) td {
+      background-color: #eeeeee; } }
+  section.users .usages table tbody tr:hover {
+    cursor: pointer; }
+  section.users .usages table tr.selected {
+    border-left: 1em solid blue; }
+  section.users .usages table th.left, section.users .usages table td.left {
+    border-left: 1px solid #ddd;
+    text-align: left; }
+  section.users .usages table th.right, section.users .usages table td.right {
+    border-right: 1px solid #ddd;
+    text-align: right; }
+  section.users .usages table th.calls, section.users .usages table td.calls {
+    background-color: #f9f9f9;
+    width: 100px; }
+  section.users .usages table th.minutes, section.users .usages table td.minutes {
+    width: 100px; }
+  section.users .usages table tbody {
+    max-height: 400px; }
+
 /*# sourceMappingURL=app.css.map */
