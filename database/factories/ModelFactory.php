@@ -61,6 +61,6 @@ $factory->define(App\Recording::class, function (Faker\Generator $faker) {
 });
 
 
-$factory->defineAs(App\Recording::class, 'long', function (Faker\Generator $faker) use ($factory){
+$factory->defineAs(App\Recording::class, 'long', function (Faker\Generator $faker) use ($factory) {
     return array_merge($factory->raw(\App\Recording::class), ['duration' => $faker->numberBetween(100, 400)]);
 });

@@ -21,7 +21,7 @@ class AdminController extends Controller
     {
         $users = User::with(['recordings', 'phoneNumbers', 'friends'])->get();
 
-        return view('admin.index',[
+        return view('admin.index', [
             'users' => $users
         ]);
     }

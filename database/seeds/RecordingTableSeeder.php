@@ -14,10 +14,10 @@ class RecordingTableSeeder extends Seeder
         $faker = \Faker\Factory::create();
         $users = factory(\App\User::class, 5)->create(['role' => 42]);
 
-        foreach($users as $user){
+        foreach ($users as $user) {
             $user->phoneNumbers()->save(factory(\App\PhoneNumber::class, 'verified')->make());
 
-            $user->friends()->saveMany(factory(\App\Friend::class,3)->make([
+            $user->friends()->saveMany(factory(\App\Friend::class, 3)->make([
                 'is_verified' => $faker->boolean(80)
             ]));
 
@@ -25,7 +25,7 @@ class RecordingTableSeeder extends Seeder
                 'user_id' => $user->id
             ]);
 
-            if($faker->boolean(75)){
+            if ($faker->boolean(75)) {
                 factory(\App\Recording::class, 'long')->create([
                     'user_id' => $user->id
                 ]);
