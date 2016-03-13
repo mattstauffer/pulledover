@@ -7,6 +7,51 @@ import UserDetails from './user-details/user-details.js';
 
 Vue.config.debug = true;
 
+Vue.directive('selectable-table', {
+    bind(){
+        $(this.el)
+            // wanna be able to jump to the table
+            .attr('tabindex', 1).addClass('selectable')
+
+            //and set some stuff on the parent
+            .parent().addClass('selectable-table-wrapper')
+
+            //prevent body scroll so table keyboard nav works (is there a better way to do this?)
+            .hover(function () {
+                $('body').css({overflow: 'hidden'})
+            }, function () {
+                $('body').css({overflow: 'auto'})
+            })
+
+            // select pre/next with up and down keys
+            .keydown(function (e) {
+                let row = $('tr.selected', this);
+
+                console.log(row);
+
+                switch (e.keyCode) {
+                    case 38:
+                    {
+                        row = row.prev();
+                        break;
+                    }
+                    case 40:
+                    {
+                        row = row.next();
+                        break;
+                    }
+                    default :
+                    {
+                        return true;
+                    }
+                }
+
+                row.click();
+                return true;
+            })
+    }
+});
+
 new Vue({
     el      : '#admin-dashboard',
     template: require('./dashboard.html'),
@@ -15,7 +60,7 @@ new Vue({
         users       : [],
         user        : null,
         startOfMonth: moment().startOf('month'),
-        orderKey    : 'minutesThisMonth',
+        orderKey    : 'secondsThisMonth',
         order       : -1
     },
 
@@ -25,8 +70,8 @@ new Vue({
 
     methods: {
         orderBy(key){
-            if(this.orderKey == key){
-                this.order = this.order *-1;
+            if (this.orderKey == key) {
+                this.order = this.order * -1;
 
                 return;
             }
@@ -48,9 +93,9 @@ new Vue({
             });
 
             //totals
-            user.recordings = _.sortBy(recordings, 'created_at');
+            user.recordings = _.sortBy(recordings, 'created_at').reverse();
             user.calls = user.recordings.length;
-            user.minutes = _.sumBy(recordings, 'duration');
+            user.seconds = _.sumBy(recordings, 'duration');
 
             //monthly totals
             user.recordingsThisMonth = recordings.filter(r => {
@@ -58,48 +103,12 @@ new Vue({
             });
 
             user.callsThisMonth = user.recordingsThisMonth.length;
-            user.minutesThisMonth = _.sumBy(user.recordingsThisMonth, 'duration');
+            user.secondsThisMonth = _.sumBy(user.recordingsThisMonth, 'duration');
 
             return user;
         });
 
         this.users = _.sortBy(users, this.orderKey).reverse();
         this.user = this.users[0];
-
-        $(this.$els.usage_table)
-            .hover(function () {
-                $('body').css({overflow: 'hidden'})
-            }, function () {
-                $('body').css({overflow: 'auto'})
-            });
-
-        let table = $(this.$els.usage_table).keydown(e => {
-            let row = $('tr.selected');
-
-            switch (e.keyCode) {
-                case 38:
-                {
-                    row = row.prev();
-                    break;
-                }
-                case 40:
-                {
-                    row = row.next();
-                    break;
-                }
-                case 9:{
-                    $(document).scrollTop($(this.$els.user).offset().top);
-                    break;
-                }
-                default :
-                {
-                    console.log(e.keyCode);
-                    return true;
-                }
-            }
-
-            row.click();
-            return true;
-        });
     }
 });

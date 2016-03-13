@@ -186,64 +186,59 @@ $border-left: 1px 1px 1px 0;
 $border-style: solid;
 $border-color: $table-border-color;
 
-table.selectable {
-    tbody tr:hover {
-        cursor: pointer;
-    }
+.selectable-table-wrapper {
 
-    tr.selected {
-        border-left: 5px solid blue;
+    max-height: 25em;
+    overflow: scroll;
+    padding-bottom: 1em;
+
+    table.selectable {
+        tbody tr:hover {
+            cursor: pointer;
+        }
+
+        tr.selected {
+            border-left: 5px solid blue;
+        }
+
+        tbody {
+            max-height: 400px;
+        }
     }
 }
 
 #admin-dashboard .users {
-    .usages {
+    table{
 
-        max-height: 25em;
-        overflow: scroll;
-        padding-bottom: 1em;
-
-        table{
-
-            caption {
-                padding-right: 1em;
-            }
-            @media screen and (max-width:$screen-xs-max){
-                tr:nth-child(odd){
-                    td {
-                        background-color: $gray-lighter;
-                    }
+        caption {
+            padding-right: 1em;
+        }
+        @media screen and (max-width:$screen-xs-max){
+            tr:nth-child(odd){
+                td {
+                    background-color: $gray-lighter;
                 }
             }
+        }
 
-            th, td {
-
-                //&.left, &.right {
-                //    border: 1px solid $table-border-color;
-                //}
-
-                &.left {
-                    border-left: 1px solid $table-border-color;
-                    text-align: left;
-                }
-
-                &.right {
-                    border-right: 1px solid $table-border-color;;
-                    text-align: right;
-                }
-
-                &.calls {
-                    background-color: $table-bg-accent;
-                    width: 100px;
-                }
-
-                &.minutes {
-                    width: 100px;
-                }
+        th, td {
+            &.left {
+                border-left: 1px solid $table-border-color;
+                text-align: left;
             }
 
-            tbody {
-                max-height: 400px;
+            &.right {
+                border-right: 1px solid $table-border-color;;
+                text-align: right;
+            }
+
+            &.calls {
+                background-color: $table-bg-accent;
+                width: 100px;
+            }
+
+            &.seconds {
+                width: 100px;
             }
         }
     }

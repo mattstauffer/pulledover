@@ -7973,33 +7973,37 @@ article.user {
   padding: 15px;
   background-color: white; }
 
-table.selectable tbody tr:hover {
-  cursor: pointer; }
-
-table.selectable tr.selected {
-  border-left: 5px solid blue; }
-
-#admin-dashboard .users .usages {
+.selectable-table-wrapper {
   max-height: 25em;
   overflow: scroll;
   padding-bottom: 1em; }
-  #admin-dashboard .users .usages table caption {
-    padding-right: 1em; }
-  @media screen and (max-width: 767px) {
-    #admin-dashboard .users .usages table tr:nth-child(odd) td {
-      background-color: #eeeeee; } }
-  #admin-dashboard .users .usages table th.left, #admin-dashboard .users .usages table td.left {
-    border-left: 1px solid #ddd;
-    text-align: left; }
-  #admin-dashboard .users .usages table th.right, #admin-dashboard .users .usages table td.right {
-    border-right: 1px solid #ddd;
-    text-align: right; }
-  #admin-dashboard .users .usages table th.calls, #admin-dashboard .users .usages table td.calls {
-    background-color: #f9f9f9;
-    width: 100px; }
-  #admin-dashboard .users .usages table th.minutes, #admin-dashboard .users .usages table td.minutes {
-    width: 100px; }
-  #admin-dashboard .users .usages table tbody {
+  .selectable-table-wrapper table.selectable tbody tr:hover {
+    cursor: pointer; }
+  .selectable-table-wrapper table.selectable tr.selected {
+    border-left: 5px solid blue; }
+  .selectable-table-wrapper table.selectable tbody {
     max-height: 400px; }
+
+#admin-dashboard .users table caption {
+  padding-right: 1em; }
+
+@media screen and (max-width: 767px) {
+  #admin-dashboard .users table tr:nth-child(odd) td {
+    background-color: #eeeeee; } }
+
+#admin-dashboard .users table th.left, #admin-dashboard .users table td.left {
+  border-left: 1px solid #ddd;
+  text-align: left; }
+
+#admin-dashboard .users table th.right, #admin-dashboard .users table td.right {
+  border-right: 1px solid #ddd;
+  text-align: right; }
+
+#admin-dashboard .users table th.calls, #admin-dashboard .users table td.calls {
+  background-color: #f9f9f9;
+  width: 100px; }
+
+#admin-dashboard .users table th.seconds, #admin-dashboard .users table td.seconds {
+  width: 100px; }
 
 /*# sourceMappingURL=app.css.map */

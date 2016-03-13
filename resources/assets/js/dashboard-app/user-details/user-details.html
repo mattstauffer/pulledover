@@ -7,7 +7,7 @@
 
         <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 1em">
             <li role="presentation" class="active">
-                <a href="#recordings" aria-controls="recordings" role="tab" data-toggle="tab" tabindex="0">Home</a>
+                <a href="#recordings" aria-controls="recordings" role="tab" data-toggle="tab">Home</a>
             </li>
             <li role="presentation">
                 <a href="#phones" aria-controls="phones" role="tab" data-toggle="tab">Profile</a>
@@ -15,29 +15,30 @@
         </ul>
 
         <div class="row">
-            <div class="tab-content" tabindex="0">
+            <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="recordings">
-                    <table class="table selectable">
-                        <thead>
-                            <tr>
-                                <th>From</th>
-                                <th>Duration</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
+                    <div>
+                        <table class="table" v-selectable-table>
+                            <thead>
+                                <tr>
+                                    <th>From</th>
+                                    <th>Duration</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
 
-                        <tbody>
-                            <tr
-                                    v-for="r in user.recordings | orderBy 'created_at' -1"
-                                    tabindex="0"
-                                    @click="$parent.recording = r"
-                                    :class="{'selected':$parent.recording == r}">
-                                <td>{{r.from}}</td>
-                                <td>{{r.duration}}s</td>
-                                <td>{{r.created_at.format('YYYY-MM-DD')}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                            <tbody>
+                                <tr
+                                        v-for="r in user.recordings | orderBy 'created_at' -1"
+                                        @click="$parent.recording = r"
+                                        :class="{'selected':$parent.recording == r}">
+                                    <td>{{r.from}}</td>
+                                    <td>{{r.duration}}s</td>
+                                    <td>{{r.created_at.format('YYYY-MM-DD')}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
                     <hr>
 

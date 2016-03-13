@@ -3,18 +3,18 @@
     <div class="users">
         <h1>Users</h1>
 
-        <div class="col-lg-6 col-md-8" tabindex="0">
+        <div class="col-lg-6 col-md-8">
             <div class="panel panel-default">
                 <header class="panel-heading">
                     Recording Usage Summary
                 </header>
 
-                <div class="panel-body" tabindex="0">
+                <div class="panel-body">
                     The table below contains data gathered from each users recordings. <br>
                 </div>
 
-                <main class="usages">
-                    <table class="table selectable" v-el:usage_table tabindex="0">
+                <div>
+                    <table class="table" v-selectable-table tabindex="0">
                         <caption class="text-right">
                             This Month Begins: <strong>{{startOfMonth.format('MMM Do YYYY HH:mm a')}}</strong>
                         </caption>
@@ -22,32 +22,31 @@
                             <tr>
                                 <th>User</th>
                                 <th colspan="2" class="text-center">Calls</th>
-                                <th colspan="2" class="text-center">Minutes</th>
+                                <th colspan="2" class="text-center">Duration</th>
                             </tr>
                             <tr>
                                 <th> </th>
                                 <th class="right calls" @click="orderBy('calls')">Total</th>
                                 <th class="left calls" @click="orderBy('callsThisMonth')">This Month</th>
-                                <th class="right minutes" @click="orderBy('minutes')">Total</th>
-                                <th class="left minutes" @click="orderBy('minutesThisMonth')">This Month</th>
+                                <th class="right seconds" @click="orderBy('seconds')">Total</th>
+                                <th class="left seconds" @click="orderBy('secondsThisMonth')">This Month</th>
                             </tr>
                         </thead>
 
                         <tbody>
                             <tr
                                     v-for="user in users | orderBy orderKey order"
-                                    tabindex="0"
                                     @click="$parent.user = user"
                                     :class="{'selected':$parent.user == user}">
                                 <td>{{user.name}}</td>
                                 <td class="right calls">{{user.calls}} <span class="sr-only">Calls total.</span></td>
                                 <td class="left calls">{{user.callsThisMonth}} <span class="sr-only">Calls this month.</span></td>
-                                <td class="right minutes">{{user.minutes}} <span class="sr-only">Seconds total.</span></td>
-                                <td class="left minutes">{{user.minutesThisMonth}} <span class="sr-only">Seconds this month</span></td>
+                                <td class="right seconds">{{user.seconds}}s <span class="sr-only">Seconds total.</span></td>
+                                <td class="left seconds">{{user.secondsThisMonth}}s <span class="sr-only">Seconds this month</span></td>
                             </tr>
                         </tbody>
                     </table>
-                </main>
+                </div>
 
                 <div class="panel-body">
                      <!--padding :)-->

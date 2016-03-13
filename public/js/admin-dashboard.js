@@ -21,6 +21,51 @@ var _userDetailsUserDetailsJs2 = _interopRequireDefault(_userDetailsUserDetailsJ
 
 _vue2['default'].config.debug = true;
 
+_vue2['default'].directive('selectable-table', {
+    bind: function bind() {
+        $(this.el)
+        // wanna be able to jump to the table
+        .attr('tabindex', 1).addClass('selectable')
+
+        //and set some stuff on the parent
+        .parent().addClass('selectable-table-wrapper')
+
+        //prevent body scroll so table keyboard nav works (is there a better way to do this?)
+        .hover(function () {
+            $('body').css({ overflow: 'hidden' });
+        }, function () {
+            $('body').css({ overflow: 'auto' });
+        })
+
+        // select pre/next with up and down keys
+        .keydown(function (e) {
+            var row = $('tr.selected', this);
+
+            console.log(row);
+
+            switch (e.keyCode) {
+                case 38:
+                    {
+                        row = row.prev();
+                        break;
+                    }
+                case 40:
+                    {
+                        row = row.next();
+                        break;
+                    }
+                default:
+                    {
+                        return true;
+                    }
+            }
+
+            row.click();
+            return true;
+        });
+    }
+});
+
 new _vue2['default']({
     el: '#admin-dashboard',
     template: require('./dashboard.html'),
@@ -29,7 +74,7 @@ new _vue2['default']({
         users: [],
         user: null,
         startOfMonth: (0, _moment2['default'])().startOf('month'),
-        orderKey: 'minutesThisMonth',
+        orderKey: 'secondsThisMonth',
         order: -1
     },
 
@@ -64,9 +109,9 @@ new _vue2['default']({
             });
 
             //totals
-            user.recordings = _lodash2['default'].sortBy(recordings, 'created_at');
+            user.recordings = _lodash2['default'].sortBy(recordings, 'created_at').reverse();
             user.calls = user.recordings.length;
-            user.minutes = _lodash2['default'].sumBy(recordings, 'duration');
+            user.seconds = _lodash2['default'].sumBy(recordings, 'duration');
 
             //monthly totals
             user.recordingsThisMonth = recordings.filter(function (r) {
@@ -74,49 +119,13 @@ new _vue2['default']({
             });
 
             user.callsThisMonth = user.recordingsThisMonth.length;
-            user.minutesThisMonth = _lodash2['default'].sumBy(user.recordingsThisMonth, 'duration');
+            user.secondsThisMonth = _lodash2['default'].sumBy(user.recordingsThisMonth, 'duration');
 
             return user;
         });
 
         this.users = _lodash2['default'].sortBy(users, this.orderKey).reverse();
         this.user = this.users[0];
-
-        $(this.$els.usage_table).hover(function () {
-            $('body').css({ overflow: 'hidden' });
-        }, function () {
-            $('body').css({ overflow: 'auto' });
-        });
-
-        var table = $(this.$els.usage_table).keydown(function (e) {
-            var row = $('tr.selected');
-
-            switch (e.keyCode) {
-                case 38:
-                    {
-                        row = row.prev();
-                        break;
-                    }
-                case 40:
-                    {
-                        row = row.next();
-                        break;
-                    }
-                case 9:
-                    {
-                        $(document).scrollTop($(_this.$els.user).offset().top);
-                        break;
-                    }
-                default:
-                    {
-                        console.log(e.keyCode);
-                        return true;
-                    }
-            }
-
-            row.click();
-            return true;
-        });
     }
 });
 
@@ -28641,9 +28650,9 @@ if (devtools) {
 module.exports = Vue;
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"_process":4}],6:[function(require,module,exports){
-module.exports = '<div class="container" id="admin-dashboard">\n\n    <div class="users">\n        <h1>Users</h1>\n\n        <div class="col-lg-6 col-md-8" tabindex="0">\n            <div class="panel panel-default">\n                <header class="panel-heading">\n                    Recording Usage Summary\n                </header>\n\n                <div class="panel-body" tabindex="0">\n                    The table below contains data gathered from each users recordings. <br>\n                </div>\n\n                <main class="usages">\n                    <table class="table selectable" v-el:usage_table tabindex="0">\n                        <caption class="text-right">\n                            This Month Begins: <strong>{{startOfMonth.format(\'MMM Do YYYY HH:mm a\')}}</strong>\n                        </caption>\n                        <thead>\n                            <tr>\n                                <th>User</th>\n                                <th colspan="2" class="text-center">Calls</th>\n                                <th colspan="2" class="text-center">Minutes</th>\n                            </tr>\n                            <tr>\n                                <th> </th>\n                                <th class="right calls" @click="orderBy(\'calls\')">Total</th>\n                                <th class="left calls" @click="orderBy(\'callsThisMonth\')">This Month</th>\n                                <th class="right minutes" @click="orderBy(\'minutes\')">Total</th>\n                                <th class="left minutes" @click="orderBy(\'minutesThisMonth\')">This Month</th>\n                            </tr>\n                        </thead>\n\n                        <tbody>\n                            <tr\n                                    v-for="user in users | orderBy orderKey order"\n                                    tabindex="0"\n                                    @click="$parent.user = user"\n                                    :class="{\'selected\':$parent.user == user}">\n                                <td>{{user.name}}</td>\n                                <td class="right calls">{{user.calls}} <span class="sr-only">Calls total.</span></td>\n                                <td class="left calls">{{user.callsThisMonth}} <span class="sr-only">Calls this month.</span></td>\n                                <td class="right minutes">{{user.minutes}} <span class="sr-only">Seconds total.</span></td>\n                                <td class="left minutes">{{user.minutesThisMonth}} <span class="sr-only">Seconds this month</span></td>\n                            </tr>\n                        </tbody>\n                    </table>\n                </main>\n\n                <div class="panel-body">\n                     <!--padding :)-->\n                </div>\n            </div>\n        </div>\n\n        <!--Selected user-->\n        <div class="col-lg-6 col-md-4">\n            <user-details :user.sync="user" v-if="user"></user-details>\n        </div>\n    </div>\n\n</div>';
+module.exports = '<div class="container" id="admin-dashboard">\n\n    <div class="users">\n        <h1>Users</h1>\n\n        <div class="col-lg-6 col-md-8">\n            <div class="panel panel-default">\n                <header class="panel-heading">\n                    Recording Usage Summary\n                </header>\n\n                <div class="panel-body">\n                    The table below contains data gathered from each users recordings. <br>\n                </div>\n\n                <div>\n                    <table class="table" v-selectable-table tabindex="0">\n                        <caption class="text-right">\n                            This Month Begins: <strong>{{startOfMonth.format(\'MMM Do YYYY HH:mm a\')}}</strong>\n                        </caption>\n                        <thead>\n                            <tr>\n                                <th>User</th>\n                                <th colspan="2" class="text-center">Calls</th>\n                                <th colspan="2" class="text-center">Duration</th>\n                            </tr>\n                            <tr>\n                                <th> </th>\n                                <th class="right calls" @click="orderBy(\'calls\')">Total</th>\n                                <th class="left calls" @click="orderBy(\'callsThisMonth\')">This Month</th>\n                                <th class="right seconds" @click="orderBy(\'seconds\')">Total</th>\n                                <th class="left seconds" @click="orderBy(\'secondsThisMonth\')">This Month</th>\n                            </tr>\n                        </thead>\n\n                        <tbody>\n                            <tr\n                                    v-for="user in users | orderBy orderKey order"\n                                    @click="$parent.user = user"\n                                    :class="{\'selected\':$parent.user == user}">\n                                <td>{{user.name}}</td>\n                                <td class="right calls">{{user.calls}} <span class="sr-only">Calls total.</span></td>\n                                <td class="left calls">{{user.callsThisMonth}} <span class="sr-only">Calls this month.</span></td>\n                                <td class="right seconds">{{user.seconds}}s <span class="sr-only">Seconds total.</span></td>\n                                <td class="left seconds">{{user.secondsThisMonth}}s <span class="sr-only">Seconds this month</span></td>\n                            </tr>\n                        </tbody>\n                    </table>\n                </div>\n\n                <div class="panel-body">\n                     <!--padding :)-->\n                </div>\n            </div>\n        </div>\n\n        <!--Selected user-->\n        <div class="col-lg-6 col-md-4">\n            <user-details :user.sync="user" v-if="user"></user-details>\n        </div>\n    </div>\n\n</div>';
 },{}],7:[function(require,module,exports){
-module.exports = '<div>\n    Id: {{recording.id}}<br>\n    SID: {{recording.recording_sid}}<br> <!-- todo link to recording -->\n    From: {{recording.from}}<br>\n    <audio controls v-el:audio>\n        <source :src="recording.url" type="audio/mpeg">\n        Your browser does not support the audio element.\n    </audio>\n</div>';
+module.exports = '<div>\n    Id: {{recording.id}}<br>\n    SID: {{recording.recording_sid}}<br> <!-- todo link to recording -->\n    From: {{recording.from}}<br>\n    <audio controls v-el:audio>\n        <source :src="recording.url" type="audio/mpeg" tabindex="0">\n        Your browser does not support the audio element.\n    </audio>\n</div>';
 },{}],8:[function(require,module,exports){
 "use strict";
 
@@ -28662,7 +28671,7 @@ module.exports = {
 };
 
 },{"./recording.html":7}],9:[function(require,module,exports){
-module.exports = '<div class="panel panel-default">\n    <div class="panel-body">\n        <h3>\n            {{ user.name }}\n            <small>{{ user.email }}</small>\n        </h3>\n\n        <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 1em">\n            <li role="presentation" class="active">\n                <a href="#recordings" aria-controls="recordings" role="tab" data-toggle="tab" tabindex="0">Home</a>\n            </li>\n            <li role="presentation">\n                <a href="#phones" aria-controls="phones" role="tab" data-toggle="tab">Profile</a>\n            </li>\n        </ul>\n\n        <div class="row">\n            <div class="tab-content" tabindex="0">\n                <div role="tabpanel" class="tab-pane active" id="recordings">\n                    <table class="table selectable">\n                        <thead>\n                            <tr>\n                                <th>From</th>\n                                <th>Duration</th>\n                                <th>Date</th>\n                            </tr>\n                        </thead>\n\n                        <tbody>\n                            <tr\n                                    v-for="r in user.recordings | orderBy \'created_at\' -1"\n                                    tabindex="0"\n                                    @click="$parent.recording = r"\n                                    :class="{\'selected\':$parent.recording == r}">\n                                <td>{{r.from}}</td>\n                                <td>{{r.duration}}s</td>\n                                <td>{{r.created_at.format(\'YYYY-MM-DD\')}}</td>\n                            </tr>\n                        </tbody>\n                    </table>\n\n                    <hr>\n\n                    <div class="col-sm-12">\n                        <recording :recording.sync="recording"></recording>\n                    </div>\n                </div>\n\n\n                <div role="tabpanel" class="tab-pane" id="phones">\n\n                    <section class="phone-numbers col-sm-6">\n                        <ul class="fa-ul">\n                            <li>Phones</li>\n                            <li v-for="n in user.phone_numbers">\n                                <i class="fa-li phone-number" :class="{\'verified\':n.is_verified}"></i>\n                                {{ n.number }}\n                            </li>\n                        </ul>\n                    </section>\n\n                    <hr class="visible-xs">\n\n                    <section class="friends col-sm-6">\n                        <ul class="fa-ul">\n                            <li>Friends</li>\n                            <li v-for="n in user.friends">\n                                <i class="fa-li phone-number" :class="{\'verified\':n.is_verified}"></i>\n                                {{ n.number }}\n                            </li>\n                        </ul>\n                    </section>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>';
+module.exports = '<div class="panel panel-default">\n    <div class="panel-body">\n        <h3>\n            {{ user.name }}\n            <small>{{ user.email }}</small>\n        </h3>\n\n        <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 1em">\n            <li role="presentation" class="active">\n                <a href="#recordings" aria-controls="recordings" role="tab" data-toggle="tab">Home</a>\n            </li>\n            <li role="presentation">\n                <a href="#phones" aria-controls="phones" role="tab" data-toggle="tab">Profile</a>\n            </li>\n        </ul>\n\n        <div class="row">\n            <div class="tab-content">\n                <div role="tabpanel" class="tab-pane active" id="recordings">\n                    <div>\n                        <table class="table" v-selectable-table>\n                            <thead>\n                                <tr>\n                                    <th>From</th>\n                                    <th>Duration</th>\n                                    <th>Date</th>\n                                </tr>\n                            </thead>\n\n                            <tbody>\n                                <tr\n                                        v-for="r in user.recordings | orderBy \'created_at\' -1"\n                                        @click="$parent.recording = r"\n                                        :class="{\'selected\':$parent.recording == r}">\n                                    <td>{{r.from}}</td>\n                                    <td>{{r.duration}}s</td>\n                                    <td>{{r.created_at.format(\'YYYY-MM-DD\')}}</td>\n                                </tr>\n                            </tbody>\n                        </table>\n                    </div>\n\n                    <hr>\n\n                    <div class="col-sm-12">\n                        <recording :recording.sync="recording"></recording>\n                    </div>\n                </div>\n\n\n                <div role="tabpanel" class="tab-pane" id="phones">\n\n                    <section class="phone-numbers col-sm-6">\n                        <ul class="fa-ul">\n                            <li>Phones</li>\n                            <li v-for="n in user.phone_numbers">\n                                <i class="fa-li phone-number" :class="{\'verified\':n.is_verified}"></i>\n                                {{ n.number }}\n                            </li>\n                        </ul>\n                    </section>\n\n                    <hr class="visible-xs">\n\n                    <section class="friends col-sm-6">\n                        <ul class="fa-ul">\n                            <li>Friends</li>\n                            <li v-for="n in user.friends">\n                                <i class="fa-li phone-number" :class="{\'verified\':n.is_verified}"></i>\n                                {{ n.number }}\n                            </li>\n                        </ul>\n                    </section>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>';
 },{}],10:[function(require,module,exports){
 "use strict";
 
