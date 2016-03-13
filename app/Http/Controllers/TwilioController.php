@@ -14,18 +14,6 @@ use Services_Twilio_Twiml as TwimlGenerator;
 class TwilioController extends Controller
 {
 
-    /**
-     * TwilioController constructor.
-     */
-    public function __construct()
-    {
-        // limit to 3 calls per day
-//        $this->middleware('throttle.calls', [
-//            'maxAttempts' => 3,
-//            'decayMinutes' => 24*60
-//        ])->only('callHook');
-    }
-
     public function callHook(Request $request)
     {
         try {
