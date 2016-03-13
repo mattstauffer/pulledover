@@ -120,7 +120,7 @@ new _vue2['default']({
     }
 });
 
-},{"./dashboard.html":6,"./user-details/user-details.js":8,"lodash":2,"moment":3,"vue":5}],2:[function(require,module,exports){
+},{"./dashboard.html":6,"./user-details/user-details.js":10,"lodash":2,"moment":3,"vue":5}],2:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -28641,16 +28641,60 @@ if (devtools) {
 module.exports = Vue;
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"_process":4}],6:[function(require,module,exports){
-module.exports = '<div class="container" id="admin-dashboard">\n\n    <div class="users">\n        <h1>Users</h1>\n\n        <div class="col-lg-6 col-md-8" tabindex="0">\n            <div class="panel panel-default">\n                <header class="panel-heading">\n                    Recording Usage Summary\n                </header>\n\n                <div class="panel-body" tabindex="0">\n                    The table below contains data gathered from each users recordings. <br>\n                </div>\n\n                <main class="usages">\n                    <table class="table" v-el:usage_table tabindex="0">\n                        <caption class="text-right">\n                            This Month Begins: <strong>{{startOfMonth.format(\'MMM Do YYYY HH:mm a\')}}</strong>\n                        </caption>\n                        <thead>\n                            <tr>\n                                <th>User</th>\n                                <th colspan="2" class="text-center">Calls</th>\n                                <th colspan="2" class="text-center">Minutes</th>\n                            </tr>\n                            <tr>\n                                <th> </th>\n                                <th class="right calls" @click="orderBy(\'calls\')">Total</th>\n                                <th class="left calls" @click="orderBy(\'callsThisMonth\')">This Month</th>\n                                <th class="right minutes" @click="orderBy(\'minutes\')">Total</th>\n                                <th class="left minutes" @click="orderBy(\'minutesThisMonth\')">This Month</th>\n                            </tr>\n                        </thead>\n\n                        <tbody>\n                            <tr\n                                    v-for="user in users | orderBy orderKey order"\n                                    tabindex="0"\n                                    @click="$parent.user = user"\n                                    :class="{\'selected\':$parent.user == user}">\n                                <td>{{user.name}}</td>\n                                <td class="right calls">{{user.calls}} <span class="sr-only">Calls total.</span></td>\n                                <td class="left calls">{{user.callsThisMonth}} <span class="sr-only">Calls this month.</span></td>\n                                <td class="right minutes">{{user.minutes}} <span class="sr-only">Seconds total.</span></td>\n                                <td class="left minutes">{{user.minutesThisMonth}} <span class="sr-only">Seconds this month</span></td>\n                            </tr>\n                        </tbody>\n                    </table>\n                </main>\n\n                <div class="panel-body">\n                     <!--padding :)-->\n                </div>\n            </div>\n        </div>\n\n        <!--Selected user-->\n        <div class="col-lg-6 col-md-4">\n            <user-details :user.sync="user" v-if="user"></user-details>\n        </div>\n    </div>\n\n</div>';
+module.exports = '<div class="container" id="admin-dashboard">\n\n    <div class="users">\n        <h1>Users</h1>\n\n        <div class="col-lg-6 col-md-8" tabindex="0">\n            <div class="panel panel-default">\n                <header class="panel-heading">\n                    Recording Usage Summary\n                </header>\n\n                <div class="panel-body" tabindex="0">\n                    The table below contains data gathered from each users recordings. <br>\n                </div>\n\n                <main class="usages">\n                    <table class="table selectable" v-el:usage_table tabindex="0">\n                        <caption class="text-right">\n                            This Month Begins: <strong>{{startOfMonth.format(\'MMM Do YYYY HH:mm a\')}}</strong>\n                        </caption>\n                        <thead>\n                            <tr>\n                                <th>User</th>\n                                <th colspan="2" class="text-center">Calls</th>\n                                <th colspan="2" class="text-center">Minutes</th>\n                            </tr>\n                            <tr>\n                                <th> </th>\n                                <th class="right calls" @click="orderBy(\'calls\')">Total</th>\n                                <th class="left calls" @click="orderBy(\'callsThisMonth\')">This Month</th>\n                                <th class="right minutes" @click="orderBy(\'minutes\')">Total</th>\n                                <th class="left minutes" @click="orderBy(\'minutesThisMonth\')">This Month</th>\n                            </tr>\n                        </thead>\n\n                        <tbody>\n                            <tr\n                                    v-for="user in users | orderBy orderKey order"\n                                    tabindex="0"\n                                    @click="$parent.user = user"\n                                    :class="{\'selected\':$parent.user == user}">\n                                <td>{{user.name}}</td>\n                                <td class="right calls">{{user.calls}} <span class="sr-only">Calls total.</span></td>\n                                <td class="left calls">{{user.callsThisMonth}} <span class="sr-only">Calls this month.</span></td>\n                                <td class="right minutes">{{user.minutes}} <span class="sr-only">Seconds total.</span></td>\n                                <td class="left minutes">{{user.minutesThisMonth}} <span class="sr-only">Seconds this month</span></td>\n                            </tr>\n                        </tbody>\n                    </table>\n                </main>\n\n                <div class="panel-body">\n                     <!--padding :)-->\n                </div>\n            </div>\n        </div>\n\n        <!--Selected user-->\n        <div class="col-lg-6 col-md-4">\n            <user-details :user.sync="user" v-if="user"></user-details>\n        </div>\n    </div>\n\n</div>';
 },{}],7:[function(require,module,exports){
-module.exports = '<div class="panel panel-default">\n    <div class="panel-body">\n        <h3>\n            {{ user.name }}\n            <small>{{ user.email }}</small>\n        </h3>\n\n        <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 1em">\n            <li role="presentation" class="active">\n                <a href="#recordings" aria-controls="recordings" role="tab" data-toggle="tab" tabindex="0">Home</a>\n            </li>\n            <li role="presentation">\n                <a href="#phones" aria-controls="phones" role="tab" data-toggle="tab">Profile</a>\n            </li>\n        </ul>\n\n        <div class="tab-content" tabindex="0">\n            <div role="tabpanel" class="tab-pane active" id="recordings">\n                <table class="table">\n                    <thead>\n                        <tr>\n                            <th>From</th>\n                            <th>Duration</th>\n                            <th>Date</th>\n                            <th></th>\n                        </tr>\n                    </thead>\n\n                    <tbody>\n                        <tr v-for="r in user.recordings | orderBy \'created_at\' -1"  tabindex="0">\n                            <td>{{r.from}}</td>\n                            <td>{{r.duration}}s</td>\n                            <td>{{r.created_at.format(\'YYYY-MM-DD\')}}</td>\n                            <td>\n                                <a href="" title="View recording {{r.id}}"><i class="fa fa-eye"></i></a>\n                            </td>\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n\n\n            <div role="tabpanel" class="tab-pane" id="phones">\n\n                <section class="phone-numbers col-sm-6">\n                    <ul class="fa-ul">\n                        <li>Phones</li>\n                        <li v-for="n in user.phone_numbers">\n                            <i class="fa-li phone-number" :class="{\'verified\':n.is_verified}"></i>\n                            {{ n.number }}\n                        </li>\n                    </ul>\n                </section>\n\n                <hr class="visible-xs">\n\n                <section class="friends col-sm-6">\n                    <ul class="fa-ul">\n                        <li>Friends</li>\n                        <li v-for="n in user.friends">\n                            <i class="fa-li phone-number" :class="{\'verified\':n.is_verified}"></i>\n                            {{ n.number }}\n                        </li>\n                    </ul>\n                </section>\n            </div>\n        </div>\n    </div>\n</div>';
+module.exports = '<div>\n    Id: {{recording.id}}<br>\n    SID: {{recording.recording_sid}}<br> <!-- todo link to recording -->\n    From: {{recording.from}}<br>\n    <audio controls v-el:audio>\n        <source :src="recording.url" type="audio/mpeg">\n        Your browser does not support the audio element.\n    </audio>\n</div>';
 },{}],8:[function(require,module,exports){
 "use strict";
 
 module.exports = {
-    template: require('./user-details.html'),
+    template: require('./recording.html'),
 
-    props: ['user']
+    props: ['recording'],
+
+    ready: function ready() {
+        var _this = this;
+
+        this.$watch('recording', function (r) {
+            $(_this.$els.audio).load();
+        });
+    }
 };
 
-},{"./user-details.html":7}]},{},[1]);
+},{"./recording.html":7}],9:[function(require,module,exports){
+module.exports = '<div class="panel panel-default">\n    <div class="panel-body">\n        <h3>\n            {{ user.name }}\n            <small>{{ user.email }}</small>\n        </h3>\n\n        <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 1em">\n            <li role="presentation" class="active">\n                <a href="#recordings" aria-controls="recordings" role="tab" data-toggle="tab" tabindex="0">Home</a>\n            </li>\n            <li role="presentation">\n                <a href="#phones" aria-controls="phones" role="tab" data-toggle="tab">Profile</a>\n            </li>\n        </ul>\n\n        <div class="row">\n            <div class="tab-content" tabindex="0">\n                <div role="tabpanel" class="tab-pane active" id="recordings">\n                    <table class="table selectable">\n                        <thead>\n                            <tr>\n                                <th>From</th>\n                                <th>Duration</th>\n                                <th>Date</th>\n                            </tr>\n                        </thead>\n\n                        <tbody>\n                            <tr\n                                    v-for="r in user.recordings | orderBy \'created_at\' -1"\n                                    tabindex="0"\n                                    @click="$parent.recording = r"\n                                    :class="{\'selected\':$parent.recording == r}">\n                                <td>{{r.from}}</td>\n                                <td>{{r.duration}}s</td>\n                                <td>{{r.created_at.format(\'YYYY-MM-DD\')}}</td>\n                            </tr>\n                        </tbody>\n                    </table>\n\n                    <hr>\n\n                    <div class="col-sm-12">\n                        <recording :recording.sync="recording"></recording>\n                    </div>\n                </div>\n\n\n                <div role="tabpanel" class="tab-pane" id="phones">\n\n                    <section class="phone-numbers col-sm-6">\n                        <ul class="fa-ul">\n                            <li>Phones</li>\n                            <li v-for="n in user.phone_numbers">\n                                <i class="fa-li phone-number" :class="{\'verified\':n.is_verified}"></i>\n                                {{ n.number }}\n                            </li>\n                        </ul>\n                    </section>\n\n                    <hr class="visible-xs">\n\n                    <section class="friends col-sm-6">\n                        <ul class="fa-ul">\n                            <li>Friends</li>\n                            <li v-for="n in user.friends">\n                                <i class="fa-li phone-number" :class="{\'verified\':n.is_verified}"></i>\n                                {{ n.number }}\n                            </li>\n                        </ul>\n                    </section>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>';
+},{}],10:[function(require,module,exports){
+"use strict";
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _recordingRecordingJs = require('./recording/recording.js');
+
+var _recordingRecordingJs2 = _interopRequireDefault(_recordingRecordingJs);
+
+module.exports = {
+    template: require('./user-details.html'),
+
+    props: ['user'],
+
+    data: function data() {
+        return {
+            recording: false
+        };
+    },
+
+    components: {
+        recording: _recordingRecordingJs2['default']
+    },
+
+    ready: function ready() {
+
+        this.$watch('user', function (u) {
+            this.recording = u.recordings[0];
+        }, {
+            immediate: true
+        });
+    }
+};
+
+},{"./recording/recording.js":8,"./user-details.html":9}]},{},[1]);

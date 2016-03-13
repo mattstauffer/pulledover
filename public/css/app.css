@@ -7973,6 +7973,12 @@ article.user {
   padding: 15px;
   background-color: white; }
 
+table.selectable tbody tr:hover {
+  cursor: pointer; }
+
+table.selectable tr.selected {
+  border-left: 5px solid blue; }
+
 #admin-dashboard .users .usages {
   max-height: 25em;
   overflow: scroll;
@@ -7982,10 +7988,6 @@ article.user {
   @media screen and (max-width: 767px) {
     #admin-dashboard .users .usages table tr:nth-child(odd) td {
       background-color: #eeeeee; } }
-  #admin-dashboard .users .usages table tbody tr:hover {
-    cursor: pointer; }
-  #admin-dashboard .users .usages table tr.selected {
-    border-left: 1em solid blue; }
   #admin-dashboard .users .usages table th.left, #admin-dashboard .users .usages table td.left {
     border-left: 1px solid #ddd;
     text-align: left; }

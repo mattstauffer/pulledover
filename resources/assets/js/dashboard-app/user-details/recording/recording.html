@@ -1,0 +1,9 @@
+<div>
+    Id: {{recording.id}}<br>
+    SID: {{recording.recording_sid}}<br> <!-- todo link to recording -->
+    From: {{recording.from}}<br>
+    <audio controls v-el:audio>
+        <source :src="recording.url" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+</div>

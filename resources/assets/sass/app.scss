@@ -186,6 +186,16 @@ $border-left: 1px 1px 1px 0;
 $border-style: solid;
 $border-color: $table-border-color;
 
+table.selectable {
+    tbody tr:hover {
+        cursor: pointer;
+    }
+
+    tr.selected {
+        border-left: 5px solid blue;
+    }
+}
+
 #admin-dashboard .users {
     .usages {
 
@@ -206,13 +216,6 @@ $border-color: $table-border-color;
                 }
             }
 
-            tbody tr:hover {
-                cursor: pointer;
-            }
-
-            tr.selected {
-                border-left: 1em solid blue;
-            }
             th, td {
 
                 //&.left, &.right {
