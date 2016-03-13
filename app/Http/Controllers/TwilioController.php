@@ -20,10 +20,10 @@ class TwilioController extends Controller
     public function __construct()
     {
         // limit to 3 calls per day
-        $this->middleware('throttle.calls', [
-            'maxAttempts' => 3,
-            'decayMinutes' => 24*60
-        ])->only('callHook');
+//        $this->middleware('throttle.calls', [
+//            'maxAttempts' => 3,
+//            'decayMinutes' => 24*60
+//        ])->only('callHook');
     }
 
     public function callHook(Request $request)
