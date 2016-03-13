@@ -3,6 +3,9 @@
 $admin-table-max-height: 25em !default;
 $admin-table-padding-bottom: 1em !default;
 
+// this is for the "calls" and "minutes" columns which span 2 columns per row
+$column-group-width: 100px !default;
+
 //selected row border
 $selected-row-border-width: 5px !default;
 $selected-row-border-style: solid !default;
@@ -60,11 +63,11 @@ $selected-row-border-color: blue !default;
 
         &.calls {
           background-color: $table-bg-accent;
-          width: 100px;
+          width: $column-group-width;
         }
 
         &.seconds {
-          width: 100px;
+          width: $column-group-width;
         }
       }
     }
