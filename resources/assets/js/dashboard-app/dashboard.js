@@ -3,7 +3,7 @@
 import moment from 'moment';
 import _ from 'lodash';
 import Vue from 'vue';
-import User from './user/user.js';
+import UserDetails from './user-details/user-details.js';
 
 Vue.config.debug = true;
 
@@ -20,7 +20,7 @@ new Vue({
     },
 
     components: {
-        user: User
+        'user-details': UserDetails
     },
 
     methods: {

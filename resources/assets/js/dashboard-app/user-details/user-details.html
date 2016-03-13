@@ -1,0 +1,69 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h3>
+            {{ user.name }}
+            <small>{{ user.email }}</small>
+        </h3>
+
+        <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 1em">
+            <li role="presentation" class="active">
+                <a href="#recordings" aria-controls="recordings" role="tab" data-toggle="tab" tabindex="0">Home</a>
+            </li>
+            <li role="presentation">
+                <a href="#phones" aria-controls="phones" role="tab" data-toggle="tab">Profile</a>
+            </li>
+        </ul>
+
+        <div class="tab-content" tabindex="0">
+            <div role="tabpanel" class="tab-pane active" id="recordings">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>From</th>
+                            <th>Duration</th>
+                            <th>Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr v-for="r in user.recordings | orderBy 'created_at' -1"  tabindex="0">
+                            <td>{{r.from}}</td>
+                            <td>{{r.duration}}s</td>
+                            <td>{{r.created_at.format('YYYY-MM-DD')}}</td>
+                            <td>
+                                <a href="" title="View recording {{r.id}}"><i class="fa fa-eye"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div role="tabpanel" class="tab-pane" id="phones">
+
+                <section class="phone-numbers col-sm-6">
+                    <ul class="fa-ul">
+                        <li>Phones</li>
+                        <li v-for="n in user.phone_numbers">
+                            <i class="fa-li phone-number" :class="{'verified':n.is_verified}"></i>
+                            {{ n.number }}
+                        </li>
+                    </ul>
+                </section>
+
+                <hr class="visible-xs">
+
+                <section class="friends col-sm-6">
+                    <ul class="fa-ul">
+                        <li>Friends</li>
+                        <li v-for="n in user.friends">
+                            <i class="fa-li phone-number" :class="{'verified':n.is_verified}"></i>
+                            {{ n.number }}
+                        </li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
