@@ -55,8 +55,7 @@ $factory->define(App\Recording::class, function (Faker\Generator $faker) {
         'url' => 'http://www.lbjlib.utexas.edu/Johnson/AV.hom/audio/8107_excerpt.mp3', //todo local file?
         'recording_sid' => $faker->randomNumber(8) . $faker->randomNumber(8) . $faker->randomNumber(8) . $faker->randomNumber(8),
         'duration' => $faker->numberBetween(1, 20),
-        'json' => '{}',
-        'created_at' => $faker->dateTimeBetween('-2 month')
+        'json' => '{}'
     ];
 });
 

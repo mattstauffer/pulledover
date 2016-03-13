@@ -22,7 +22,8 @@ class RecordingTableSeeder extends Seeder
             ]));
 
             factory(\App\Recording::class, 5)->create([
-                'user_id' => $user->id
+                'user_id' => $user->id,
+                'created_at' => $faker->dateTimeBetween('-2 month')
             ]);
 
             if ($faker->boolean(75)) {
