@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Friend;
 use App\Jobs\Job;
+use App\Phone\Exceptions\BlacklistedPhoneNumberException;
 use App\Phone\TwilioClient;
 use App\PhoneNumber;
 use App\Recording;
@@ -44,7 +45,13 @@ class SendNewRecordingNotifications extends Job
     {
         $text = $this->getOwnerBody();
         $logger->info($this->getOwnerNumber());
-        $twilio->text($this->getOwnerNumber(), $text);
+
+        try {
+            $twilio->text($this->getOwnerNumber(), $text);
+        } catch (BlacklistedPhoneNumberException $e) {
+            //todo handle blacklisted number
+        }
+
         $logger->info('Owner SMS sent: ' . $text);
     }
 
@@ -98,7 +105,6 @@ class SendNewRecordingNotifications extends Job
      * @param TwilioClient $twilio
      * @param $text
      *
-     * @throws \App\Phone\Exceptions\BlacklistedPhoneNumberException
      * @throws \App\Phone\Exceptions\InternationalPhoneNumberException
      * @throws \App\Phone\Exceptions\InvalidPhoneNumberException
      * @throws \App\Phone\Exceptions\NonMobilePhoneNumberException
@@ -106,7 +112,11 @@ class SendNewRecordingNotifications extends Job
      */
     function notifyFriend(Friend $friend,TwilioClient $twilio, $text)
     {
-        $twilio->text($friend->number, $text);
+        try {
+            $twilio->text($friend->number, $text);
+        } catch (BlacklistedPhoneNumberException $e) {
+            //todo handle blacklisted number
+        }
     }
 
     /**
