@@ -22,14 +22,11 @@ class NotificationTest extends TestCase
         $friend = factory(Friend::class)->make();
         $friendVerified = factory(Friend::class, 'verified')->make();
         $user->friends()->saveMany([$friend, $friendVerified]);
-
-        $request = new Request([
-            'From' => $number->number
-        ]);
+        $recording = $user->recordings()->save(factory(\App\Recording::class)->make());
 
         $twilioMock = M::spy(TwilioClient::class);
         $this->app->instance(TwilioClient::class, $twilioMock);
-        $command = new NotifyFriendsOfRecording($request);
+        $command = new NotifyFriendsOfRecording($recording);
 
         $command->handle(
             $twilioMock,

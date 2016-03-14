@@ -5,27 +5,32 @@ namespace App\Jobs;
 use App\Jobs\Job;
 use App\Phone\TwilioClient;
 use App\PhoneNumber;
+use App\Recording;
 use Illuminate\Log\Writer as Logger;
 
 class NotifyFriendsOfRecording extends Job
 {
-    private $request;
 
-    public function __construct($request)
+    /**
+     * @var Recording
+     */
+    private $recording;
+
+    public function __construct(Recording $recording)
     {
-        $this->request = $request;
+        $this->recording = $recording;
     }
 
     public function handle(TwilioClient $twilio, Logger $logger)
     {
-        $user = PhoneNumber::findByTwilioNumber($this->request->get('From'))->user;
+        $user = $this->recording->user;
 
         $text = sprintf(
             "Your friend {$user->name} has completed a PulledOver recording. From %s, City %s, State %s, Recording %s",
-            $this->request->get("From"),
-            $this->request->get("CallerCity"),
-            $this->request->get("CallerState"),
-            $this->request->get("RecordingUrl")
+            $this->recording->from,
+            $this->recording->city,
+            $this->recording->state,
+            $this->recording->url
         );
 
         $user->friends()->verified()->get()->each(function ($friend) use ($user, $twilio, $text) {
