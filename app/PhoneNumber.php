@@ -21,6 +21,11 @@ class PhoneNumber extends Model implements ReceivesTextMessages
         return $this->belongsTo(User::class);
     }
 
+    public function recordings()
+    {
+        return $this->hasMany(Recording::class);
+    }
+
     public function markVerified()
     {
         $this->is_verified = true;

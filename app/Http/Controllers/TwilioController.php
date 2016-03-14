@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Requests\TwilioRequest;
 use App\Jobs\NotifyFriendsOfRecording;
 use App\Jobs\NotifyOwnerOfRecording;
+use App\Jobs\SendNewRecordingNotifications;
 use App\PhoneNumber;
 use App\Recording;
 use Exception;
@@ -51,8 +52,7 @@ class TwilioController extends Controller
     {
         $number = $request->phoneNumber();
         $recording = $this->saveRecording($number, $request);
-        $this->dispatch(new NotifyOwnerOfRecording($recording));
-        $this->dispatch(new NotifyFriendsOfRecording($recording));
+        $this->dispatch(new SendNewRecordingNotifications($recording));
 
         return $this->hangup();
     }
@@ -74,6 +74,7 @@ class TwilioController extends Controller
             'duration' => $request->input('RecordingDuration'),
             'json' => json_encode($request->all()),
         ]);
+        $recording->phone_number_id = $number->id;
 
         return $number->user->recordings()->save($recording);
     }
