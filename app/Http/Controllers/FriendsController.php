@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-use App\Jobs\VerifyPhoneNumberFriendship;
+use App\Jobs\VerifyPhoneNumber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,7 +37,7 @@ class FriendsController extends Controller
             'name' => $request->get('name'),
         ]);
 
-        $this->dispatch(new VerifyPhoneNumberFriendship($number));
+        $this->dispatch(new VerifyPhoneNumber($number));
 
         return redirect()->route('dashboard');
     }
