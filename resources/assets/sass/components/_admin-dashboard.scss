@@ -1,0 +1,75 @@
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+$admin-table-max-height: 25em !default;
+$admin-table-padding-bottom: 1em !default;
+
+// this is for the "calls" and "minutes" columns which span 2 columns per row
+$column-group-width: 100px !default;
+
+//selected row border
+$selected-row-border-width: 5px !default;
+$selected-row-border-style: solid !default;
+$selected-row-border-color: blue !default;
+
+#admin-dashboard {
+
+  .selectable-table-wrapper {
+
+    max-height: $admin-table-max-height;
+    overflow: scroll;
+    padding-bottom: $admin-table-padding-bottom;
+
+    table.selectable {
+      tbody tr:hover {
+        cursor: pointer;
+      }
+
+      tr.selected {
+        border-left: {
+          style: $selected-row-border-style;
+          width: $selected-row-border-width;
+          color: $selected-row-border-color
+        };
+      }
+
+    }
+  }
+
+  .users {
+    table{
+
+      caption {
+        padding-right: $grid-gutter-width/2;
+      }
+
+      @media screen and (max-width:$screen-xs-max){
+        tr:nth-child(odd){
+          td {
+            background-color: $gray-lighter;
+          }
+        }
+      }
+
+      th, td {
+        &.left {
+          border-left: 1px solid $table-border-color;
+          text-align: left;
+        }
+
+        &.right {
+          border-right: 1px solid $table-border-color;;
+          text-align: right;
+        }
+
+        &.calls {
+          background-color: $table-bg-accent;
+          width: $column-group-width;
+        }
+
+        &.seconds {
+          width: $column-group-width;
+        }
+      }
+    }
+  }
+}

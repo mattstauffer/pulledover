@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Jobs\NotifyFriendsOfRecording;
 use App\Jobs\NotifyOwnerOfRecording;
@@ -14,6 +13,7 @@ use Services_Twilio_Twiml as TwimlGenerator;
 
 class TwilioController extends Controller
 {
+
     public function callHook(Request $request)
     {
         try {

@@ -17,7 +17,7 @@
             <div class="col-sm-1 dashboard-section-icon">
                 <i class="fa fa-3x fa-phone"></i>
             </div>
-            <div class="col-sm-10">
+            <div class="col-sm-10" tabindex="0">
                 <h2>My Phone Numbers</h2>
                 <p class="intro text-muted">In order to identify incoming phone calls with your account, you need to verify each of your phone numbers you want to be able to call from.</p>
 
@@ -26,7 +26,7 @@
                 @else
                     @foreach ($numbers as $i => $number)
                         <h4 class="number">{{ $number->formattedNumber }}
-                            <i class="fa fa-{{ $number->is_verified ? 'check-square-o number--verified' : 'square-o number--unverified' }}"></i>
+                            <i class="phone-number {{$number->is_verified ? 'verified':''}}"></i>
                             <span class="number__label">{{ $number->is_verified ? 'Verified' : 'Un-verified' }}</span>
                         </h4>
                     @endforeach
@@ -56,7 +56,7 @@
                 @else
                     @foreach ($friends as $i => $friend)
                         <h4 class="number">{{ $friend->name }} - {{ $friend->formattedNumber }}
-                            <i class="fa fa-{{ $friend->is_verified ? 'check-square-o number--verified' : 'square-o number--unverified' }}"></i>
+                            <i class="phone-number {{$friend->is_verified ? 'verified':''}}"></i>
                             <span class="number__label">{{ $friend->is_verified ? 'Verified' : 'Un-verified' }}</span>
                         </h4>
                     @endforeach

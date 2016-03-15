@@ -15,7 +15,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->email,
-        'password' => bcrypt(str_random(10)),
+        'password' => bcrypt('password'),
         'remember_token' => str_random(10),
     ];
 });
@@ -52,9 +52,14 @@ $factory->define(App\Recording::class, function (Faker\Generator $faker) {
         'from' => '+1313' . $faker->randomNumber(7),
         'city' => $faker->city,
         'state' => $faker->state,
-        'url' => $faker->url,
+        'url' => 'http://www.lbjlib.utexas.edu/Johnson/AV.hom/audio/8107_excerpt.mp3', //todo local file?
         'recording_sid' => $faker->randomNumber(8) . $faker->randomNumber(8) . $faker->randomNumber(8) . $faker->randomNumber(8),
-        'duration' => $faker->randomNumber(2),
-        'json' => '{}',
+        'duration' => $faker->numberBetween(1, 20),
+        'json' => '{}'
     ];
+});
+
+
+$factory->defineAs(App\Recording::class, 'long', function (Faker\Generator $faker) use ($factory) {
+    return array_merge($factory->raw(\App\Recording::class), ['duration' => $faker->numberBetween(100, 400)]);
 });

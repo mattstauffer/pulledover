@@ -1,0 +1,25 @@
+@import "node_modules/font-awesome/scss/variables";
+@import "node_modules/font-awesome/scss/mixins";
+
+$un-verified-color: red !default;
+$verified-color: green !default;
+
+// Phone number / friend number icon
+// defaults to red open square, add .verified to turn to green check square
+i.phone-number {
+  @include fa-icon();
+
+  color: $un-verified-color;
+
+  &:before {
+    content: $fa-var-square-o;
+  }
+
+  &.verified {
+    color: $verified-color;
+
+    &:before {
+      content: $fa-var-check-square-o;
+    }
+  }
+}
