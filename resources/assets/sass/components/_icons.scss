@@ -22,4 +22,11 @@ i.phone-number {
       content: $fa-var-check-square-o;
     }
   }
+
+  &.blacklisted {
+
+    &:before {
+      content: $fa-var-bell-slash;
+    }
+  }
 }

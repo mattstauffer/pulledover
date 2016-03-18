@@ -55,4 +55,15 @@ class PhoneNumber extends Model implements ReceivesTextMessages
 
         return self::where('number', $number)->where('is_verified', true)->firstOrFail();
     }
+
+    public function getStatusAttribute()
+    {
+        if ($this->blacklisted) {
+            return 'blacklisted';
+        } elseif ($this->is_verified) {
+            return 'verified';
+        }
+
+        return 'un-verified';
+    }
 }

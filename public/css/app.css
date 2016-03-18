@@ -7838,6 +7838,8 @@ i.phone-number {
     color: green; }
     i.phone-number.verified:before {
       content: ""; }
+  i.phone-number.blacklisted:before {
+    content: ""; }
 
 /*!
  * Bootstrap v3.3.6 (http://getbootstrap.com)

@@ -93,5 +93,7 @@ class PhoneNumberTest extends TestCase
             "Sorry, but that phone number has been blacklisted.",
             'Text "START" to (500) 555-0006 and try again.'
         ], \Session::get('errors')->all());
+
+        $this->dontSeeInDatabase('phone_numbers', ['number' => '5005550004']);
     }
 }
