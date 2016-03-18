@@ -24,10 +24,7 @@ class PhoneNumberTest extends TestCase
 
     public function test_user_cannot_add_the_same_number_twice()
     {
-        Validator::extend('valid_phone', function ($attribute, $value, $parameters, $validator) {
-            // Skip validation because we can't validate a phone number on test creds
-            return true;
-        });
+        $this->withoutPhoneValidation();
 
         $user = factory(User::class)->create();
         $this->be($user);
@@ -77,16 +74,24 @@ class PhoneNumberTest extends TestCase
 
     public function test_it_strips_non_numeric_characters_on_store()
     {
+        $this->withoutMiddleware()->withoutPhoneValidation();
+
         $user = factory(User::class)->create();
         $this->be($user);
-
-        //don't nobody wanna test twilio validators right now
-        Validator::extend('valid_phone', function ($attribute, $value, $parameters, $validator) {
-            // Skip validation because we can't validate a phone number on test creds
-            return true;
-        });
-
         $this->post(route('numbers.store'), ['number' => '(500) 555-0000']);
         $this->seeInDatabase('phone_numbers', ['number' => '5005550000']);
+    }
+
+    public function test_it_return_proper_error_if_blacklisted()
+    {
+        $this->withoutMiddleware()->withoutPhoneValidation();
+        $user = factory(User::class)->create();
+        $this->be($user);
+        $this->post(route('numbers.store'), ['number' => '5005550004']);
+
+        $this->assertEquals([
+            "Sorry, but that phone number has been blacklisted.",
+            'Text "START" to (500) 555-0006 and try again.'
+        ], \Session::get('errors')->all());
     }
 }

@@ -28,4 +28,18 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         return $app;
     }
+
+    /**
+     * Disable valid_phone validator.
+     * @return $this
+     */
+    protected function withoutPhoneValidation()
+    {
+        Validator::extend('valid_phone', function ($attribute, $value, $parameters, $validator) {
+            // Skip validation because we can't validate a phone number on test creds
+            return true;
+        });
+
+        return $this;
+    }
 }

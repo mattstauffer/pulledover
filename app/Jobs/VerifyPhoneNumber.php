@@ -46,6 +46,8 @@ class VerifyPhoneNumber extends Job implements ShouldQueue
             $this->sendVerificationText($verifier);
         } catch (BlacklistedPhoneNumberException $e) {
             //todo handle blacklisted number
+
+            throw $e;
         }
     }
 
