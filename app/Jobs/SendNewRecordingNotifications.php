@@ -49,7 +49,7 @@ class SendNewRecordingNotifications extends Job
         try {
             $twilio->text($this->getOwnerNumber(), $text);
         } catch (BlacklistedPhoneNumberException $e) {
-            //todo handle blacklisted number
+            $this->recording->phoneNumber->markBlacklisted();
         }
 
         $logger->info('Owner SMS sent: ' . $text);
@@ -60,7 +60,7 @@ class SendNewRecordingNotifications extends Job
      */
     protected function getOwnerNumber()
     {
-        if($number = $this->recording->phone_number) {
+        if($number = $this->recording->phoneNumber) {
             return $number->number;
         }
 
@@ -115,7 +115,9 @@ class SendNewRecordingNotifications extends Job
         try {
             $twilio->text($friend->number, $text);
         } catch (BlacklistedPhoneNumberException $e) {
-            //todo handle blacklisted number
+            $friend->markBlacklisted();
+
+            //todo notify owner
         }
     }
 

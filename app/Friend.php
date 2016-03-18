@@ -27,9 +27,18 @@ class Friend extends Model
         $this->save();
     }
 
+    public function markBlacklisted()
+    {
+        $this->blacklisted = true;
+        $this->save();
+    }
+
     public function scopeVerified($query)
     {
-        return $query->where('is_verified', true);
+        return $query->where([
+            'is_verified' => true,
+            'blacklisted' => false
+        ]);
     }
 
     public function getStatusAttribute()

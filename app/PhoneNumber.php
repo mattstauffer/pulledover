@@ -36,14 +36,23 @@ class PhoneNumber extends Model
         $this->save();
     }
 
+    public function markBlacklisted()
+    {
+        $this->blacklisted = true;
+        $this->save();
+    }
+
     public static function findByNumber($number)
     {
         return self::where('number', $number)->firstOrFail();
     }
 
-    public function scopeVerified(Builder $builder)
+    public function scopeVerified($query)
     {
-        return $builder->where('is_verified', true);
+        return $query->where([
+            'is_verified' => true,
+            'blacklisted' => false
+        ]);
     }
 
     public static function findByTwilioNumber($number)

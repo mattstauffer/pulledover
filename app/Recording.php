@@ -22,7 +22,7 @@ class Recording extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function phone_number()
+    public function phoneNumber()
     {
         return $this->belongsTo(PhoneNumber::class);
     }
