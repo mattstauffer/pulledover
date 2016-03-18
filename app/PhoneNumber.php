@@ -16,6 +16,10 @@ class PhoneNumber extends Model implements ReceivesTextMessages
         'is_verified' => 'boolean'
     ];
 
+    public $appends = [
+        'status'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
