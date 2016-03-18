@@ -4,12 +4,9 @@ namespace App\Jobs;
 
 use App\Exceptions\UnrecognizedReceiverTypeException;
 use App\Friend;
-use App\Jobs\Job;
 use App\Phone\Exceptions\BlacklistedPhoneNumberException;
 use App\Phone\NumberVerifier;
 use App\PhoneNumber;
-use App\ReceivesTextMessages as Receiver;
-use App\User;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -19,27 +16,15 @@ class VerifyPhoneNumber extends Job implements ShouldQueue
     use InteractsWithQueue, SerializesModels;
 
     /**
-     * @var Receiver
+     * @var PhoneNumber|Friend
      */
     private $receiver;
 
-    /**
-     * Create a new job instance.
-     *
-     * @param Receiver $receiver
-     */
-    public function __construct(Receiver $receiver)
+    public function __construct($receiver)
     {
         $this->receiver = $receiver;
     }
 
-    /**
-     * Execute the job.
-     *
-     * @param NumberVerifier $verifier
-     *
-     * @throws UnrecognizedReceiverTypeException
-     */
     public function handle(NumberVerifier $verifier)
     {
         try {

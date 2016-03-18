@@ -35,7 +35,7 @@ class VerifyNumberJobTest extends TestCase
      */
     public function test_it_throws_exception_if_receiver_type_not_implemented()
     {
-        $job = new \App\Jobs\VerifyPhoneNumber(M::mock(\App\ReceivesTextMessages::class));
+        $job = new \App\Jobs\VerifyPhoneNumber(M::mock());
         $job->handle(M::mock(NumberVerifier::class));
     }
 }

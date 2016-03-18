@@ -6,7 +6,7 @@ use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
-class PhoneNumber extends Model implements ReceivesTextMessages
+class PhoneNumber extends Model
 {
     use formatsNumber;
 
