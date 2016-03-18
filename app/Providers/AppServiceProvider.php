@@ -53,6 +53,10 @@ class AppServiceProvider extends ServiceProvider
 
     public function register()
     {
-        //
+        $this->app->singleton('from_number', function($app){
+            return Str::formatNumber(
+                substr($app[TwilioClient::class]->getFromNumber(), 2)
+            );
+        });
     }
 }

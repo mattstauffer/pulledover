@@ -14,10 +14,7 @@ class FriendTest extends TestCase
 
     public function test_user_cannot_add_the_same_friend_twice()
     {
-        Validator::extend('valid_phone', function ($attribute, $value, $parameters, $validator) {
-            // Skip validation because we can't validate a phone number on test creds
-            return true;
-        });
+        $this->withoutPhoneValidation();
 
         $user = factory(User::class)->create();
         $phoneNumber = factory(PhoneNumber::class, 'verified')->make();
@@ -32,6 +29,20 @@ class FriendTest extends TestCase
         $friends = $user->friends()->where(['number' => $number])->get();
 
         $this->assertEquals(1, $friends->count());
+    }
+
+    public function test_it_cannot_add_blacklisted_numbers()
+    {
+        $this->withoutPhoneValidation();
+
+        $user = factory(User::class)->create();
+        $phoneNumber = factory(PhoneNumber::class, 'verified')->make();
+        $user->phoneNumbers()->save($phoneNumber);
+        $this->be($user);
+        $this->post(route('friends.store'), ['number' => '5005550004', 'name' => 'foo']);
+
+        $this->assertEquals([trans('twilio.21610')], \Session::get('errors')->all());
+        $this->dontSeeInDatabase('friends', ['number' => '5005550004']);
     }
 
     public function test_it_is_listed_on_the_dashboard_after_being_added()

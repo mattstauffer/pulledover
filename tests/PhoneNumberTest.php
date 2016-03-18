@@ -82,17 +82,14 @@ class PhoneNumberTest extends TestCase
         $this->seeInDatabase('phone_numbers', ['number' => '5005550000']);
     }
 
-    public function test_it_return_proper_error_if_blacklisted()
+    public function test_it_cannot_add_blacklisted_numbers()
     {
         $this->withoutMiddleware()->withoutPhoneValidation();
         $user = factory(User::class)->create();
         $this->be($user);
         $this->post(route('numbers.store'), ['number' => '5005550004']);
 
-        $this->assertEquals([
-            "Sorry, but that phone number has been blacklisted.",
-            'Text "START" to (500) 555-0006 and try again.'
-        ], \Session::get('errors')->all());
+        $this->assertEquals([trans('twilio.21610')], \Session::get('errors')->all());
 
         $this->dontSeeInDatabase('phone_numbers', ['number' => '5005550004']);
     }

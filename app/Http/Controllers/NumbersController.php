@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Jobs\VerifyPhoneNumber;
 use App\Phone\Exceptions\BlacklistedPhoneNumberException;
+use App\Phone\Exceptions\TwilioException;
 use App\Phone\TwilioClient;
 use App\PhoneNumber;
 use Illuminate\Http\Request;
@@ -38,17 +39,10 @@ class NumbersController extends Controller
 
         try {
             $this->dispatch(new VerifyPhoneNumber($number));
-        } catch (BlacklistedPhoneNumberException $e) {
+        } catch (TwilioException $e) {
             \DB::rollback();
 
-            return back()->withInput()->withErrors([
-                $e->getMessage(),
-                sprintf("Text \"START\" to %s and try again.",
-                    Str::formatNumber(
-                        substr(app(TwilioClient::class)->getFromNumber(), 2)
-                    )
-                )
-            ]);
+            return back()->withInput()->withErrors([trans('twilio.'.$e->getCode())]);
         }
 
         \DB::commit();
