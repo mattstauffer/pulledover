@@ -21,7 +21,6 @@ class PhoneNumberWasBlacklisted extends Event
     public function __construct(PhoneNumber $phoneNumber)
     {
         $this->phoneNumber = $phoneNumber;
-        info('phone number blacklisted');
     }
 
     /**

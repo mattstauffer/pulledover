@@ -21,7 +21,6 @@ class FriendWasBlacklisted extends Event
     public function __construct(Friend $friend)
     {
         $this->friend = $friend;
-        info('friend blacklisted');
     }
 
     /**
