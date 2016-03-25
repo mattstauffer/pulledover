@@ -6,6 +6,8 @@ use App\Friend;
 use App\Phone\Exceptions\BlacklistedPhoneNumberException;
 use App\Phone\NumberVerifier;
 use App\PhoneNumber;
+use App\Events\FriendWasBlacklisted;
+use App\Events\PhoneNumberWasBlacklisted;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -29,9 +31,7 @@ class VerifyPhoneNumber extends Job implements ShouldQueue
         try {
             $this->sendVerificationText($verifier);
         } catch (BlacklistedPhoneNumberException $e) {
-            //todo handle blacklisted number
-
-            throw $e;
+            $this->receiver->markBlacklisted();
         }
     }
 

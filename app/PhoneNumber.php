@@ -3,6 +3,7 @@
 namespace App;
 
 use App\User;
+use App\Events\PhoneNumberWasBlacklisted;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -40,6 +41,7 @@ class PhoneNumber extends Model
     {
         $this->blacklisted = true;
         $this->save();
+        event(new PhoneNumberWasBlacklisted($this));
     }
 
     public static function findByNumber($number)

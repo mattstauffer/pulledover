@@ -31,7 +31,7 @@ class FriendTest extends TestCase
         $this->assertEquals(1, $friends->count());
     }
 
-    public function test_it_cannot_add_blacklisted_numbers()
+    public function test_it_marks_friend_as_blacklisted()
     {
         $this->withoutPhoneValidation();
 
@@ -40,9 +40,7 @@ class FriendTest extends TestCase
         $user->phoneNumbers()->save($phoneNumber);
         $this->be($user);
         $this->post(route('friends.store'), ['number' => '5005550004', 'name' => 'foo']);
-
-        $this->assertEquals([trans('twilio.21610')], \Session::get('errors')->all());
-        $this->dontSeeInDatabase('friends', ['number' => '5005550004']);
+        $this->seeInDatabase('friends', ['number' => '5005550004', 'blacklisted' => true]);
     }
 
     public function test_it_is_listed_on_the_dashboard_after_being_added()

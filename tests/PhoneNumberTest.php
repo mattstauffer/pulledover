@@ -82,15 +82,12 @@ class PhoneNumberTest extends TestCase
         $this->seeInDatabase('phone_numbers', ['number' => '5005550000']);
     }
 
-    public function test_it_cannot_add_blacklisted_numbers()
+    public function test_it_marks_phone_number_as_blacklisted()
     {
         $this->withoutMiddleware()->withoutPhoneValidation();
         $user = factory(User::class)->create();
         $this->be($user);
         $this->post(route('numbers.store'), ['number' => '5005550004']);
-
-        $this->assertEquals([trans('twilio.21610')], \Session::get('errors')->all());
-
-        $this->dontSeeInDatabase('phone_numbers', ['number' => '5005550004']);
+        $this->seeInDatabase('phone_numbers', ['number' => '5005550004', 'blacklisted' => true]);
     }
 }

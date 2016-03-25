@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Events\FriendWasBlacklisted;
 
 class Friend extends Model
 {
@@ -31,6 +32,7 @@ class Friend extends Model
     {
         $this->blacklisted = true;
         $this->save();
+        event(new FriendWasBlacklisted($this));
     }
 
     public function scopeVerified($query)

@@ -116,8 +116,6 @@ class SendNewRecordingNotifications extends Job
             $twilio->text($friend->number, $text);
         } catch (BlacklistedPhoneNumberException $e) {
             $friend->markBlacklisted();
-
-            //todo notify owner
         }
     }
 
