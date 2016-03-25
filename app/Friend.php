@@ -15,7 +15,8 @@ class Friend extends Model
     ];
 
     protected $casts = [
-        'is_verified' => 'boolean'
+        'is_verified' => 'boolean',
+        'blacklisted' => 'boolean'
     ];
 
     public $appends = [
