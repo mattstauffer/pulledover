@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
             return Auth::user()->friends()->where(['number' => $value])->count() === 0;
         });
 
-        Str::macro('formatNumber', function($number){
+        Str::macro('formatNumber', function ($number) {
             return sprintf(
                 '(%s) %s-%s',
                 substr($number, 0, 3),
@@ -53,7 +53,7 @@ class AppServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->singleton('from_number', function($app){
+        $this->app->singleton('from_number', function ($app) {
             return Str::formatNumber(
                 substr($app[TwilioClient::class]->getFromNumber(), 2)
             );

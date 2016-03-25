@@ -40,17 +40,14 @@ class VerifyPhoneNumber extends Job implements ShouldQueue
         $key = str_random(16);
 
         switch (get_class($this->receiver)) {
-            case Friend::class: {
+            case Friend::class:
                 $verifier->verifyFriendsNumber($this->receiver, $key);
                 break;
-            }
-            case PhoneNumber::class: {
+            case PhoneNumber::class:
                 $verifier->verifyOwnNumber($this->receiver, $key);
                 break;
-            }
-            default: {
+            default:
                 throw new \Exception('Unrecognized Receiver type');
-            }
         }
     }
 }

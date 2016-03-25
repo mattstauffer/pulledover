@@ -47,7 +47,7 @@ class SendNewRecordingNotifications extends Job
 
     protected function getOwnerNumber()
     {
-        if($number = $this->recording->phoneNumber) {
+        if ($number = $this->recording->phoneNumber) {
             return $number->number;
         }
 
@@ -67,7 +67,7 @@ class SendNewRecordingNotifications extends Job
         return $text;
     }
 
-    protected function notifyFriends(TwilioClient $twilio, Logger $logger,User $user)
+    protected function notifyFriends(TwilioClient $twilio, Logger $logger, User $user)
     {
         $text = $this->getFriendBody($user);
 
@@ -79,7 +79,7 @@ class SendNewRecordingNotifications extends Job
         $logger->info('Friends SMS sent: ' . $text);
     }
 
-    function notifyFriend(Friend $friend,TwilioClient $twilio, $text)
+    public function notifyFriend(Friend $friend, TwilioClient $twilio, $text)
     {
         try {
             $twilio->text($friend->number, $text);
