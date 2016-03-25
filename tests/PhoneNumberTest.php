@@ -90,4 +90,12 @@ class PhoneNumberTest extends TestCase
         $this->post(route('numbers.store'), ['number' => '5005550004']);
         $this->seeInDatabase('phone_numbers', ['number' => '5005550004', 'blacklisted' => true]);
     }
+
+    public function test_it_fires_blacklisted_event()
+    {
+        $this->expectsEvents(App\Events\PhoneNumberWasBlacklisted::class);
+        $user = factory(User::class)->create();
+        $number = factory(PhoneNumber::class)->make();
+        $user->phoneNumbers()->save($number)->markBlacklisted();
+    }
 }

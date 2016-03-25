@@ -84,4 +84,13 @@ class FriendTest extends TestCase
         $this->assertRedirectedTo(route('dashboard'));
         $this->assertSessionHas('messages', ['You need to verify a phone number before you can add any friends.']);
     }
+
+    public function test_it_fires_blacklisted_event()
+    {
+        $this->expectsEvents(App\Events\FriendWasBlacklisted::class);
+        $user = factory(User::class)->create();
+        $friend = factory(Friend::class)->make();
+        $user->friends()->save($friend);
+        $friend->markBlacklisted();
+    }
 }
