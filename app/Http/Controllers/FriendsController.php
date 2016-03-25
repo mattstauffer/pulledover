@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Jobs\VerifyPhoneNumber;
-use App\Phone\Exceptions\TwilioException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,21 +32,12 @@ class FriendsController extends Controller
             $this->throwValidationException($request, $validator);
         }
 
-        \DB::beginTransaction();
         $number = Auth::user()->friends()->create([
             'number' => $number,
             'name' => $request->get('name'),
         ]);
 
-        try {
-            $this->dispatch(new VerifyPhoneNumber($number));
-        } catch (TwilioException $e) {
-            \DB::rollback();
-
-            return back()->withInput()->withErrors([trans('twilio.'.$e->getCode())]);
-        }
-
-        \DB::commit();
+        $this->dispatch(new VerifyPhoneNumber($number));
 
         return redirect()->route('dashboard');
     }

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Jobs\VerifyPhoneNumber;
 use App\Phone\Exceptions\BlacklistedPhoneNumberException;
-use App\Phone\Exceptions\TwilioException;
 use App\Phone\TwilioClient;
 use App\PhoneNumber;
 use Illuminate\Http\Request;
@@ -32,20 +31,12 @@ class NumbersController extends Controller
             $this->throwValidationException($request, $validator);
         }
 
-        \DB::beginTransaction();
         $number = Auth::user()->phoneNumbers()->create([
             'number' => $number,
         ]);
 
-        try {
-            $this->dispatch(new VerifyPhoneNumber($number));
-        } catch (TwilioException $e) {
-            \DB::rollback();
+        $this->dispatch(new VerifyPhoneNumber($number));
 
-            return back()->withInput()->withErrors([trans('twilio.'.$e->getCode())]);
-        }
-
-        \DB::commit();
         return redirect()->route('dashboard');
     }
 }
