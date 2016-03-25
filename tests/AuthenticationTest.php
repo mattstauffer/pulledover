@@ -58,4 +58,18 @@ class AuthenticationTest extends TestCase
         $this->get(route('admin.index'));
         $this->assertResponseStatus(302);
     }
+
+    public function test_it_dispatches_verify_phone_number_job_on_register()
+    {
+        $this->expectsJobs(App\Jobs\VerifyPhoneNumber::class);
+        $this->withoutPhoneValidation();
+        $this
+            ->visit(route('auth.register'))
+            ->type('Bob', 'name')
+            ->type('email@email.com', 'email')
+            ->type('schmassword', 'password')
+            ->type('5005550006', 'phone_number')
+            ->check('disclaimer')
+            ->press('Register');
+    }
 }
