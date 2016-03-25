@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-use App\Jobs\VerifyPhoneNumberOwnership;
+use App\Jobs\VerifyPhoneNumber;
+use App\Phone\Exceptions\BlacklistedPhoneNumberException;
+use App\Phone\TwilioClient;
 use App\PhoneNumber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class NumbersController extends Controller
 {
@@ -32,7 +35,7 @@ class NumbersController extends Controller
             'number' => $number,
         ]);
 
-        $this->dispatch(new VerifyPhoneNumberOwnership($number));
+        $this->dispatch(new VerifyPhoneNumber($number));
 
         return redirect()->route('dashboard');
     }

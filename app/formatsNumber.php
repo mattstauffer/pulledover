@@ -1,14 +1,11 @@
 <?php namespace App;
 
+use Illuminate\Support\Str;
+
 trait formatsNumber
 {
     public function getFormattedNumberAttribute()
     {
-        return sprintf(
-            '(%s) %s-%s',
-            substr($this->number, 0, 3),
-            substr($this->number, 3, 3),
-            substr($this->number, 6)
-        );
+        return Str::formatNumber($this->number);
     }
 }

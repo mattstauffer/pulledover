@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Lookups_Services_Twilio;
 
 class AppServiceProvider extends ServiceProvider
@@ -39,10 +40,23 @@ class AppServiceProvider extends ServiceProvider
         Validator::extend('unique_friend', function ($attribute, $value, $parameters, $validator) {
             return Auth::user()->friends()->where(['number' => $value])->count() === 0;
         });
+
+        Str::macro('formatNumber', function ($number) {
+            return sprintf(
+                '(%s) %s-%s',
+                substr($number, 0, 3),
+                substr($number, 3, 3),
+                substr($number, 6)
+            );
+        });
     }
 
     public function register()
     {
-        //
+        $this->app->singleton('from_number', function ($app) {
+            return Str::formatNumber(
+                substr($app[TwilioClient::class]->getFromNumber(), 2)
+            );
+        });
     }
 }

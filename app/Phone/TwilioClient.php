@@ -70,4 +70,9 @@ class TwilioClient
             }
         }
     }
+
+    public function getFromNumber()
+    {
+        return $this->fromNumber;
+    }
 }

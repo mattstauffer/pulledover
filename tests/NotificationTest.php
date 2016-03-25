@@ -13,32 +13,88 @@ class NotificationTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function test_only_verified_friends_are_notified()
+    /** @var  User */
+    protected $user;
+
+    /** @var  PhoneNumber */
+    protected $number;
+
+    /** @var  \App\Recording */
+    protected $recording;
+
+    /** @before */
+    protected function buildRecording()
     {
         $user = factory(User::class)->create();
         $number = factory(PhoneNumber::class, 'verified')->make();
-        $user->phoneNumbers()->save($number);
+        $recording = $user->recordings()->save(factory(\App\Recording::class)->make());
 
+        $user->phoneNumbers()->save($number);
+        $recording->phoneNumber()->associate($number);
+
+        $this->user = $user;
+        $this->number = $number;
+        $this->recording = $recording;
+
+
+    }
+
+    public function test_only_verified_friends_are_notified()
+    {
         $friend = factory(Friend::class)->make();
         $friendVerified = factory(Friend::class, 'verified')->make();
-        $user->friends()->saveMany([$friend, $friendVerified]);
+        $this->user->friends()->saveMany([$friend, $friendVerified]);
 
-        $request = new Request([
-            'From' => $number->number
-        ]);
+        $command = new \App\Jobs\SendNewRecordingNotifications($this->recording);
 
         $twilioMock = M::spy(TwilioClient::class);
         $this->app->instance(TwilioClient::class, $twilioMock);
-        $command = new NotifyFriendsOfRecording($request);
 
         $command->handle(
             $twilioMock,
             app('Illuminate\Log\Writer')
         );
 
-        $twilioMock->shouldHaveReceived('text')->once()->with(
-            $friendVerified->number,
+        $twilioMock->shouldHaveReceived('text')->twice()->with(
+            M::anyOf($friendVerified->number, $this->number->number),
             M::any()
         );
+    }
+
+    public function test_blacklisted_friends_are_not_notified()
+    {
+        $friendBlackListed = factory(Friend::class, 'verified')->make(['blacklisted' => true]);
+        $friendVerified = factory(Friend::class, 'verified')->make();
+        $this->user->friends()->saveMany([$friendVerified, $friendBlackListed]);
+
+        $command = new \App\Jobs\SendNewRecordingNotifications($this->recording);
+
+        $twilioMock = M::spy(TwilioClient::class);
+        $this->app->instance(TwilioClient::class, $twilioMock);
+
+        $command->handle(
+            $twilioMock,
+            app('Illuminate\Log\Writer')
+        );
+
+        $twilioMock->shouldHaveReceived('text')->twice()->with(
+            M::anyOf($friendVerified->number, $this->number->number),
+            M::any()
+        );
+    }
+
+    public function test_blacklisted_friends_get_flagged()
+    {
+        $friendVerified = factory(Friend::class, 'verified')->make(['number' => '5005550004']);
+        $this->user->friends()->saveMany([$friendVerified]);
+
+        $command = new \App\Jobs\SendNewRecordingNotifications($this->recording);
+
+        $command->handle(
+            app(TwilioClient::class),
+            app('Illuminate\Log\Writer')
+        );
+
+        $this->seeInDatabase('friends', ['blacklisted' => 1]);
     }
 }

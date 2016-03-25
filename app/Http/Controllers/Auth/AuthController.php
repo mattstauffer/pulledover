@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\VerifyPhoneNumberOwnership;
+use App\Jobs\VerifyPhoneNumber;
 use App\User;
 use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -45,7 +45,7 @@ class AuthController extends Controller
                 'number' => $data['phone_number'],
             ]);
 
-            $this->dispatch(new VerifyPhoneNumberOwnership($number));
+            $this->dispatch(new VerifyPhoneNumber($number));
         } catch (Exception $e) {
             Log::error($e);
         }

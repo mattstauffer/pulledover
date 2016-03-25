@@ -22,6 +22,11 @@ class Recording extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function phoneNumber()
+    {
+        return $this->belongsTo(PhoneNumber::class);
+    }
+
     public function getFormattedFromAttribute()
     {
         return sprintf(

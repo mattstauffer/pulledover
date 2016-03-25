@@ -14,10 +14,7 @@ class FriendTest extends TestCase
 
     public function test_user_cannot_add_the_same_friend_twice()
     {
-        Validator::extend('valid_phone', function ($attribute, $value, $parameters, $validator) {
-            // Skip validation because we can't validate a phone number on test creds
-            return true;
-        });
+        $this->withoutPhoneValidation();
 
         $user = factory(User::class)->create();
         $phoneNumber = factory(PhoneNumber::class, 'verified')->make();
@@ -32,6 +29,18 @@ class FriendTest extends TestCase
         $friends = $user->friends()->where(['number' => $number])->get();
 
         $this->assertEquals(1, $friends->count());
+    }
+
+    public function test_it_marks_friend_as_blacklisted()
+    {
+        $this->withoutPhoneValidation();
+
+        $user = factory(User::class)->create();
+        $phoneNumber = factory(PhoneNumber::class, 'verified')->make();
+        $user->phoneNumbers()->save($phoneNumber);
+        $this->be($user);
+        $this->post(route('friends.store'), ['number' => '5005550004', 'name' => 'foo']);
+        $this->seeInDatabase('friends', ['number' => '5005550004', 'blacklisted' => true]);
     }
 
     public function test_it_is_listed_on_the_dashboard_after_being_added()
@@ -74,5 +83,14 @@ class FriendTest extends TestCase
         $this->post(route('friends.store'), ['name' => 'Sally', 'number' => "(500) 555-5555"]);
         $this->assertRedirectedTo(route('dashboard'));
         $this->assertSessionHas('messages', ['You need to verify a phone number before you can add any friends.']);
+    }
+
+    public function test_it_fires_blacklisted_event()
+    {
+        $this->expectsEvents(App\Events\FriendWasBlacklisted::class);
+        $user = factory(User::class)->create();
+        $friend = factory(Friend::class)->make();
+        $user->friends()->save($friend);
+        $friend->markBlacklisted();
     }
 }

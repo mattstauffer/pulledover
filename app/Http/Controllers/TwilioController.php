@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Http\Requests\TwilioRequest;
 use App\Jobs\NotifyFriendsOfRecording;
 use App\Jobs\NotifyOwnerOfRecording;
+use App\Jobs\SendNewRecordingNotifications;
 use App\PhoneNumber;
 use App\Recording;
 use Exception;
@@ -13,11 +15,10 @@ use Services_Twilio_Twiml as TwimlGenerator;
 
 class TwilioController extends Controller
 {
-
-    public function callHook(Request $request)
+    public function callHook(TwilioRequest $request)
     {
         try {
-            $phoneNumber = PhoneNumber::findVerifiedByTwilioNumber($request->input("From"));
+            $phoneNumber = $request->phoneNumber();
         } catch (Exception $e) {
             return $this->promptToRegister($request);
         }
@@ -38,7 +39,7 @@ class TwilioController extends Controller
         return $response;
     }
 
-    private function promptToRegister($request)
+    private function promptToRegister(TwilioRequest $request)
     {
         $response = new TwimlGenerator;
         $response->say('Sorry, but this is not a registered number. Please log into your account at Pulled Over Dot US, add a phone number, and verify it to register. Thank you!');
@@ -47,19 +48,23 @@ class TwilioController extends Controller
         return $response;
     }
 
-    public function afterCallHook(Request $request)
+    public function afterCallHook(TwilioRequest $request)
     {
-        $this->saveRecording($request);
-        $this->dispatch(new NotifyOwnerOfRecording($request));
-        $this->dispatch(new NotifyFriendsOfRecording($request));
+        $number = $request->phoneNumber();
+        $recording = $this->saveRecording($number, $request);
+        $this->dispatch(new SendNewRecordingNotifications($recording));
 
         return $this->hangup();
     }
 
-    private function saveRecording($request)
+    /**
+     * @param PhoneNumber $number
+     * @param TwilioRequest $request
+     *
+     * @return Recording
+     */
+    private function saveRecording(PhoneNumber $number, TwilioRequest $request)
     {
-        $number = PhoneNumber::findByTwilioNumber($request->input('Caller'));
-
         $recording = new Recording([
             'from' => $request->input('Caller'),
             'city' => $request->input('CallerCity'),
@@ -69,8 +74,9 @@ class TwilioController extends Controller
             'duration' => $request->input('RecordingDuration'),
             'json' => json_encode($request->all()),
         ]);
+        $recording->phone_number_id = $number->id;
 
-        $number->user->recordings()->save($recording);
+        return $number->user->recordings()->save($recording);
     }
 
     private function hangUp()
