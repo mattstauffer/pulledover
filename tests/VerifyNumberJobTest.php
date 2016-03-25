@@ -31,7 +31,7 @@ class VerifyNumberJobTest extends TestCase
     }
 
     /**
-     * @expectedException \App\Exceptions\UnrecognizedReceiverTypeException
+     * @expectedException \Exception
      */
     public function test_it_throws_exception_if_receiver_type_not_implemented()
     {

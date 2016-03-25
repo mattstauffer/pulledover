@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Exceptions\UnrecognizedReceiverTypeException;
 use App\Friend;
 use App\Phone\Exceptions\BlacklistedPhoneNumberException;
 use App\Phone\NumberVerifier;
@@ -36,11 +35,6 @@ class VerifyPhoneNumber extends Job implements ShouldQueue
         }
     }
 
-    /**
-     * @param NumberVerifier $verifier
-     *
-     * @throws UnrecognizedReceiverTypeException
-     */
     protected function sendVerificationText(NumberVerifier $verifier)
     {
         $key = str_random(16);
@@ -55,7 +49,7 @@ class VerifyPhoneNumber extends Job implements ShouldQueue
                 break;
             }
             default: {
-                throw new UnrecognizedReceiverTypeException;
+                throw new \Exception('Unrecognized Receiver type');
             }
         }
     }
