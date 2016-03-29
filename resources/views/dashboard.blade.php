@@ -9,7 +9,7 @@
                 <p><h2 style="margin-top: 0">Welcome to Pulled Over!</h2></p>
                 <div style="font-size: 1.25em;">
                     <p>Make sure you remember to add <b><tel>1-844-311-OVER</tel></b> to your phonebook right now, for when you need to call!
-                    <p>Next, you'll need to verify your phone number, and then add some friends to be notified if you ever call in.</p>
+                    <p>Next, you'll need to verify your phone number (check your phone for a verification text message), and then add some friends to be notified if you ever call in.</p>
                 </div>
             </div>
         @endif
@@ -85,8 +85,6 @@
                             <thead>
                                 <tr>
                                     <th>From</th>
-                                    <th>City</th>
-                                    <th>State</th>
                                     <th>Recording</th>
                                     <th>Duration</th>
                                     <th>Date/Time</th>
@@ -95,8 +93,6 @@
                             @endif
                             <tr>
                                 <th>{{ $recording->formattedFrom }}</th>
-                                <th>{{ $recording->city }}</th>
-                                <th>{{ $recording->state }}</th>
                                 <th>
                                     @if ($recording->created_at->lt(\Carbon\Carbon::parse('-10 days')))
                                     Recording has expired.

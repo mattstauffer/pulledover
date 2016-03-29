@@ -21,10 +21,8 @@ class NotifyFriendsOfRecording extends Job
         $user = PhoneNumber::findByTwilioNumber($this->request->get('From'))->user;
 
         $text = sprintf(
-            "Your friend {$user->name} has completed a PulledOver recording. From %s, City %s, State %s, Recording %s",
+            "Your friend {$user->name} made PulledOver recording. From %s : %s",
             $this->request->get("From"),
-            $this->request->get("CallerCity"),
-            $this->request->get("CallerState"),
             $this->request->get("RecordingUrl")
         );
 
