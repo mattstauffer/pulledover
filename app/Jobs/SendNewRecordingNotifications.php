@@ -26,9 +26,8 @@ class SendNewRecordingNotifications extends Job
 
     public function handle(TwilioClient $twilio, Logger $logger)
     {
-        $user = $this->recording->user;
         $this->notifyOwner($twilio, $logger);
-        $this->notifyFriends($twilio, $logger, $user);
+        $this->notifyFriends($twilio, $logger, $this->recording->user);
     }
 
     protected function notifyOwner(TwilioClient $twilio, Logger $logger)
