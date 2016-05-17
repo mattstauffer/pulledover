@@ -11,11 +11,14 @@ class PhoneNumber extends Model
 {
     use formatsNumber;
 
+    const VERIFIED = 'is_verified';
+    const BLACKLISTED = 'blacklisted';
+
     protected $fillable = ['number'];
 
     protected $casts = [
-        'is_verified' => 'boolean',
-        'blacklisted' => 'boolean'
+        self::VERIFIED => 'boolean',
+        self::BLACKLISTED => 'boolean'
     ];
 
     public $appends = [
@@ -34,28 +37,18 @@ class PhoneNumber extends Model
 
     public function markVerified()
     {
-        $this->is_verified = true;
-        $this->save();
+        $this->setAttribute(self::VERIFIED, true)->save();
     }
 
     public function markBlacklisted()
     {
-        $this->blacklisted = true;
-        $this->save();
+        $this->setAttribute(self::BLACKLISTED, true)->save();
         event(new PhoneNumberWasBlacklisted($this));
     }
 
     public static function findByNumber($number)
     {
         return self::where('number', $number)->firstOrFail();
-    }
-
-    public function scopeVerified($query)
-    {
-        return $query->where([
-            'is_verified' => true,
-            'blacklisted' => false
-        ]);
     }
 
     public static function findByTwilioNumber($number)
@@ -69,17 +62,25 @@ class PhoneNumber extends Model
     {
         $number = str_replace('+1', '', $number);
 
-        return self::where('number', $number)->where('is_verified', true)->firstOrFail();
+        return self::where('number', $number)->where(self::VERIFIED, true)->firstOrFail();
+    }
+
+    public function scopeVerified($query)
+    {
+        return $query->where([
+            self::VERIFIED => true,
+            self::BLACKLISTED => false
+        ]);
     }
 
     public function getStatusAttribute()
     {
-        if ($this->blacklisted) {
+        if ($this->getAttribute(self::BLACKLISTED)) {
             return 'blacklisted';
-        } elseif ($this->is_verified) {
+        } elseif ($this->getAttribute(self::VERIFIED)) {
             return 'verified';
         }
 
-        return 'un-verified';
+        return 'unverified';
     }
 }
