@@ -50,9 +50,9 @@ class TwilioController extends Controller
 
     public function afterCallHook(TwilioRequest $request)
     {
-        $number = $request->phoneNumber();
-        $recording = $this->saveRecording($number, $request);
-        $this->dispatch(new SendNewRecordingNotifications($recording));
+        $this->dispatch(new SendNewRecordingNotifications(
+            $this->saveRecording($request->phoneNumber(), $request)
+        ));
 
         return $this->hangup();
     }
