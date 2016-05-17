@@ -34,7 +34,6 @@ class SendNewRecordingNotifications extends Job
     protected function notifyOwner(TwilioClient $twilio, Logger $logger)
     {
         $text = $this->getOwnerBody();
-        $logger->info($this->getOwnerNumber());
 
         try {
             $twilio->text($this->getOwnerNumber(), $text);
@@ -42,7 +41,7 @@ class SendNewRecordingNotifications extends Job
             $this->recording->phoneNumber->markBlacklisted();
         }
 
-        $logger->info('Owner SMS sent: ' . $text);
+        $logger->info('Owner SMS sent: ' . $text, ['number' => $this->getOwnerNumber()]);
     }
 
     protected function getOwnerNumber()
