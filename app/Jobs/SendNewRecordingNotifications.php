@@ -47,10 +47,6 @@ class SendNewRecordingNotifications extends Job
 
     protected function getOwnerNumber()
     {
-        if ($number = $this->recording->phoneNumber) {
-            return $number->number;
-        }
-
         return str_replace('+1', '', $this->recording->from);
     }
 

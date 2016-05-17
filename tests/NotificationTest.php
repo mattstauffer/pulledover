@@ -27,7 +27,9 @@ class NotificationTest extends TestCase
     {
         $user = factory(User::class)->create();
         $number = factory(PhoneNumber::class, 'verified')->make();
-        $recording = $user->recordings()->save(factory(\App\Recording::class)->make());
+        $recording = $user->recordings()->save(factory(\App\Recording::class)->make([
+            'from' => '+1'.$number->number
+        ]));
 
         $user->phoneNumbers()->save($number);
         $recording->phoneNumber()->associate($number);
