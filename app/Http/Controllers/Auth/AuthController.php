@@ -47,7 +47,7 @@ class AuthController extends Controller
 
             $this->dispatch(new VerifyPhoneNumber($number));
         } catch (Exception $e) {
-            Log::error($e);
+            \Log::error($e);
         }
 
         return $user;
