@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Friend extends Model
+class Friend extends PhoneNumber
 {
     use formatsNumber;
 
@@ -16,15 +16,4 @@ class Friend extends Model
     protected $casts = [
         'is_verified' => 'boolean'
     ];
-
-    public function markVerified()
-    {
-        $this->is_verified = true;
-        $this->save();
-    }
-
-    public function scopeVerified($query)
-    {
-        return $query->where('is_verified', true);
-    }
 }
