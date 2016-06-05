@@ -58,7 +58,7 @@ class TwilioController extends Controller
 
     private function saveRecording($request)
     {
-        $number = PhoneNumber::findByTwilioNumber($request->input('Caller'));
+        $number = PhoneNumber::findByNumber($request->input('Caller'));
 
         $recording = new Recording([
             'from' => $request->input('Caller'),

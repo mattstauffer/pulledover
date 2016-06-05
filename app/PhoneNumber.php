@@ -13,7 +13,8 @@ class PhoneNumber extends Model
     protected $fillable = ['number'];
 
     protected $casts = [
-        'is_verified' => 'boolean'
+        'is_verified' => 'boolean',
+        'is_blacklisted' => 'boolean',
     ];
 
     public function user()
@@ -27,9 +28,10 @@ class PhoneNumber extends Model
         $this->save();
     }
 
-    public static function findByNumber($number)
+    public function markBlacklisted()
     {
-        return self::where('number', $number)->firstOrFail();
+        $this->is_blacklisted = true;
+        $this->save();
     }
 
     public function scopeVerified(Builder $builder)
@@ -37,17 +39,23 @@ class PhoneNumber extends Model
         return $builder->where('is_verified', true);
     }
 
-    public static function findByTwilioNumber($number)
+    public function scopeBlacklisted(Builder $builder, $value = true)
     {
-        $number = str_replace('+1', '', $number);
-
-        return self::where('number', $number)->firstOrFail();
+        return $builder->where('is_blacklisted', $value);
     }
 
+    public function scopeByNumber(Builder $builder, $number)
+    {
+        return $builder->where('number', str_replace('+1', '', $number));
+    }
+
+    public static function findByNumber($number)
+    {
+        return self::byNumber($number)->firstOrFail();
+    }
+    
     public static function findVerifiedByTwilioNumber($number)
     {
-        $number = str_replace('+1', '', $number);
-
-        return self::where('number', $number)->where('is_verified', true)->firstOrFail();
+        return self::byNumber($number)->verified()->firstOrFail();
     }
 }
