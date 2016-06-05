@@ -209,8 +209,6 @@ class RecordingTest extends TestCase
         $this
             ->get(route('dashboard'))
             ->see($recording->url)
-            ->see($recording->city)
-            ->see($recording->state)
             ->see($recording->duration);
     }
 }
