@@ -22,20 +22,22 @@ class TwilioRequest extends Request
         );
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public function phoneNumber()
     {
-        return PhoneNumber::findByNumber($this->input('From'));
+        return PhoneNumber::byNumber($this->input('From'))->first();
+    }
+
+    public function isFromVerifiedNumber()
+    {
+        if ($number = $this->phoneNumber()) {
+            return $number->is_verified;
+        }
+
+        return false;
     }
 }

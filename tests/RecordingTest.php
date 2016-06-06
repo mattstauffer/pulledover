@@ -217,4 +217,9 @@ class RecordingTest extends TestCase
             ->see($recording->url)
             ->see($recording->duration);
     }
+
+    public function test_it_prompts_to_register()
+    {
+        $this->post(route('hook.call'))->see('Sorry, but this is not a registered number');
+    }
 }

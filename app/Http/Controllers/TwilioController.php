@@ -15,13 +15,7 @@ class TwilioController extends Controller
 
     public function callHook(Request $request)
     {
-        try {
-            $phoneNumber = $request->phoneNumber();
-        } catch (Exception $e) {
-            return $this->promptToRegister($request);
-        }
-
-        return $this->startRecording();
+        return $request->isFromVerifiedNumber() ? $this->startRecording() : $this->promptToRegister();
     }
 
     private function startRecording()
@@ -37,7 +31,7 @@ class TwilioController extends Controller
         return $response;
     }
 
-    private function promptToRegister($request)
+    private function promptToRegister()
     {
         $response = new TwimlGenerator;
         $response->say('Sorry, but this is not a registered number. Please log into your account at Pulled Over Dot US, add a phone number, and verify it to register. Thank you!');
