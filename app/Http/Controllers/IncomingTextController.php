@@ -23,8 +23,6 @@ class IncomingTextController extends Controller
 
     public function receiveText(Request $request)
     {
-        \Log::info('Incoming Message', $request->all());
-
         if ($command = $this->translateCommand($request->Body)) {
             return $this->{$command}($request);
         }
@@ -34,12 +32,12 @@ class IncomingTextController extends Controller
 
     protected function subscribe(Request $request)
     {
-        //whitelist number
+        $request->phoneNumber()->markBlacklisted(false);
     }
 
     protected function unsubscribe(Request $request)
     {
-        //blacklist number
+        $request->phoneNumber()->markBlacklisted();
     }
 
     /**

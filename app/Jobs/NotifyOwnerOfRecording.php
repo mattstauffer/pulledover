@@ -7,6 +7,7 @@ use App\Recording;
 use App\Phone\TwilioClient;
 use Illuminate\Log\Writer as Logger;
 use Illuminate\Support\Fluent;
+use App\Phone\Exceptions\BlacklistedPhoneNumberException;
 
 class NotifyOwnerOfRecording extends Job
 {
@@ -27,11 +28,15 @@ class NotifyOwnerOfRecording extends Job
             $this->recording->url
         );
 
-        $twilio->text(
-            TwilioClient::formatNumberFromTwilio($this->recording->from),
-            $text
-        );
+        try {
+            $twilio->text(
+                TwilioClient::formatNumberFromTwilio($this->recording->from),
+                $text
+            );
 
-        $logger->info('Owner SMS sent: ' . $text);
+            $logger->info('Owner SMS sent: ' . $text);
+        } catch (BlacklistedPhoneNumberException $e) {
+            $this->recording->phoneNumber()->markBlacklisted();
+        }
     }
 }

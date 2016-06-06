@@ -8,6 +8,7 @@ use App\PhoneNumber;
 use App\Recording;
 use Illuminate\Log\Writer as Logger;
 use Illuminate\Support\Fluent;
+use App\Phone\Exceptions\BlacklistedPhoneNumberException;
 
 class NotifyFriendsOfRecording extends Job
 {
@@ -28,8 +29,12 @@ class NotifyFriendsOfRecording extends Job
             $this->recording->url
         );
 
-        $user->friends()->verified()->get()->each(function ($friend) use ($user, $twilio, $text) {
-            $twilio->text($friend->number, $text);
+        $user->friends()->verified()->blacklisted(false)->get()->each(function ($friend) use ($user, $twilio, $text) {
+            try {
+                $twilio->text($friend->number, $text);
+            } catch (BlacklistedPhoneNumberException $e) {
+                $friend->markBlacklisted();
+            }
         });
 
         $logger->info('Friends SMS sent: ' . $text);

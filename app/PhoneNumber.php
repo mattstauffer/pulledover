@@ -28,9 +28,9 @@ class PhoneNumber extends Model
         $this->save();
     }
 
-    public function markBlacklisted()
+    public function markBlacklisted($value = true)
     {
-        $this->is_blacklisted = true;
+        $this->is_blacklisted = $value;
         $this->save();
     }
 
