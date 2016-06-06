@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use App\PhoneNumber;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 
 class TwilioRequest extends Request
 {
@@ -30,5 +32,10 @@ class TwilioRequest extends Request
         return [
             //
         ];
+    }
+
+    public function phoneNumber()
+    {
+        return PhoneNumber::findByNumber($this->input('From'));
     }
 }

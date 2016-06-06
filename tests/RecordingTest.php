@@ -82,6 +82,12 @@ class RecordingTest extends TestCase
             TwilioClient::class,
             M::mock(TwilioClient::class)->shouldIgnoreMissing()
         );
+
+        App::singleton(\Services_Twilio_RequestValidator::class, function () {
+            $mock = M::spy(\Services_Twilio_RequestValidator::class);
+            $mock->shouldReceive('validate')->andReturn(true);
+            return $mock;
+        });
     }
 
     public function checkTwiml()

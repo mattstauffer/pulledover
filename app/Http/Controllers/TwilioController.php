@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
+use App\Http\Requests\TwilioRequest as Request;
 use App\Jobs\NotifyFriendsOfRecording;
 use App\Jobs\NotifyOwnerOfRecording;
 use App\PhoneNumber;
 use App\Recording;
 use Exception;
-use Illuminate\Http\Request;
 use Services_Twilio_Twiml as TwimlGenerator;
 
 class TwilioController extends Controller
@@ -17,7 +16,7 @@ class TwilioController extends Controller
     public function callHook(Request $request)
     {
         try {
-            $phoneNumber = PhoneNumber::findVerifiedByTwilioNumber($request->input("From"));
+            $phoneNumber = $request->phoneNumber();
         } catch (Exception $e) {
             return $this->promptToRegister($request);
         }
@@ -49,16 +48,16 @@ class TwilioController extends Controller
 
     public function afterCallHook(Request $request)
     {
-        $this->saveRecording($request);
-        $this->dispatch(new NotifyOwnerOfRecording($request));
-        $this->dispatch(new NotifyFriendsOfRecording($request));
+        $recording = $this->saveRecording($request);
+        $this->dispatch(new NotifyOwnerOfRecording($recording));
+        $this->dispatch(new NotifyFriendsOfRecording($recording));
 
         return $this->hangup();
     }
 
     private function saveRecording($request)
     {
-        $number = PhoneNumber::findByNumber($request->input('Caller'));
+        $number = $request->phoneNumber();
 
         $recording = new Recording([
             'from' => $request->input('Caller'),
@@ -71,6 +70,8 @@ class TwilioController extends Controller
         ]);
 
         $number->user->recordings()->save($recording);
+
+        return $recording;
     }
 
     private function hangUp()
