@@ -3,30 +3,32 @@
 namespace App\Jobs;
 
 use App\Jobs\Job;
+use App\Recording;
 use App\Phone\TwilioClient;
 use Illuminate\Log\Writer as Logger;
+use Illuminate\Support\Fluent;
 
 class NotifyOwnerOfRecording extends Job
 {
-    private $request;
+    private $recording;
 
-    public function __construct($request)
+    public function __construct(Recording $recording)
     {
-        $this->request = $request;
+        $this->recording = $recording;
     }
 
     public function handle(TwilioClient $twilio, Logger $logger)
     {
         $text = sprintf(
             "New Pulledover.us recording. Number: %s\nFrom: %s %s\nURL: %s \n .",
-            $this->request->get("From"),
-            $this->request->get("CallerCity"),
-            $this->request->get("CallerState"),
-            $this->request->get("RecordingUrl")
+            $this->recording->from,
+            $this->recording->city,
+            $this->recording->state,
+            $this->recording->url
         );
 
         $twilio->text(
-            TwilioClient::formatNumberFromTwilio($this->request->get("From")),
+            TwilioClient::formatNumberFromTwilio($this->recording->from),
             $text
         );
 
