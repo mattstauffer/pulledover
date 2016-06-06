@@ -51,9 +51,7 @@ class TwilioController extends Controller
 
     private function saveRecording($request)
     {
-        $number = $request->phoneNumber();
-
-        $recording = new Recording([
+        return $request->phoneNumber()->user->recordings()->create([
             'from' => $request->input('Caller'),
             'city' => $request->input('CallerCity'),
             'state' => $request->input('CallerState'),
@@ -62,10 +60,6 @@ class TwilioController extends Controller
             'duration' => $request->input('RecordingDuration'),
             'json' => json_encode($request->all()),
         ]);
-
-        $number->user->recordings()->save($recording);
-
-        return $recording;
     }
 
     private function hangUp()
