@@ -17,6 +17,8 @@ class PhoneNumber extends Model
         'is_blacklisted' => 'boolean',
     ];
 
+    public $appends = ['status'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -58,5 +60,10 @@ class PhoneNumber extends Model
     public static function findVerifiedByTwilioNumber($number)
     {
         return self::byNumber($number)->verified()->firstOrFail();
+    }
+
+    public function getStatusAttribute()
+    {
+        return $this->is_blacklisted ? 'blacklisted' : ($this->is_verified ? 'verified' : 'unverified');
     }
 }
