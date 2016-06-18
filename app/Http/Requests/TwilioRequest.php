@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 use App\PhoneNumber;
+use App\Friend;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
 class TwilioRequest extends Request
@@ -33,7 +34,9 @@ class TwilioRequest extends Request
 
     public function phoneNumber()
     {
-        return PhoneNumber::byNumber($this->input('From'))->first();
+        $number = PhoneNumber::byNumber($this->input('From'))->first();
+
+        return $number ?: Friend::byNumber($this->input('From'))->first();
     }
 
     public function isFromVerifiedNumber()

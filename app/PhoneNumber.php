@@ -32,6 +32,7 @@ class PhoneNumber extends Model
     {
         $this->is_blacklisted = $value;
         $this->save();
+        info('Number was blacklisted', ['class' => get_called_class(), 'id' => $this->id]);
     }
 
     public function scopeVerified(Builder $builder)

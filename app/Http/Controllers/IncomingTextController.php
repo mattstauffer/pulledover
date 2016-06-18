@@ -21,6 +21,9 @@ class IncomingTextController extends Controller
         ]
     ];
 
+    /**
+     * Starting point for all incoming text messages.
+     */
     public function receiveText(Request $request)
     {
         if ($command = $this->translateCommand($request->Body)) {
