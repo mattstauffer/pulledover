@@ -15,6 +15,10 @@ class TwilioRequest extends Request
      */
     public function authorize(\Services_Twilio_RequestValidator $validator)
     {
+        if (app()->isLocal()) {
+            return true;
+        }
+
         return $validator->validate(
             $this->headers->get('X-Twilio-Signature'),
             $this->fullUrl(),
