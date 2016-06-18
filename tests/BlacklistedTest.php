@@ -8,6 +8,8 @@ use App\Phone\TwilioClient;
 use App\Phone\Exceptions\BlacklistedPhoneNumberException;
 use App\Jobs\NotifyFriendsOfRecording;
 use App\Jobs\NotifyOwnerOfRecording;
+use App\Jobs\VerifyPhoneNumberOwnership;
+use App\Jobs\VerifyPhoneNumberFriendship;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -58,7 +60,23 @@ class BlacklistedTest extends TestCase
         $this->assertBlacklisted($friend, false);
     }
 
-    public function test_it_marks_blacklisted_if_exception_is_thrown()
+    public function test_it_marks_blacklisted_if_exception_is_thrown_while_sending_verification_link()
+    {
+        list($number, $friend) = $this->createNumberAndFriend();
+        $this->be($number->user);
+
+        $twilioMock = M::mock(TwilioClient::class);
+        $twilioMock->shouldReceive('text')->andThrow(BlacklistedPhoneNumberException::class);
+        $this->app->instance(TwilioClient::class, $twilioMock);
+
+        dispatch(new VerifyPhoneNumberOwnership($number));
+        dispatch(new VerifyPhoneNumberfriendship($friend));
+        
+        $this->assertBlacklisted($number);
+        $this->assertBlacklisted($friend);
+    }
+
+    public function test_it_marks_blacklisted_if_exception_is_thrown_while_sending_recording_notifications()
     {
         list($number, $friend) = $this->createNumberAndFriend();
         $recording = factory(Recording::class)->make(['from' => $number->number]);
