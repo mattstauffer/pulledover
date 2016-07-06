@@ -45,7 +45,7 @@ class IncomingTextController extends Controller
 
     /**
      * Transalate an incoming text to a command using $this->commands.
-     * 
+     *
      * @param  string $body The body of the incoming message
      * @return string|false
      */
@@ -64,7 +64,7 @@ class IncomingTextController extends Controller
 
     /**
      * Return message as a twiml xml response.
-     * 
+     *
      * @param  string $message The body of the reply
      * @return Illuminate\Http\Response
      */
