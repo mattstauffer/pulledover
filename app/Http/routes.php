@@ -32,7 +32,7 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     Route::post('call', ['as' => 'hook.call', 'uses' => 'TwilioController@callHook']);
-    Route::post('after-call', ['as' => 'hook.after-call', 'uses' => 'TwilioController@afterCallHook']);
+    Route::post('after-call', ['as' => 'hook.after-call', 'uses' => 'TwilioController@afterCallHook', 'middleware' => 'twilio.signature']);
 
     Route::get('verify/own/{hash}', ['as' => 'phones.verify', 'uses' => 'VerificationController@own']);
     Route::get('verify/friend/{hash}', ['as' => 'friends.verify', 'uses' => 'VerificationController@friend']);
