@@ -53,7 +53,7 @@ class TwilioServiceProvider extends ServiceProvider
 
         $this->app->bind(Services_Twilio_RequestValidator::class, function ($app) {
             return new Services_Twilio_RequestValidator(
-                 $app->config['services.twilio.token']
+                $app->config['services.twilio.token']
             );
         });
     }

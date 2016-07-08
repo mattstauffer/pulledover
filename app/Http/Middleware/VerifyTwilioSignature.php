@@ -40,5 +40,4 @@ class VerifyTwilioSignature
                         ? response('Unauthorized.', 401)
                         : $next($request);
     }
-
 }
