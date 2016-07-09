@@ -5,16 +5,16 @@ namespace App\Jobs;
 use App\Jobs\Job;
 use App\Phone\NumberVerifier;
 use App\Phone\Exceptions\BlacklistedPhoneNumberException;
-use Illuminate\Queue\InteractsWithQueue;
+use App\PhoneNumber;
 use Illuminate\Queue\SerializesModels;
 
 class VerifyPhoneNumberOwnership extends Job
 {
-    use InteractsWithQueue, SerializesModels;
+    use SerializesModels;
 
     private $phoneNumber;
 
-    public function __construct($phoneNumber)
+    public function __construct(PhoneNumber $phoneNumber)
     {
         $this->phoneNumber = $phoneNumber;
     }

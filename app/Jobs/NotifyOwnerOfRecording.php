@@ -4,13 +4,15 @@ namespace App\Jobs;
 
 use App\Jobs\Job;
 use App\Recording;
+use App\Phone\Exceptions\BlacklistedPhoneNumberException;
 use App\Phone\TwilioClient;
 use Illuminate\Log\Writer as Logger;
-use Illuminate\Support\Fluent;
-use App\Phone\Exceptions\BlacklistedPhoneNumberException;
+use Illuminate\Queue\SerializesModels;
 
 class NotifyOwnerOfRecording extends Job
 {
+    use SerializesModels;
+
     private $recording;
 
     public function __construct(Recording $recording)
