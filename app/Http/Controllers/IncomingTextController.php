@@ -29,9 +29,9 @@ class IncomingTextController extends Controller
     {
         switch ($this->getActionName($request)) {
             case 'addToBlacklist':
-                return $request->phoneNumber()->markBlacklisted();
+                return $request->phoneNumber()->addToBlacklist();
             case 'removeFromBlacklist':
-                return $request->phoneNumber()->markBlacklisted(false);
+                return $request->phoneNumber()->removeFromBlacklist();
             default:
                 return $this->responseMessage('Unrecognized command: '.$request->Body);
         }

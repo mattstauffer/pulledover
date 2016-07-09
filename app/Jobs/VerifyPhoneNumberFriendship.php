@@ -27,7 +27,7 @@ class VerifyPhoneNumberFriendship extends Job
                 str_random(16)
             );
         } catch (BlacklistedPhoneNumberException $e) {
-            $this->friend->markBlacklisted();
+            $this->friend->addToBlacklist();
         }
     }
 }

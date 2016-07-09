@@ -36,7 +36,7 @@ class NotifyOwnerOfRecording extends Job
 
             $logger->info('Owner SMS sent: ' . $text);
         } catch (BlacklistedPhoneNumberException $e) {
-            $this->recording->phoneNumber()->markBlacklisted();
+            $this->recording->phoneNumber()->addToBlacklist();
         }
     }
 }

@@ -33,7 +33,7 @@ class NotifyFriendsOfRecording extends Job
             try {
                 $twilio->text($friend->number, $text);
             } catch (BlacklistedPhoneNumberException $e) {
-                $friend->markBlacklisted();
+                $friend->addToBlacklist();
             }
         });
 

@@ -27,7 +27,7 @@ class VerifyPhoneNumberOwnership extends Job
                 str_random(16)
             );
         } catch (BlacklistedPhoneNumberException $e) {
-            $this->phoneNumber->markBlacklisted();
+            $this->phoneNumber->addToBlacklist();
         }
     }
 }

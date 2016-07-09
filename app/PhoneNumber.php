@@ -3,8 +3,8 @@
 namespace App;
 
 use App\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class PhoneNumber extends Model
 {
@@ -13,7 +13,7 @@ class PhoneNumber extends Model
     protected $fillable = ['number'];
 
     protected $casts = [
-        'is_verified' => 'boolean',
+        'is_verified'    => 'boolean',
         'is_blacklisted' => 'boolean',
     ];
 
@@ -34,7 +34,16 @@ class PhoneNumber extends Model
     {
         $this->is_blacklisted = $value;
         $this->save();
-        info('Number was blacklisted', ['class' => get_called_class(), 'id' => $this->id]);
+    }
+
+    public function addToBlacklist()
+    {
+        return $this->markBlacklisted();
+    }
+
+    public function removeFromBlacklist()
+    {
+        return $this->markBlacklisted(false);
     }
 
     public function scopeVerified(Builder $builder)
