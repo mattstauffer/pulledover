@@ -6,6 +6,7 @@ use App\Http\Requests\Request;
 use App\PhoneNumber;
 use App\Friend;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Services_Twilio_RequestValidator;
 
 class TwilioRequest extends Request
 {
@@ -14,7 +15,7 @@ class TwilioRequest extends Request
      *
      * @return bool
      */
-    public function authorize(\Services_Twilio_RequestValidator $validator)
+    public function authorize(Services_Twilio_RequestValidator $validator)
     {
         if (app()->isLocal()) {
             return true;
