@@ -2,64 +2,54 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TwilioRequest as Request;
+use App\Http\Requests\TwilioRequest;
 
 class IncomingTextController extends Controller
 {
-    protected $commands = [
-        "unsubscribe" => [
+    protected $actions = [
+        "addToBlacklist" => [
             "STOP",
-            "STOPAll",
+            "STOPALL",
             "UNSUBSCRIBE",
             "CANCEL",
             "END",
             "QUIT",
         ],
-        "subscribe" => [
+        "removeFromBlacklist" => [
             "START",
             "YES",
+            "UNSTOP"
         ]
     ];
 
     /**
-     * Starting point for all incoming text messages.
+     * Webhook endpoint for incoming text messages from twilio.
      */
-    public function receiveText(Request $request)
+    public function receiveText(TwilioRequest $request)
     {
-        if ($command = $this->translateCommand($request->Body)) {
-            return $this->{$command}($request);
+        switch ($this->getActionName($request)) {
+            case 'addToBlacklist':
+                return $request->phoneNumber()->markBlacklisted();
+            case 'removeFromBlacklist':
+                return $request->phoneNumber()->markBlacklisted(false);
+            default:
+                return $this->responseMessage('Unrecognized command: '.$request->Body);
         }
-
-        return $this->responseMessage('Unrecognized command: '.$request->Body);
-    }
-
-    protected function subscribe(Request $request)
-    {
-        $request->phoneNumber()->markBlacklisted(false);
-    }
-
-    protected function unsubscribe(Request $request)
-    {
-        $request->phoneNumber()->markBlacklisted();
     }
 
     /**
-     * Transalate an incoming text to a command using $this->commands.
+     * Get the name of the action that should be performed based on the request attributes.
      *
-     * @param  string $body The body of the incoming message
+     * @param  TwilioRequest
      * @return string|false
      */
-    protected function translateCommand($body)
+    public function getActionName(TwilioRequest $request)
     {
-        $body = strtoupper($body);
-
-        foreach ($this->commands as $command => $translations) {
-            if (in_array($body, $translations)) {
-                return $command;
-            }
-        }
-
-        return false;
+        $body = strtoupper($request->get('Body'));
+        
+        return collect($this->actions)->search(function ($keywords) use ($body) {
+            return in_array($body, $keywords);
+        });
     }
 
     /**
@@ -70,7 +60,7 @@ class IncomingTextController extends Controller
      */
     protected function responseMessage($message)
     {
-        return new \Illuminate\Http\Response("<Response><Message>{$message}</Message></Response>", 200, [
+        return response("<Response><Message>{$message}</Message></Response>", 200, [
             "Content-Type" => "text/xml"
         ]);
     }
