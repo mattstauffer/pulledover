@@ -13,7 +13,7 @@ class PhoneNumber extends Model
     protected $fillable = ['number'];
 
     protected $casts = [
-        'is_verified'    => 'boolean',
+        'is_verified' => 'boolean',
         'is_blacklisted' => 'boolean',
     ];
 
