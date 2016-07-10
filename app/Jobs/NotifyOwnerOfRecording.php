@@ -23,7 +23,7 @@ class NotifyOwnerOfRecording extends Job
     public function handle(TwilioClient $twilio, Logger $logger)
     {
         $text = sprintf(
-            "New Pulledover.us recording. Number: %s\nFrom: %s %s\nURL: %s \n .",
+            "New Pulledover.us recording. Number: %s\nFrom: %s %s\nURL: %s .",
             $this->recording->from,
             $this->recording->city,
             $this->recording->state,
