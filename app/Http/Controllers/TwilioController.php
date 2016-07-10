@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TwilioRequest as Request;
+use App\Http\Requests\TwilioRequest;
 use App\Jobs\NotifyFriendsOfRecording;
 use App\Jobs\NotifyOwnerOfRecording;
 use App\PhoneNumber;
@@ -13,7 +13,7 @@ use Services_Twilio_Twiml as TwimlGenerator;
 class TwilioController extends Controller
 {
 
-    public function callHook(Request $request)
+    public function callHook(TwilioRequest $request)
     {
         return $request->isFromVerifiedNumber() ? $this->startRecording() : $this->promptToRegister();
     }
@@ -40,7 +40,7 @@ class TwilioController extends Controller
         return $response;
     }
 
-    public function afterCallHook(Request $request)
+    public function afterCallHook(TwilioRequest $request)
     {
         $recording = $this->saveRecording($request);
         $this->dispatch(new NotifyOwnerOfRecording($recording));
