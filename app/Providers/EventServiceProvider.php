@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\Events\CallRecordingWasCompleted;
 use App\Events\CallWasReceived;
+use App\Events\FriendWasBlacklisted;
 use App\Listeners\MessageOwnerWithRecording;
 use App\Listeners\NotifyFriendsCallWasReceived;
 use App\Listeners\NotifyFriendsRecordingWasReceived;
+use App\Listeners\NotifyOwnerFriendWasBlacklisted;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -25,6 +27,9 @@ class EventServiceProvider extends ServiceProvider
             NotifyFriendsRecordingWasReceived::class,
             MessageOwnerWithRecording::class,
         ],
+        FriendWasBlacklisted::class => [
+            NotifyOwnerFriendWasBlacklisted::class
+        ]
     ];
 
     /**
