@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\FriendWasBlacklisted;
 use Illuminate\Database\Eloquent\Model;
 
 class Friend extends PhoneNumber
@@ -10,4 +11,10 @@ class Friend extends PhoneNumber
         'name',
         'number'
     ];
+
+    public function addToBlacklist()
+    {
+        $this->markBlacklisted();
+        event(new FriendWasBlacklisted($this));
+    }
 }

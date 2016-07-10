@@ -4,6 +4,8 @@ use App\User;
 use App\Friend;
 use App\PhoneNumber;
 use App\Recording;
+use App\Events\PhoneNumberWasBlacklisted;
+use App\Events\FriendWasBlacklisted;
 use App\Phone\TwilioClient;
 use App\Phone\Exceptions\BlacklistedPhoneNumberException;
 use App\Jobs\NotifyFriendsOfRecording;
@@ -40,6 +42,7 @@ class BlacklistedTest extends TestCase
 
     public function test_it_marks_blacklisted_true_when_stop_text_received()
     {
+        $this->expectsEvents([PhoneNumberWasBlacklisted::class, FriendWasBlacklisted::class]);
         list($number, $friend) = $this->createNumberAndFriend();
 
         $this->receiveText($friend, 'STOP');
@@ -51,6 +54,7 @@ class BlacklistedTest extends TestCase
 
     public function test_it_marks_blacklisted_false_when_start_text_received()
     {
+        $this->doesntExpectEvents([PhoneNumberWasBlacklisted::class, FriendWasBlacklisted::class]);
         list($number, $friend) = $this->createNumberAndFriend(['is_blacklisted' => true]);
 
         $this->receiveText($friend, 'START');
@@ -62,6 +66,7 @@ class BlacklistedTest extends TestCase
 
     public function test_it_marks_blacklisted_if_exception_is_thrown_while_sending_verification_link()
     {
+        $this->expectsEvents([PhoneNumberWasBlacklisted::class, FriendWasBlacklisted::class]);
         list($number, $friend) = $this->createNumberAndFriend();
         $this->be($number->user);
 
@@ -78,6 +83,7 @@ class BlacklistedTest extends TestCase
 
     public function test_it_marks_blacklisted_if_exception_is_thrown_while_sending_recording_notifications()
     {
+        $this->expectsEvents([PhoneNumberWasBlacklisted::class, FriendWasBlacklisted::class]);
         list($number, $friend) = $this->createNumberAndFriend();
         $recording = factory(Recording::class)->make(['from' => $number->number]);
         $number->user->recordings()->save($recording);

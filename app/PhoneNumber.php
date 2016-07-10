@@ -3,6 +3,7 @@
 namespace App;
 
 use App\User;
+use App\Events\PhoneNumberWasBlacklisted;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,7 +39,8 @@ class PhoneNumber extends Model
 
     public function addToBlacklist()
     {
-        return $this->markBlacklisted();
+        $this->markBlacklisted();
+        event(new PhoneNumberWasBlacklisted($this));
     }
 
     public function removeFromBlacklist()
