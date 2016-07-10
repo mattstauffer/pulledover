@@ -26,8 +26,8 @@
                 @else
                     @foreach ($numbers as $i => $number)
                         <h4 class="number">{{ $number->formattedNumber }}
-                            <i class="phone-number {{$number->is_verified ? 'verified':''}}"></i>
-                            <span class="number__label">{{ $number->is_verified ? 'Verified' : 'Un-verified' }}</span>
+                            <i class="phone-number {{$number->status}}"></i>
+                            <span class="number__label">{{ title_case($number->status) }}</span>
                         </h4>
                     @endforeach
                 @endif
@@ -56,8 +56,8 @@
                 @else
                     @foreach ($friends as $i => $friend)
                         <h4 class="number">{{ $friend->name }} - {{ $friend->formattedNumber }}
-                            <i class="phone-number {{$friend->is_verified ? 'verified':''}}"></i>
-                            <span class="number__label">{{ $friend->is_verified ? 'Verified' : 'Un-verified' }}</span>
+                            <i class="phone-number {{$friend->status}}"></i>
+                            <span class="number__label">{{ $friend->status }}</span>
                         </h4>
                     @endforeach
                 @endif

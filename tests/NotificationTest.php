@@ -1,6 +1,7 @@
 <?php
 
 use App\Friend;
+use App\Recording;
 use App\Jobs\NotifyFriendsOfRecording;
 use App\Phone\TwilioClient;
 use App\PhoneNumber;
@@ -23,13 +24,11 @@ class NotificationTest extends TestCase
         $friendVerified = factory(Friend::class, 'verified')->make();
         $user->friends()->saveMany([$friend, $friendVerified]);
 
-        $request = new Request([
-            'From' => $number->number
-        ]);
-
         $twilioMock = M::spy(TwilioClient::class);
         $this->app->instance(TwilioClient::class, $twilioMock);
-        $command = new NotifyFriendsOfRecording($request);
+        $command = new NotifyFriendsOfRecording(
+            $user->recordings()->save(factory(Recording::class)->make())
+        );
 
         $command->handle(
             $twilioMock,

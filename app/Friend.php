@@ -2,29 +2,19 @@
 
 namespace App;
 
+use App\Events\FriendWasBlacklisted;
 use Illuminate\Database\Eloquent\Model;
 
-class Friend extends Model
+class Friend extends PhoneNumber
 {
-    use formatsNumber;
-
     protected $fillable = [
         'name',
         'number'
     ];
 
-    protected $casts = [
-        'is_verified' => 'boolean'
-    ];
-
-    public function markVerified()
+    public function addToBlacklist()
     {
-        $this->is_verified = true;
-        $this->save();
-    }
-
-    public function scopeVerified($query)
-    {
-        return $query->where('is_verified', true);
+        $this->markBlacklisted();
+        event(new FriendWasBlacklisted($this));
     }
 }

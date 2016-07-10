@@ -37,3 +37,5 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('verify/own/{hash}', ['as' => 'phones.verify', 'uses' => 'VerificationController@own']);
     Route::get('verify/friend/{hash}', ['as' => 'friends.verify', 'uses' => 'VerificationController@friend']);
 });
+
+Route::post('receive-text', 'IncomingTextController@receiveText');

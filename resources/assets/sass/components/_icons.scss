@@ -1,7 +1,7 @@
 @import "node_modules/font-awesome/scss/variables";
 @import "node_modules/font-awesome/scss/mixins";
 
-$un-verified-color: red !default;
+$unverified-color: red !default;
 $verified-color: green !default;
 
 // Phone number / friend number icon
@@ -9,7 +9,7 @@ $verified-color: green !default;
 i.phone-number {
   @include fa-icon();
 
-  color: $un-verified-color;
+  color: $unverified-color;
 
   &:before {
     content: $fa-var-square-o;
@@ -20,6 +20,14 @@ i.phone-number {
 
     &:before {
       content: $fa-var-check-square-o;
+    }
+  }
+
+  &.blacklisted {
+    color: $unverified-color;
+
+    &:before {
+      content: $fa-var-exclamation-circle;
     }
   }
 }

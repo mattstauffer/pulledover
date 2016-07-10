@@ -82,6 +82,12 @@ class RecordingTest extends TestCase
             TwilioClient::class,
             M::mock(TwilioClient::class)->shouldIgnoreMissing()
         );
+
+        App::singleton(\Services_Twilio_RequestValidator::class, function () {
+            $mock = M::spy(\Services_Twilio_RequestValidator::class);
+            $mock->shouldReceive('validate')->andReturn(true);
+            return $mock;
+        });
     }
 
     public function checkTwiml()
@@ -209,8 +215,11 @@ class RecordingTest extends TestCase
         $this
             ->get(route('dashboard'))
             ->see($recording->url)
-            ->see($recording->city)
-            ->see($recording->state)
             ->see($recording->duration);
+    }
+
+    public function test_it_prompts_to_register()
+    {
+        $this->post(route('hook.call'))->see('Sorry, but this is not a registered number');
     }
 }

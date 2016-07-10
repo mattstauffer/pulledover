@@ -2,27 +2,32 @@
 
 namespace App\Jobs;
 
+use App\Friend;
 use App\Jobs\Job;
 use App\Phone\NumberVerifier;
-use Illuminate\Queue\InteractsWithQueue;
+use App\Phone\Exceptions\BlacklistedPhoneNumberException;
 use Illuminate\Queue\SerializesModels;
 
 class VerifyPhoneNumberFriendship extends Job
 {
-    use InteractsWithQueue, SerializesModels;
+    use SerializesModels;
 
     private $friend;
 
-    public function __construct($friend)
+    public function __construct(Friend $friend)
     {
         $this->friend = $friend;
     }
 
     public function handle(NumberVerifier $verifier)
     {
-        $verifier->verifyFriendsNumber(
-            $this->friend,
-            str_random(16)
-        );
+        try {
+            $verifier->verifyFriendsNumber(
+                $this->friend,
+                str_random(16)
+            );
+        } catch (BlacklistedPhoneNumberException $e) {
+            $this->friend->addToBlacklist();
+        }
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\VerifyPhoneNumberOwnership;
 use App\User;
 use Exception;
+use Log;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Support\Facades\Validator;

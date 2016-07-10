@@ -3,33 +3,46 @@
 namespace App\Jobs;
 
 use App\Jobs\Job;
+use App\Phone\Exceptions\BlacklistedPhoneNumberException;
 use App\Phone\TwilioClient;
 use App\PhoneNumber;
+use App\Recording;
 use Illuminate\Log\Writer as Logger;
+use Illuminate\Queue\SerializesModels;
 
 class NotifyFriendsOfRecording extends Job
 {
-    private $request;
+    use SerializesModels;
 
-    public function __construct($request)
+    private $recording;
+
+    public function __construct(Recording $recording)
     {
-        $this->request = $request;
+        $this->recording = $recording;
     }
 
     public function handle(TwilioClient $twilio, Logger $logger)
     {
-        $user = PhoneNumber::findByTwilioNumber($this->request->get('From'))->user;
-
         $text = sprintf(
-            "Your friend {$user->name} made PulledOver recording. From %s : %s",
-            $this->request->get("From"),
-            $this->request->get("RecordingUrl")
+            "Your friend %s made PulledOver recording. From %s : %s",
+            $this->recording->user->name,
+            $this->recording->from,
+            $this->recording->url
         );
 
-        $user->friends()->verified()->get()->each(function ($friend) use ($user, $twilio, $text) {
-            $twilio->text($friend->number, $text);
+        $this->getNotifiableFriends()->each(function ($friend) use ($twilio, $text) {
+            try {
+                $twilio->text($friend->number, $text);
+            } catch (BlacklistedPhoneNumberException $e) {
+                $friend->addToBlacklist();
+            }
         });
 
         $logger->info('Friends SMS sent: ' . $text);
+    }
+
+    public function getNotifiableFriends()
+    {
+        return $this->recording->user->friends()->verified()->blacklisted(false)->get();
     }
 }

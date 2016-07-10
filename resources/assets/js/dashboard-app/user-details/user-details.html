@@ -54,7 +54,7 @@
                         <ul class="fa-ul">
                             <li>Phones</li>
                             <li v-for="n in user.phone_numbers">
-                                <i class="fa-li phone-number" :class="{'verified':n.is_verified}"></i>
+                                <i class="fa-li phone-number" :class="n.status"></i>
                                 {{ n.number }}
                             </li>
                         </ul>
@@ -66,7 +66,7 @@
                         <ul class="fa-ul">
                             <li>Friends</li>
                             <li v-for="n in user.friends">
-                                <i class="fa-li phone-number" :class="{'verified':n.is_verified}"></i>
+                                <i class="fa-li phone-number" :class="n.status"></i>
                                 {{ n.number }}
                             </li>
                         </ul>

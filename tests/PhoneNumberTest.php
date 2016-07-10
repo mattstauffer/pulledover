@@ -89,4 +89,16 @@ class PhoneNumberTest extends TestCase
         $this->post(route('numbers.store'), ['number' => '(500) 555-0000']);
         $this->seeInDatabase('phone_numbers', ['number' => '5005550000']);
     }
+
+    public function test_it_appends_correct_status_attribute()
+    {
+        $number = factory(PhoneNumber::class)->make(['is_verified' => true, 'is_blacklisted' => true]);
+        $this->assertEquals('blacklisted', $number->status);
+
+        $number->is_blacklisted = false;
+        $this->assertEquals('verified', $number->status);
+
+        $number->is_verified = false;
+        $this->assertEquals('unverified', $number->status);
+    }
 }

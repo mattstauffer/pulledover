@@ -3,33 +3,42 @@
 namespace App\Jobs;
 
 use App\Jobs\Job;
+use App\Recording;
+use App\Phone\Exceptions\BlacklistedPhoneNumberException;
 use App\Phone\TwilioClient;
 use Illuminate\Log\Writer as Logger;
+use Illuminate\Queue\SerializesModels;
 
 class NotifyOwnerOfRecording extends Job
 {
-    private $request;
+    use SerializesModels;
 
-    public function __construct($request)
+    private $recording;
+
+    public function __construct(Recording $recording)
     {
-        $this->request = $request;
+        $this->recording = $recording;
     }
 
     public function handle(TwilioClient $twilio, Logger $logger)
     {
         $text = sprintf(
-            "New Pulledover.us recording. Number: %s\nFrom: %s %s\nURL: %s \n .",
-            $this->request->get("From"),
-            $this->request->get("CallerCity"),
-            $this->request->get("CallerState"),
-            $this->request->get("RecordingUrl")
+            "New Pulledover.us recording. Number: %s\nFrom: %s %s\nURL: %s .",
+            $this->recording->from,
+            $this->recording->city,
+            $this->recording->state,
+            $this->recording->url
         );
 
-        $twilio->text(
-            TwilioClient::formatNumberFromTwilio($this->request->get("From")),
-            $text
-        );
+        try {
+            $twilio->text(
+                TwilioClient::formatNumberFromTwilio($this->recording->from),
+                $text
+            );
 
-        $logger->info('Owner SMS sent: ' . $text);
+            $logger->info('Owner SMS sent: ' . $text);
+        } catch (BlacklistedPhoneNumberException $e) {
+            $this->recording->phoneNumber()->addToBlacklist();
+        }
     }
 }

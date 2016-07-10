@@ -1,6 +1,7 @@
 {
     "ignore": [
         "resources/views/*",
-        "public/*"
+        "public/*",
+        "tests/*"
     ]
 }

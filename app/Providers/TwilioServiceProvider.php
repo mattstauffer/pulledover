@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Lookups_Services_Twilio;
 use Services_Twilio;
 use Services_Twilio_TinyHttp;
+use Services_Twilio_RequestValidator;
 
 class TwilioServiceProvider extends ServiceProvider
 {
@@ -41,6 +42,10 @@ class TwilioServiceProvider extends ServiceProvider
                 $app->config['services.twilio.token'],
                 'v1'
             );
+        });
+
+        $this->app->bind('Services_Twilio_RequestValidator', function ($app) {
+            return new Services_Twilio_RequestValidator($app->config['services.twilio.token']);
         });
 
         $this->app->bind(TwilioClient::class, function ($app) {

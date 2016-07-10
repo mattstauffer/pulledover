@@ -31,4 +31,9 @@ class Recording extends Model
             substr($this->from, 8)
         );
     }
+
+    public function phoneNumber()
+    {
+        return $this->user->phoneNumbers()->byNumber($this->from)->first();
+    }
 }
