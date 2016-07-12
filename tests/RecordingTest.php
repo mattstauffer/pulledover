@@ -12,7 +12,7 @@ use Mockery as M;
 
 class RecordingTest extends TestCase
 {
-    use DatabaseMigrations;
+    use DatabaseMigrations, WithoutMiddleware;
 
     private $callPost = [
         'AccountSid' => '290t5102934j1234',
