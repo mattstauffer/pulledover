@@ -1,5 +1,15 @@
 @extends('layouts.app')
 
+@section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.2.7/inputmask/inputmask.min.js"></script>
+    <script type="text/javascript">
+        Inputmask({
+            mask:'(999) 999-9999',
+            removeMaskOnSubmit:true
+        }).mask('#number');
+    </script>
+@stop
+
 @section('content')
     <div class="container">
         <div class="row">
