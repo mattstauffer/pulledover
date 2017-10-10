@@ -4,74 +4,59 @@
             {{ user.name }}
             <small>{{ user.email }}</small>
         </h3>
-
-        <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 1em">
-            <li role="presentation" class="active">
-                <a href="#recordings" aria-controls="recordings" role="tab" data-toggle="tab">Home</a>
-            </li>
-            <li role="presentation">
-                <a href="#phones" aria-controls="phones" role="tab" data-toggle="tab">Profile</a>
-            </li>
-        </ul>
-
+        <hr>
         <div class="row">
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="recordings">
-                    <div>
-                        <table class="table" v-selectable-table>
-                            <thead>
-                                <tr>
-                                    <th>From</th>
-                                    <th>Duration</th>
-                                    <th>Date</th>
-                                </tr>
-                            </thead>
+            <section class="phone-numbers col-sm-6">
+                <ul class="fa-ul">
+                    <li>Phones</li>
+                    <li v-for="n in user.phone_numbers">
+                        <i class="fa-li phone-number" :class="{'verified':n.is_verified}"></i>
+                        {{ n.number }}
+                    </li>
+                </ul>
+            </section>
 
-                            <tbody>
-                                <tr
-                                        v-for="r in user.recordings | orderBy 'created_at' -1"
-                                        @click="$parent.recording = r"
-                                        :class="{'selected':$parent.recording == r}">
-                                    <td>{{r.from}}</td>
-                                    <td>{{r.duration}}s</td>
-                                    <td>{{r.created_at.format('YYYY-MM-DD')}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <hr class="visible-xs">
 
-                    <hr>
+            <section class="friends col-sm-6">
+                <ul class="fa-ul">
+                    <li>Friends</li>
+                    <li v-for="n in user.friends">
+                        <i class="fa-li phone-number" :class="{'verified':n.is_verified}"></i>
+                        {{ n.number }}
+                    </li>
+                </ul>
+            </section>
+        </div>
+        <div class="row">
+                <section class="col-sm-12">
+                    <table class="table" v-selectable-table>
+                        <thead>
+                            <tr>
+                                <th>From</th>
+                                <th>Duration</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
 
-                    <div class="col-sm-12">
-                        <recording :recording.sync="recording"></recording>
-                    </div>
-                </div>
+                        <tbody>
+                            <tr
+                                    v-for="r in user.recordings | orderBy 'created_at' -1"
+                                    @click="$parent.recording = r"
+                                    :class="{'selected':$parent.recording == r}">
+                                <td>{{r.from}}</td>
+                                <td>{{r.duration}}s</td>
+                                <td>{{r.created_at.format('YYYY-MM-DD')}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
 
+                <hr>
 
-                <div role="tabpanel" class="tab-pane" id="phones">
-
-                    <section class="phone-numbers col-sm-6">
-                        <ul class="fa-ul">
-                            <li>Phones</li>
-                            <li v-for="n in user.phone_numbers">
-                                <i class="fa-li phone-number" :class="{'verified':n.is_verified}"></i>
-                                {{ n.number }}
-                            </li>
-                        </ul>
-                    </section>
-
-                    <hr class="visible-xs">
-
-                    <section class="friends col-sm-6">
-                        <ul class="fa-ul">
-                            <li>Friends</li>
-                            <li v-for="n in user.friends">
-                                <i class="fa-li phone-number" :class="{'verified':n.is_verified}"></i>
-                                {{ n.number }}
-                            </li>
-                        </ul>
-                    </section>
-                </div>
+                <section class="col-sm-12">
+                    <recording :recording.sync="recording"></recording>
+                </section>
             </div>
         </div>
     </div>
